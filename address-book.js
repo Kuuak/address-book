@@ -2,6 +2,7 @@
 const express	= require( 'express' );
 const app			= express();
 const server	= require( 'http' ).Server( app );
+const io			= require( 'socket.io' )( server );
 
 // Express Middlewares
 const bodyParser = require('body-parser');
@@ -27,6 +28,15 @@ app
 
 	// Redirect to root if request does not match any route
 	.use( '/', (req, res) => res.redirect( '/' ) );
+
+/**
+ * Socket.io connection handling
+ */
+io.on( 'connection', socket => {
+
+	console.log( 'New io connection');
+
+} );
 
 /**
  * Start server
