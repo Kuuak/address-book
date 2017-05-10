@@ -1,0 +1,11 @@
+{
+  "name": "address-book",
+  "version": "0.1.0",
+  "description": "L'Escale Gourmande address book directory",
+  "main": "address-book.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",
+  "license": "MIT"
+}
