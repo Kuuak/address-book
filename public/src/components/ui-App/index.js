@@ -10,17 +10,41 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // Components
 import Nav from 'components/ui-Nav';
+import SearchBar from 'components/ui-SearchBar';
+
+// Helpers
+import isEmpty from 'lodash.isempty';
 
 class App extends React.Component {
 
 	constructor( props ) {
 		super( props );
+
+		// Set the initial states
+		this.state = {
+			searchValue: '',
+		};
+
+		// Bind functions to current `this`instance
+		this.handleChangeSearch = this.handleChangeSearch.bind( this );
 	}
 
 	componentDidMount() {
 		if ( typeof io !== undefined ) {
 			this.socket = io.connect( 'http://kuuak.dev:8080' );
 		}
+	}
+
+	handleChangeSearch( value ) {
+
+		if ( !isEmpty(value) && value.length > 2 ) {
+			// TODO Perform search
+		}
+		else {
+			// TODO Set empty results
+		}
+
+		this.setState({ searchValue: value });
 	}
 
 	render() {
@@ -32,7 +56,9 @@ class App extends React.Component {
 					<header className="page-header indigo" >
 						<div className="container">
 							<Nav />
-							// Search box
+							<Route exact path="/" render={ () => (
+								<SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} />
+							)}/>
 						</div>
 					</header>
 					<main>
@@ -51,5 +77,5 @@ class App extends React.Component {
 	}
 }
 
-// Render the App components in HTML page
+// Render the App component in HTML page
 ReactDom.render( <App />, document.getElementById('app') );
