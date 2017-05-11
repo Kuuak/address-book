@@ -4,6 +4,7 @@
   "description": "L'Escale Gourmande address book directory",
   "main": "address-book.js",
   "scripts": {
+    "start": "node address-book.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",
@@ -19,6 +20,10 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "style-loader": "^0.17.0",
     "webpack": "^2.5.1"
   }
 }

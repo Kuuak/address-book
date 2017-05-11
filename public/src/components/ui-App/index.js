@@ -1,6 +1,9 @@
+// Assets depedencies (Style & images)
+import 'materialize/css/materialize.min.css';
+
+// React
 import React from 'react';
 import ReactDom from 'react-dom';
-
 
 class App extends React.Component {
 
@@ -10,7 +13,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		if ( typeof io !== undefined ) {
-			this.socket = io.connect( 'http://kuuak.dev:8080' ); 
+			this.socket = io.connect( 'http://kuuak.dev:8080' );
 		}
 	}
 
@@ -38,5 +41,5 @@ class App extends React.Component {
 	}
 }
 
-
+// Render the App components in HTML page
 ReactDom.render( <App />, document.getElementById('app') );

@@ -1,28 +1,39 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 	context: path.join( __dirname, 'public' ),
+
 	entry: {
-		index: [
-			'./src/js/index.js'
-		]
+		index: './src/components/ui-App/'
 	},
+
 	devtool: 'source-map',
+
 	output: {
 		filename: 'address-book.js',
 		path: path.resolve(__dirname, 'public/dist')
 	},
+
+	// Resolve the `./src` directory so we can avoid writing
+	// ../../styles/index.css
+	resolve: {
+		modules: [ 'node_modules', './src' ]
+	},
+
 	module: {
 		loaders: [
-			{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				loader: 'babel-loader',
-				query: {
-					presets: ['react']
-				}
-			}
+			{ test: /\.js[x]?$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['react'] } },
+			{ test: /\.json$/, loader: 'json-loader' },
+			{ test: /\.css$/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) },
+			{ test: /\.(png|jp[e]?g)$/, loader: 'file-loader?name=images/[name].[ext]' },
+			{ test: /\.woff\d?$/, loader: 'file-loader?name=fonts/[name].[ext]' }
 		]
-	}
+	},
+
+	plugins: [
+		new ExtractTextPlugin( "./address-book.css" ),
+	]
 };
