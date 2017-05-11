@@ -1,0 +1,15 @@
+.top-nav {
+	height: 100px;
+	box-shadow: none;
+	flex-basis: 20%;
+	text-align: center;
+}
+
+.top-nav .brand-logo { height: 100%; }
+
+.top-nav img {
+	display: block;
+	width: auto;
+	height: 100%;
+	max-width: none;
+}

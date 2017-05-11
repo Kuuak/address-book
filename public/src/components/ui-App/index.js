@@ -6,6 +6,10 @@ import './index.css';
 // React
 import React from 'react';
 import ReactDom from 'react-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+
+// Components
+import Nav from 'components/ui-Nav';
 
 class App extends React.Component {
 
@@ -22,25 +26,27 @@ class App extends React.Component {
 	render() {
 
 		return (
-			<div>
-				// Alerts
-				<header className="page-header indigo" >
-					<div className="container">
-						// Nav bar
-						// Search box
-					</div>
-				</header>
-				<main>
-					// Content
-				</main>
-				<footer className="page-footer indigo">
-					<div className="footer-copyright">
+			<BrowserRouter>
+				<div>
+					// Alerts
+					<header className="page-header indigo" >
 						<div className="container">
-							© 2017 L'Escale Gourmande
+							<Nav />
+							// Search box
 						</div>
-					</div>
-				</footer>
-			</div>
+					</header>
+					<main>
+						// Content
+					</main>
+					<footer className="page-footer indigo">
+						<div className="footer-copyright">
+							<div className="container">
+								© 2017 L'Escale Gourmande
+							</div>
+						</div>
+					</footer>
+				</div>
+			</BrowserRouter>
 		)
 	}
 }
