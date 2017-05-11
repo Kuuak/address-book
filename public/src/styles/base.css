@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #eee;
+}
+
+a,
+a:hover,
+a:visited { color: inherit; }
+
+a:hover { text-decoration: underline; }
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+strong { font-weight: 600; }
+
+address { margin: 0; }

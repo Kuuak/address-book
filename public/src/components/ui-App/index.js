@@ -1,5 +1,7 @@
 // Assets depedencies (Style & images)
 import 'materialize/css/materialize.min.css';
+import 'styles/base.css';
+import './index.css';
 
 // React
 import React from 'react';
@@ -28,7 +30,9 @@ class App extends React.Component {
 						// Search box
 					</div>
 				</header>
-				// Content
+				<main>
+					// Content
+				</main>
 				<footer className="page-footer indigo">
 					<div className="footer-copyright">
 						<div className="container">
