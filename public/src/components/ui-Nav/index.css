@@ -3,6 +3,10 @@
 	padding: 0 100px;
 }
 
+.site-nav a i {
+	height: 100px;
+	line-height: 100px;
+}
 
 nav .brand-logo {
 	position: relative;

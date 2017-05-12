@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Nav from 'components/ui-Nav';
 import Alerts from 'components/ui-Alerts';
 import SearchBar from 'components/ui-SearchBar';
+import CustomerAdd from 'components/ui-CustomerAdd';
 
 // Helpers
 import isNull from 'lodash.isnull';
@@ -101,7 +102,9 @@ class App extends React.Component {
 						)}/>
 					</header>
 					<main>
-						// Content
+						<Route path="/customer/add/" render={ ({ match }) => {
+							return <CustomerAdd onAlertsChange={this.addAlerts} />;
+						}} />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">

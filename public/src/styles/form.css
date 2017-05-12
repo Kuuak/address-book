@@ -1,0 +1,48 @@
+form .wrapper {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 2em;
+}
+
+
+fieldset {
+	border: none;
+	padding: 0;
+	padding: 0;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+.input-wrap.required label::after {
+	content: "*";
+	color: red;
+	vertical-align: top;
+}
+
+.third { flex-basis: 32%; }
+.half { flex-basis: 49%; }
+.sixt { flex-basis: 66%; }
+.full { flex-basis: 100%; }
+
+.btn-wrap {
+	margin-top: 1em;
+	justify-content: center;
+}
+
+.input-rdo-label {
+	display: block;
+	margin-bottom: 1rem;
+}
+
+.input-rdo {
+	display: inline-block;
+	height: 2rem;
+	margin: 0 1rem 20px 0;
+}
+.input-rdo:first-of-type { margin-left: 0; }
+
+.input-phone {
+	font-size: 1.2rem;
+	font-weight: bold;
+}

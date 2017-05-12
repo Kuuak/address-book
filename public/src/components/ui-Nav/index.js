@@ -15,6 +15,13 @@ class Nav extends React.Component {
 					<Link to="/" className="brand-logo" >
 						<img src="/dist/images/LEscaleGourmande-Logo-v2-blanc.png" alt="L'Escale Gourmande"/>
 					</Link>
+					<ul id="nav-mobile" className="right">
+						<li>
+							<Link to="/customer/add/">
+								<i className="large material-icons" title="Ajouter un client">add_box</i>
+							</Link>
+						</li>
+					</ul>
 				</div>
 			</nav>
 		);
