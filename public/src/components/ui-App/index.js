@@ -95,12 +95,10 @@ class App extends React.Component {
 				<div>
 					<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 					<header className="page-header" >
-						<div className="container">
-							<Nav />
-							<Route exact path="/" render={ () => (
-								<SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} />
-							)}/>
-						</div>
+						<Nav />
+						<Route exact path="/" render={ () => (
+							<SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} />
+						)}/>
 					</header>
 					<main>
 						// Content
@@ -114,7 +112,8 @@ class App extends React.Component {
 					</footer>
 				</div>
 			</BrowserRouter>
-		)
+		);
+
 	}
 }
 

@@ -10,9 +10,9 @@ class Nav extends React.Component {
 
 	render() {
 		return (
-			<nav className="top-nav indigo">
+			<nav className="site-nav indigo">
 				<div className="nav-wrapper">
-					<Link to="/address-book/" className="brand-logo" >
+					<Link to="/" className="brand-logo" >
 						<img src="/dist/images/LEscaleGourmande-Logo-v2-blanc.png" alt="L'Escale Gourmande"/>
 					</Link>
 				</div>

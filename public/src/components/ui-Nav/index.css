@@ -1,13 +1,17 @@
-.top-nav {
+.site-nav {
 	height: 100px;
-	box-shadow: none;
-	flex-basis: 20%;
-	text-align: center;
+	padding: 0 100px;
 }
 
-.top-nav .brand-logo { height: 100%; }
 
-.top-nav img {
+nav .brand-logo {
+	position: relative;
+	left: initial;
+	height: 100%;
+	transform: none;
+}
+
+.brand-logo img {
 	display: block;
 	width: auto;
 	height: 100%;

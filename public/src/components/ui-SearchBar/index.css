@@ -1,12 +1,15 @@
 .search-bar {
-	flex-basis: 60%;
+	position: absolute;
+	top: 0;
+	left: calc(50% - 20%);
+	z-index: 10;
+	width: 40%;
 	line-height: 100px;
-	text-align: center;
 }
 
 .search-bar input {
 	display: inline-block;
-	width: 60%;
+	width: 100%;
 	text-align: center;
 	padding: .2em;
 	font-size: 1.2em;

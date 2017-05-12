@@ -1,6 +1,4 @@
-header > .container {
-	display: flex;
-}
+header  { position: relative; }
 
 main {
 	min-height: calc( 100vh - 170px );
