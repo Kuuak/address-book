@@ -1,0 +1,9 @@
+.result-costumer {
+	flex: 0 0 calc(50% - 0.5rem);
+}
+
+.result-costumer .collection-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

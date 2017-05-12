@@ -19,7 +19,9 @@ app
 	.get( '/', (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
-	.get( '/search/:number', (req, res) => {} )
+	.get( '/search/:number', (req, res) => {
+		customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
+	} )
 	.get( '/customer/:number', (req, res) => {} )
 
 	.post( '/customer/add/', (req, res) => {

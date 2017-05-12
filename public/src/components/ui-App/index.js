@@ -11,11 +11,13 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 // Components
 import Nav from 'components/ui-Nav';
 import Alerts from 'components/ui-Alerts';
+import Results from 'components/ui-Results';
 import SearchBar from 'components/ui-SearchBar';
 import CustomerAdd from 'components/ui-CustomerAdd';
 
 // Helpers
 import isNull from 'lodash.isnull';
+import isNil from 'lodash.isnil';
 import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
 
@@ -28,6 +30,10 @@ class App extends React.Component {
 		this.state = {
 			alerts			: [],
 			searchValue	: '',
+			customers		: {
+				items		: [],
+				loading	: false,
+			},
 		};
 
 		// Bind functions to current `this`instance
@@ -45,10 +51,13 @@ class App extends React.Component {
 	handleChangeSearch( value ) {
 
 		if ( !isEmpty(value) && value.length > 2 ) {
-			// TODO Perform search
+			this.searchCustomer( value );
 		}
 		else {
-			// TODO Set empty results
+			this.setState({ customers: {
+				loading: false,
+				items: [],
+			} });
 		}
 
 		this.setState({ searchValue: value });
@@ -88,6 +97,26 @@ class App extends React.Component {
 		return false;
 	}
 
+	searchCustomer( value ) {
+
+		this.setState({ customers: {
+			loading: true,
+			items: [],
+		} });
+
+		fetch( `/search/${value}/` )
+			.then( res => res.json() )
+			.then( res => {
+				if ( ! isNil(res.alerts) ) {
+					this.addAlerts( res.alerts );
+					res = [];
+				}
+				this.setState({ customers: {
+					loading: false,
+					items: res.customers,
+				} });
+			} );
+	}
 
 	render() {
 
@@ -105,6 +134,9 @@ class App extends React.Component {
 						<Route path="/customer/add/" render={ ({ match }) => {
 							return <CustomerAdd onAlertsChange={this.addAlerts} />;
 						}} />
+						<Route exact path="/" render={ () => (
+							<Results customers={this.state.customers} />
+						) } />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">
