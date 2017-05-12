@@ -10,10 +10,13 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // Components
 import Nav from 'components/ui-Nav';
+import Alerts from 'components/ui-Alerts';
 import SearchBar from 'components/ui-SearchBar';
 
 // Helpers
+import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
+import uniqueId from 'lodash.uniqueid';
 
 class App extends React.Component {
 
@@ -22,11 +25,14 @@ class App extends React.Component {
 
 		// Set the initial states
 		this.state = {
-			searchValue: '',
+			alerts			: [],
+			searchValue	: '',
 		};
 
 		// Bind functions to current `this`instance
-		this.handleChangeSearch = this.handleChangeSearch.bind( this );
+		this.addAlerts					= this.addAlerts.bind(this);
+		this.dismissAlert				= this.dismissAlert.bind(this);
+		this.handleChangeSearch	= this.handleChangeSearch.bind( this );
 	}
 
 	componentDidMount() {
@@ -47,13 +53,48 @@ class App extends React.Component {
 		this.setState({ searchValue: value });
 	}
 
+	addAlerts( alerts ) {
+
+		if ( isNull(alerts) ) {
+			return;
+		}
+
+		if ( !Array.isArray(alerts) ) {
+			alerts = Array(alerts);
+		}
+
+		alerts = alerts.map( (alert) => {
+			alert.id = parseInt( uniqueId() );
+			return alert;
+		} );
+
+		this.setState({ alerts: [...this.state.alerts, ...alerts] });
+
+		return alerts.map( (alert) => alert.id );
+	}
+
+	dismissAlert( alertId ) {
+		let tmpAlerts = this.state.alerts;
+		let index			= tmpAlerts.findIndex( (alert) => ( alert.id === alertId ) );
+
+		if ( 0 <= index ) {
+			tmpAlerts.splice( index, 1 );
+			this.setState({ alerts: tmpAlerts });
+
+			return true;
+		}
+
+		return false;
+	}
+
+
 	render() {
 
 		return (
 			<BrowserRouter>
 				<div>
-					// Alerts
-					<header className="page-header indigo" >
+					<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
+					<header className="page-header" >
 						<div className="container">
 							<Nav />
 							<Route exact path="/" render={ () => (

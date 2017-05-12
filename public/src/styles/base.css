@@ -26,3 +26,5 @@ h2 {
 strong { font-weight: 600; }
 
 address { margin: 0; }
+
+button { padding: .6em 1em .4em; }
