@@ -1,11 +1,12 @@
 // Server, Express & Socket.io
-const express	= require( 'express' );
-const app			= express();
-const server	= require( 'http' ).Server( app );
-const io			= require( 'socket.io' )( server );
+const express			= require( 'express' );
+const app					= express();
+const server			= require( 'http' ).Server( app );
+const io					= require( 'socket.io' )( server );
+const bodyParser	= require( 'body-parser' ); // Parse the urlencoded format POST data
 
-// Express Middlewares
-const bodyParser = require('body-parser');
+// Customer related precesses
+const customer = require( './includes/customer' );
 
 /**
  * Express config & routes handling
@@ -19,14 +20,18 @@ app
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.get( '/search/:number', (req, res) => {} )
-	.post( '/costumer/add/', (req, res) => {} )
-	.post( '/costumer/edit/', (req, res) => {} )
-	.post( '/costumer/add/address/', (req, res) => {} )
-	.post( '/costumer/edit/address/', (req, res) => {} )
-	.post( '/costumer/delete/', (req, res) => {} )
-	.post( '/costumer/delete/address/', (req, res) => {} )
+	.get( '/customer/:number', (req, res) => {} )
 
-	// Redirect to root if request does not match any route
+	.post( '/customer/add/', (req, res) => {
+		customer.add( req.body, result => res.end( JSON.stringify( result ) ) );
+	} )
+	.post( '/customer/edit/', (req, res) => {} )
+	.post( '/customer/add/address/', (req, res) => {} )
+	.post( '/customer/edit/address/', (req, res) => {} )
+	.post( '/customer/delete/', (req, res) => {} )
+	.post( '/customer/delete/address/', (req, res) => {} )
+
+	// If request does not match any route
 	.use( '/', (req, res) => res.redirect( '/' ) );
 
 /**
