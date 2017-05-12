@@ -54,7 +54,7 @@ export class Alert extends React.Component {
 				{ this.props.closeButton && <button className="close" onClick={this.handleCloseButton}>x</button> }
 				{ this.props.icon && <i className="material-icons">{this.props.icon}</i> }
 				<strong>{this.props.title}</strong>
-				<span>{this.props.message}</span>
+				<div>{this.props.message}</div>
 				{ this.props.handleClick && <button className="btn red" onClick={this.props.handleClick}>{this.props.titleButton}</button> }
 				{ this.props.linkButton && <Link to={this.props.linkButton} className="btn red" >{this.props.titleButton}</Link> }
 			</li>
