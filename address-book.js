@@ -7,6 +7,7 @@ const bodyParser	= require( 'body-parser' ); // Parse the urlencoded format POST
 
 // Customer related precesses
 const customer = require( './includes/customer' );
+const suggestion = require( './includes/suggestion' );
 
 /**
  * Express config & routes handling
@@ -19,8 +20,11 @@ app
 	.get( '/', (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
-	.get( '/search/:number', (req, res) => {
+	.get( '/search/customer/:number', (req, res) => {
 		customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
+	} )
+	.get( '/search/suggestion/:number', (req, res) => {
+		suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
 	.get( '/customer/:number', (req, res) => {} )
 

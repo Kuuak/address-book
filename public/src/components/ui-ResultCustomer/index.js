@@ -1,5 +1,6 @@
 // Assets depedencies (Style & images)
 import './index.css';
+import 'styles/appears.css';
 
 // React
 import React from 'react';
@@ -22,7 +23,8 @@ class ResultCostumer extends React.Component {
 							this.props.addresses.map( (addr, i) => (
 								<li className="collection-item" key={i}>
 									<address>
-										<span className="street">{addr.street},</span>&nbsp;
+										<span className="street">{addr.street}</span>&nbsp;
+										<span className="number">{addr.number},</span>&nbsp;
 										<span className="postcode">{addr.postcode}</span>&nbsp;
 										<span className="city">{addr.city}</span>&nbsp;
 										{ ( !isEmpty(addr.info) ) && ( <div className="info">{addr.info}</div> ) }

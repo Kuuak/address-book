@@ -16,10 +16,11 @@ import SearchBar from 'components/ui-SearchBar';
 import CustomerAdd from 'components/ui-CustomerAdd';
 
 // Helpers
-import isNull from 'lodash.isnull';
 import isNil from 'lodash.isnil';
+import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
+
 
 class App extends React.Component {
 
@@ -34,6 +35,11 @@ class App extends React.Component {
 				items		: [],
 				loading	: false,
 			},
+			suggestions	: {
+				items				: [],
+				loading			: false,
+				totalResults: null,
+			}
 		};
 
 		// Bind functions to current `this`instance
@@ -52,12 +58,20 @@ class App extends React.Component {
 
 		if ( !isEmpty(value) && value.length > 2 ) {
 			this.searchCustomer( value );
+			this.searchSuggestion( value );
 		}
 		else {
-			this.setState({ customers: {
-				loading: false,
-				items: [],
-			} });
+			this.setState({
+				customers: {
+					items: [],
+					loading: false,
+				},
+				Suggestions: {
+					items: null,
+					loading: false,
+					totalResults: null,
+				}
+			});
 		}
 
 		this.setState({ searchValue: value });
@@ -104,7 +118,7 @@ class App extends React.Component {
 			items: [],
 		} });
 
-		fetch( `/search/${value}/` )
+		fetch( `/search/customer/${value}/` )
 			.then( res => res.json() )
 			.then( res => {
 				if ( ! isNil(res.alerts) ) {
@@ -114,6 +128,30 @@ class App extends React.Component {
 				this.setState({ customers: {
 					loading: false,
 					items: res.customers,
+				} });
+			} );
+	}
+
+	searchSuggestion( value ) {
+
+		this.setState({ suggestions: {
+			items				: null,
+			loading			: true,
+			totalResults: null,
+			}
+		});
+
+		fetch( `/search/suggestion/${value}/` )
+			.then( res => res.json() )
+			.then( res => {
+				if ( ! isNil(res.alerts) ) {
+					this.addAlerts( res.alerts );
+					res = [];
+				}
+				this.setState({ suggestions: {
+					loading			: false,
+					items				: res.suggestions,
+					totalResults: res.totalResults,
 				} });
 			} );
 	}
@@ -131,11 +169,15 @@ class App extends React.Component {
 						)}/>
 					</header>
 					<main>
-						<Route path="/customer/add/" render={ ({ match }) => {
-							return <CustomerAdd onAlertsChange={this.addAlerts} />;
+						<Route path="/customer/add/:id?" render={ ({ match }) => {
+							let suggestion = null;
+							if ( ! isNull( match.params.id ) ) {
+								suggestion = this.state.suggestions.items[ match.params.id ];
+							}
+							return <CustomerAdd {...suggestion} onAlertsChange={this.addAlerts} />;
 						}} />
 						<Route exact path="/" render={ () => (
-							<Results customers={this.state.customers} />
+							<Results customers={this.state.customers} suggestions={this.state.suggestions} />
 						) } />
 					</main>
 					<footer className="page-footer indigo">

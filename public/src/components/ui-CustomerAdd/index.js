@@ -217,7 +217,7 @@ class CustomerAdd extends React.Component {
 							</div>
 							<div className="input-wrap full">
 								<label htmlFor="email">Email</label>
-								<input type="email" id="email" name="email" placeholder={ `${this.state.name_placeholder.first}.${this.state.name_placeholder.last}@example.com`.toLowerCase() } />
+								<input type="email" id="email" name="email" defaultValue={ this.props.email } placeholder={ `${this.state.name_placeholder.first}.${this.state.name_placeholder.last}@example.com`.toLowerCase() } />
 							</div>
 						</fieldset>
 						<div className="input-wrap">
