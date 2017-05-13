@@ -27,7 +27,6 @@ class ResultCostumer extends React.Component {
 										<span className="number">{addr.number},</span>&nbsp;
 										<span className="postcode">{addr.postcode}</span>&nbsp;
 										<span className="city">{addr.city}</span>&nbsp;
-										{ ( !isEmpty(addr.info) ) && ( <div className="info">{addr.info}</div> ) }
 									</address>
 									<Link to={`/customer/${this.props.phone}/`} className="btn blue accent-2 waves-effect waves-light">
 										<i className="material-icons">local_shipping</i>

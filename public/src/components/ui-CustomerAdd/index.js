@@ -195,6 +195,10 @@ class CustomerAdd extends React.Component {
 								<input type="text" id="floor" name="floor"  />
 							</div>
 						</fieldset>
+						<div className="input-wrap">
+							<label htmlFor="notes">Information complémentaires</label>
+							<textarea id="notes" name="notes" className="materialize-textarea"></textarea>
+						</div>
 						<fieldset className="customer-info">
 							<div className="input-wrap full">
 								<label className="input-rdo-label">Genre</label>
@@ -220,10 +224,6 @@ class CustomerAdd extends React.Component {
 								<input type="email" id="email" name="email" defaultValue={ this.props.email } placeholder={ `${this.state.name_placeholder.first}.${this.state.name_placeholder.last}@example.com`.toLowerCase() } />
 							</div>
 						</fieldset>
-						<div className="input-wrap">
-							<label htmlFor="notes">Information complémentaires</label>
-							<textarea id="notes" name="notes" className="materialize-textarea"></textarea>
-						</div>
 						<fieldset className="input-wrap btn-wrap">
 							<button type="submit" className="btn red btn-large half">Enregistrer</button>
 						</fieldset>
