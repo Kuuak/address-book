@@ -15,6 +15,10 @@ class SearchBar extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 	}
 
+	componentDidMount() {
+		document.getElementById('search_input').focus()
+	}
+
 	handleChange( event ) {
 		this.props.onChange( event.target.value )
 	}
