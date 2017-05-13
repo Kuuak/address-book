@@ -32,6 +32,7 @@ export class Alert extends React.Component {
 		super(props);
 
 		this.handleCloseButton = this.handleCloseButton.bind(this);
+		this.handleClickLink = this.handleClickLink.bind(this);
 	}
 
 	componentDidMount() {
@@ -48,6 +49,13 @@ export class Alert extends React.Component {
 		}
 	}
 
+	handleClickLink( event ) {
+		if ( ! isNull(this.timeout) ) {
+			clearTimeout( this.timeout );
+		}
+		this.props.dismiss( this.props.id );
+	}
+
 	render() {
 		return (
 			<li className={ 'alert alert-'+ this.props.status } style={this.props.style}>
@@ -56,7 +64,7 @@ export class Alert extends React.Component {
 				<strong>{this.props.title}</strong>
 				<div>{this.props.message}</div>
 				{ this.props.handleClick && <button className="btn red" onClick={this.props.handleClick}>{this.props.titleButton}</button> }
-				{ this.props.linkButton && <Link to={this.props.linkButton} className="btn red" >{this.props.titleButton}</Link> }
+				{ this.props.linkButton && <Link to={this.props.linkButton} onClick={this.handleClickLink} className="btn red" >{this.props.titleButton}</Link> }
 			</li>
 		);
 	}
