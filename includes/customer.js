@@ -157,4 +157,29 @@ function add( data, callback ) {
 
 };
 
-module.exports.add;
+function find( number, callback ) {
+
+	if ( isEmpty(number) ) {
+		return;
+	}
+
+	dbCustomers.find({ phone: new RegExp( number ) }, (err, docs) => {
+
+		if ( ! isNull(err) ) {
+			callback({ alerts: [{
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
+			}] });
+
+			return;
+		}
+
+		callback( { customers: docs } );
+	} );
+
+}
+
+exports.add = add;
+exports.find = find;
