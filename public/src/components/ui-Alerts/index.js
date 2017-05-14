@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 // Helpers
 import isNull from 'lodash.isnull';
+import Timer from 'includes/timer.js';
 
 class Alerts extends React.Component {
 
@@ -31,34 +32,47 @@ export class Alert extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.handleCloseButton = this.handleCloseButton.bind(this);
-		this.handleClickLink = this.handleClickLink.bind(this);
+		this.handleClickLink		= this.handleClickLink.bind(this);
+		this.handleCloseButton	= this.handleCloseButton.bind(this);
+		this.handleMouseOverOut	= this.handleMouseOverOut.bind(this);
 	}
 
 	componentDidMount() {
-
 		if ( 0 < this.props.timeout ) {
-			this.timeout = setTimeout( this.props.dismiss, this.props.timeout, this.props.id );
+			this.timer = new Timer( this.props.dismiss, this.props.timeout, this.props.id );
+		}
+	}
+
+	handleMouseOverOut( event ) {
+		if ( ! isNull(this.timer) ) {
+			switch (event.type) {
+				case 'mouseover':
+					this.timer.pause();
+					break;
+				case 'mouseout':
+					this.timer.resume();
+					break;
+			}
 		}
 	}
 
 	handleCloseButton() {
 		this.props.dismiss( this.props.id );
-		if ( ! isNull(this.timeout) ) {
-			clearTimeout( this.timeout );
+		if ( ! isNull(this.timer) ) {
+			this.timeout.clear();
 		}
 	}
 
 	handleClickLink( event ) {
-		if ( ! isNull(this.timeout) ) {
-			clearTimeout( this.timeout );
+		if ( ! isNull(this.timer) ) {
+			this.timer.clear();
 		}
 		this.props.dismiss( this.props.id );
 	}
 
 	render() {
 		return (
-			<li className={ 'alert alert-'+ this.props.status } style={this.props.style}>
+			<li className={ 'alert alert-'+ this.props.status } onMouseOver={this.handleMouseOverOut} onMouseOut={this.handleMouseOverOut} style={this.props.style}>
 				{ this.props.closeButton && <button className="close" onClick={this.handleCloseButton}>x</button> }
 				{ this.props.icon && <i className="material-icons">{this.props.icon}</i> }
 				<strong>{this.props.title}</strong>
