@@ -40,19 +40,64 @@ class App extends React.Component {
 				items				: [],
 				loading			: false,
 				totalResults: null,
+			},
+			currentCall: {
+				number	: null,
+				alertId	: 0,
 			}
 		};
 
 		// Bind functions to current `this`instance
-		this.addAlerts					= this.addAlerts.bind(this);
-		this.dismissAlert				= this.dismissAlert.bind(this);
-		this.handleChangeSearch	= this.handleChangeSearch.bind( this );
+		this.addAlerts							= this.addAlerts.bind(this);
+		this.dismissAlert						= this.dismissAlert.bind(this);
+		this.callMonitorEvent				= this.callMonitorEvent.bind(this);
+		this.handleChangeSearch			= this.handleChangeSearch.bind( this );
+		this.copyCurrentCallNumber	= this.copyCurrentCallNumber.bind(this);
 	}
 
 	componentDidMount() {
 		if ( typeof io !== undefined ) {
-			this.socket = io.connect( 'http://kuuak.dev:8080' );
+			this.socket = io.connect( window.location );
+
+			// Listen to emmitted events from the Call Monitor server
+			this.socket
+				.on( 'inbound'			, data => this.callMonitorEvent( 'inbound' , data ) )
+				.on( 'connected'		, data => this.callMonitorEvent( 'connected' , data ) )
+				.on( 'disconnected'	, data => this.callMonitorEvent( 'disconnected' , data ) );
 		}
+	}
+
+	callMonitorEvent( status, data ) {
+		this.dismissAlert( this.state.currentCall.alertId );
+
+		const phoneNumber = data.caller.replace( '041', '' );
+		const callAlert		= {
+			timeout			: ( 'disconnected' === status ? 3000 : 0 ),
+			status			: ( 'disconnected' === status ? 'error' : ( 'inbound' === status ? 'info' : 'success' ) ),
+			title				: ( 'disconnected' === status ? 'Appel terminé' : ( 'inbound' === status ? 'Appel entrant' : 'Appel en cours' ) ),
+			message			: phoneNumber,
+			icon				: ( 'disconnected' === status ? 'call_end' : ( 'inbound' === status ? 'settings_phone' : 'call' ) ),
+			handleClick	: this.copyCurrentCallNumber,
+			titleButton	: 'Rechercher',
+		};
+
+		this.setState({
+			currentCall: {
+				number	: phoneNumber,
+				alertId	: parseInt( this.addAlerts( callAlert ) )
+			}
+		});
+	}
+
+	copyCurrentCallNumber () {
+
+		if ( ! isNull(this.state.currentCall.number) ) {
+			this.setState({ searchValue: this.state.currentCall.number });
+			this.searchValueChange( this.state.currentCall.number );
+			return true;
+		}
+
+		return false;
 	}
 
 	handleChangeSearch( value ) {

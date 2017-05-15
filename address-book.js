@@ -9,6 +9,9 @@ const bodyParser	= require( 'body-parser' ); // Parse the urlencoded format POST
 const customer = require( './includes/customer' );
 const suggestion = require( './includes/suggestion' );
 
+// Call Monitor
+const fritzMonitor = require( './includes/fritzmonitor' );
+
 /**
  * Express config & routes handling
  */
@@ -43,11 +46,7 @@ app
 /**
  * Socket.io connection handling
  */
-io.on( 'connection', socket => {
-
-	console.log( 'New io connection');
-
-} );
+io.on( 'connection', socket => fritzMonitor.listen( socket ) );
 
 /**
  * Start server
