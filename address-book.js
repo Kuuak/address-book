@@ -29,7 +29,6 @@ app
 	.get( '/search/suggestion/:number', (req, res) => {
 		suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
-	.get( '/customer/:number', (req, res) => {} )
 
 	.post( '/customer/add/', (req, res) => {
 		customer.add( req.body, result => res.end( JSON.stringify( result ) ) );
