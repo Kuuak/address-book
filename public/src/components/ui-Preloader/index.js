@@ -3,6 +3,7 @@ import './index.css';
 
 // React
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Preloader extends React.Component {
 
@@ -12,6 +13,10 @@ class Preloader extends React.Component {
 
 		if ( this.props.active ) {
 			classes += ' active';
+		}
+
+		if ( this.props.center ) {
+			classes += ' center';
 		}
 
 		return (
@@ -31,5 +36,13 @@ class Preloader extends React.Component {
 		);
 	}
 }
+Preloader.propTypes = {
+	active: PropTypes.bool.isRequired,
+	center: PropTypes.bool,
+};
+Preloader.defaultProps = {
+	active: false,
+	center: false,
+};
 
 export default Preloader;

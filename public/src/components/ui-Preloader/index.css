@@ -1,5 +1,22 @@
 .preloader-wrapper {
 	position: absolute;
+	z-index: 100;
 	left: 50%;
 	margin-left: -24px;
+}
+
+.preloader-wrapper.center {
+	top: 50%;
+	margin-left: 0;
+	transform: translate(-50%,-50%) rotate(0);
+}
+
+.preloader-wrapper.center.active {
+	animation-name: container-rotate-center;
+}
+
+@keyframes container-rotate-center {
+	to {
+		transform: translate(-50%,-50%) rotate(360deg);
+	}
 }
