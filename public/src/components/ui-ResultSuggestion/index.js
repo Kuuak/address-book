@@ -15,9 +15,6 @@ class ResultSuggestion extends React.Component {
 				<div className="card-content">
 					<div className="card-header">
 						<div className="card-title phone">{this.props.phone}</div>
-						<Link to={`/customer/add/${this.props.id}`} className="btn-floating halfway-fab waves-effect waves-light red">
-							<i className="material-icons">add</i>
-						</Link>
 					</div>
 					<div className="title">{this.props.title}</div>
 					<address>
@@ -27,6 +24,9 @@ class ResultSuggestion extends React.Component {
 							<span className="city">{this.props.city}</span>
 						</div>
 					</address>
+				</div>
+				<div className="card-action">
+					<Link to={`/add/customer/${this.props.id}`}>Enregistrer comme client</Link>
 				</div>
 			</li>
 		)

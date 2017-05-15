@@ -15,14 +15,6 @@
 	position: relative;
 	margin: 0 -24px 8px;
 	padding: 0 24px;
-	border-bottom: 1px solid #e0e0e0
 }
 
 .result-suggestion .card-title { margin-bottom: 0; }
-
-.result-suggestion .btn-floating.halfway-fab {
-	right: 10px;
-	bottom: -20px;
-}
-
-.result-suggestion .title { padding-right: 30px; }
