@@ -66,7 +66,7 @@ class App extends React.Component {
 					items: [],
 					loading: false,
 				},
-				Suggestions: {
+				suggestions: {
 					items: null,
 					loading: false,
 					totalResults: null,
