@@ -19,9 +19,8 @@ h1 {
 	text-align: center;
 }
 
-h2 {
-	font-size: 1.5rem;
-}
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.3rem; }
 
 strong { font-weight: 600; }
 
