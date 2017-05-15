@@ -164,21 +164,17 @@ class App extends React.Component {
 					<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 					<header className="page-header" >
 						<Nav />
-						<Route exact path="/" render={ () => (
-							<SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} />
-						)}/>
+						<Route exact path="/" render={ () => <SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} /> }/>
 					</header>
 					<main>
-						<Route path="/customer/add/:id?" render={ ({ match }) => {
+						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
+						<Route path="/add/customer/:addrId?" render={ ({ match }) => {
 							let suggestion = null;
-							if ( ! isNull( match.params.id ) ) {
-								suggestion = this.state.suggestions.items[ match.params.id ];
+							if ( ! isNull( match.params.addrId ) ) {
+								suggestion = this.state.suggestions.items[ match.params.addrId ];
 							}
 							return <CustomerAdd {...suggestion} onAlertsChange={this.addAlerts} />;
 						}} />
-						<Route exact path="/" render={ () => (
-							<Results customers={this.state.customers} suggestions={this.state.suggestions} />
-						) } />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">
