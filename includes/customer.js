@@ -159,11 +159,9 @@ function add( data, callback ) {
 
 function find( number, callback ) {
 
-	if ( isEmpty(number) ) {
-		return;
-	}
+	let query = ( (! isEmpty(number)) ? { phone: new RegExp( number ) } : {} );
 
-	dbCustomers.find({ phone: new RegExp( number ) }, (err, docs) => {
+	dbCustomers.find( query, (err, docs) => {
 
 		if ( ! isNull(err) ) {
 			callback({ alerts: [{

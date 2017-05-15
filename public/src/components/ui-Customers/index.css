@@ -1,0 +1,14 @@
+.customer-all {
+	padding: 0 50px;
+}
+
+.customer-all .customers {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.customer-all .result-costumer {
+	flex-basis: calc(33% - 0.5rem)
+}

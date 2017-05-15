@@ -20,7 +20,7 @@ app
 	.get( '/', (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
-	.get( '/search/customer/:number', (req, res) => {
+	.get( '/search/customer/:number?', (req, res) => {
 		customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
 	} )
 	.get( '/search/suggestion/:number', (req, res) => {

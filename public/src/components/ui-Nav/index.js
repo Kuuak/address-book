@@ -17,8 +17,18 @@ class Nav extends React.Component {
 					</Link>
 					<ul id="nav-mobile" className="right">
 						<li>
-							<Link to="/customer/add/">
-								<i className="large material-icons" title="Ajouter un client">add_box</i>
+							<Link to="/">
+								<i className="large material-icons" title="Rechercher un client">search</i>
+							</Link>
+						</li>
+						<li>
+							<Link to="/customers/">
+								<i className="large material-icons" title="Tous les clients">list</i>
+							</Link>
+						</li>
+						<li>
+							<Link to="/add/customer/">
+								<i className="large material-icons" title="Ajouter un client">add</i>
 							</Link>
 						</li>
 					</ul>

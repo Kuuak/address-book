@@ -13,6 +13,7 @@ import Nav from 'components/ui-Nav';
 import Alerts from 'components/ui-Alerts';
 import Results from 'components/ui-Results';
 import SearchBar from 'components/ui-SearchBar';
+import Customers from 'components/ui-Customers';
 import CustomerAdd from 'components/ui-CustomerAdd';
 
 // Helpers
@@ -168,6 +169,7 @@ class App extends React.Component {
 					</header>
 					<main>
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
+						<Route path="/customers/" render={ () => <Customers /> } />
 						<Route path="/add/customer/:addrId?" render={ ({ match }) => {
 							let suggestion = null;
 							if ( ! isNull( match.params.addrId ) ) {
