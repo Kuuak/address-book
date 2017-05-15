@@ -1,0 +1,100 @@
+.customer {
+	display: flex;
+	align-items: stretch;
+}
+
+
+.customer-details {
+	flex: 1 0 40%;
+	padding: 0 2rem;
+	min-height: calc(100vh - 170px);
+	transition: flex-basis .3s ease-in-out .1s;
+}
+
+.customer-details .wrap {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.customer-details h1 {
+	text-align: left;
+	margin-bottom: 0;
+}
+.customer-details h2 { margin: .5rem 0; }
+.customer-details h3 { margin-top: 2rem; }
+
+.customer-details address { position: relative; }
+
+.customer-details .input-rdio {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	display: block;
+	transform: translateY(-50%);
+}
+.customer-details .input-rdio label {
+	position: relative;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+}
+.customer-details .input-rdio label::before {
+	border: 2px solid #5a5a5a;
+	border-radius: 0;
+	width: 26px;
+	height: 26px;
+	margin: 0;
+}
+.customer-details .input-rdio label::after { display: none !important; }
+
+.customer-details .input-rdio label i {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: transparent;
+	transform: translate(-50%,-50%);
+	transition: color .2s ease-in-out;
+}
+.customer-details .input-rdio label:hover i { color: #ccc; }
+.customer-details input:checked + label i,
+.customer-details input:checked + label:hover i { color: #000; }
+
+.address-map {
+	position: relative;
+	flex: 0 1 0;
+	min-height: calc(100vh - 170px);
+	transition: flex-basis .3s ease-in-out;
+}
+.address-map.open { flex-basis: 60%; }
+
+.veil {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	opacity: .8;
+	background-color: #000;
+	transition: opacity .4s ease-in-out;
+}
+.loading-enter .veil { opacity: 0; }
+.loading-enter.loading-enter-active .veil { opacity: .8; }
+.loading-leave .veil { opacity: .8; }
+.loading-leave.loading-leave-active .veil { opacity: 0; }
+
+.map-wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.address-map button {
+	position: absolute;
+	left: 50%;
+	bottom: 2rem;
+	z-index: 5;
+	opacity: 1;
+	transform: translateX(-50%);
+	transition: opacity .3s ease-int-out;
+}
+.address-map.loading button { opacity: 0; }

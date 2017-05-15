@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Nav from 'components/ui-Nav';
 import Alerts from 'components/ui-Alerts';
 import Results from 'components/ui-Results';
+import Customer from 'components/ui-Customer';
 import SearchBar from 'components/ui-SearchBar';
 import Customers from 'components/ui-Customers';
 import CustomerAdd from 'components/ui-CustomerAdd';
@@ -215,6 +216,7 @@ class App extends React.Component {
 					<main>
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
 						<Route path="/customers/" render={ () => <Customers /> } />
+						<Route path="/customer/:phone/:addrId?" render={ ({ match }) => <Customer phone={match.params.phone} addr={match.params.addrId} addAlerts={this.addAlerts} /> } />
 						<Route path="/add/customer/:addrId?" render={ ({ match }) => {
 							let suggestion = null;
 							if ( ! isNull( match.params.addrId ) ) {
