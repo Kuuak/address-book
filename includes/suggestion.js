@@ -1,5 +1,5 @@
 // APP settings
-const config = require( '../config.json' );
+const config = require( '../config' );
 
 const vCard = require( 'vcard-json' );
 const isNull = require( 'lodash.isnull' );

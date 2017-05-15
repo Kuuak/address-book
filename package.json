@@ -4,9 +4,10 @@
   "description": "L'Escale Gourmande address book directory",
   "main": "address-book.js",
   "scripts": {
-    "watch": "nodemon --watch public/src -e js,json,css -x \"webpack\"",
-    "start": "node address-book.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start ecosystem.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build\""
   },
   "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",
   "license": "MIT",

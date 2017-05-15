@@ -2,8 +2,8 @@ const isNull	= require( 'lodash.isnull' );
 const isEmpty	= require( 'lodash.isempty' );
 const Isemail	= require( 'isemail' );
 
-// APP settings
-const config = require( '../config.json' );
+// // APP settings
+const config = require( '../config' );
 
 // Database
 const Datastore		= require( 'nedb' );

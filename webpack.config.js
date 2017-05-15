@@ -4,10 +4,9 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-	context: path.join( __dirname, 'public' ),
 
 	entry: {
-		index: './src/components/ui-App/'
+		index: 'components/ui-App/'
 	},
 
 	devtool: 'source-map',
@@ -20,7 +19,7 @@ module.exports = {
 	// Resolve the `./src` directory so we can avoid writing
 	// ../../styles/index.css
 	resolve: {
-		modules: [ 'node_modules', './src' ]
+		modules: [ './public/src', 'node_modules' ]
 	},
 
 	module: {
