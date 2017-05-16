@@ -18,7 +18,7 @@ function parseXML( xml, callback ) {
 
 		let data = {
 			total: result.feed['openSearch:totalResults'][0],
-			links: result.feed.entry.map( entry => entry.link[1]['$'].href ),
+			links: Array.isArray(result.feed.entry) ? result.feed.entry.map( entry => entry.link[1]['$'].href ) : [],
 		};
 
 		callback( null, data );
