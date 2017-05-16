@@ -34,6 +34,7 @@ class Customer extends React.Component {
 			loadingMap	: false,
 		};
 
+		this.closeMap = this.closeMap.bind( this );
 		this.handleChangeAddr = this.handleChangeAddr.bind( this );
 
 		this.map = null;
@@ -96,8 +97,13 @@ class Customer extends React.Component {
 		}
 		else {
 			setTimeout( () => {
-				this.initMap( addr );
-			}, 410 );
+				if ( isNull(this.map) ) {
+					this.initMap( addr );
+				}
+				else {
+					this.setMapDirection( addr );
+				}
+			}, 400 );
 		}
 
 		this.setState({
@@ -136,6 +142,20 @@ class Customer extends React.Component {
 			}
 		} );
 
+	}
+
+	closeMap() {
+
+		document.getElementById(`addr_${this.state.selectedAddr}`).checked = false;
+
+		this.setState({
+			showMap: false,
+			loadingMap: true,
+			selectedAddr: 0,
+			route: null,
+		});
+
+		setTimeout( () => this.setState({ loadingMap: false }), 400 );
 	}
 
 	render() {
@@ -181,6 +201,7 @@ class Customer extends React.Component {
 						{ this.state.loadingMap && <Preloader center={true} active={true} /> }
 					</CSSTransitionGroup>
 					<div id="mapWrapper" className="map-wrapper"></div>
+					{ this.state.route && <i className="close-map material-icons small" onClick={ this.closeMap }>close</i> }
 					{ this.state.route && <button className="btn red">{`Temps de trajet: ${this.state.route.duration} (${this.state.route.distance})`}</button> }
 				</div>
 			</div>

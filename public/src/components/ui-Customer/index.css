@@ -88,6 +88,18 @@
 	height: 100%;
 }
 
+.address-map .close-map {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	z-index: 50;
+	opacity: .4;
+	cursor: pointer;
+	transition: opacity .2s ease-in-out;
+}
+.address-map .close-map:hover { opacity: .9; }
+.address-map.loading .close-map { opacity: 0; }
+
 .address-map button {
 	position: absolute;
 	left: 50%;
