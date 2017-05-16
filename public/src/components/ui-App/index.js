@@ -58,7 +58,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		if ( typeof io !== undefined ) {
-			this.socket = io.connect( window.location );
+			this.socket = io.connect( window.location.origin );
 
 			// Listen to emmitted events from the Call Monitor server
 			this.socket
