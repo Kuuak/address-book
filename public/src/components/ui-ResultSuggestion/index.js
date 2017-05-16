@@ -4,6 +4,7 @@ import 'styles/appears.css';
 
 // React
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class ResultSuggestion extends React.Component {
@@ -25,13 +26,29 @@ class ResultSuggestion extends React.Component {
 						</div>
 					</address>
 				</div>
-				<div className="card-action">
-					<Link to={`/add/customer/${this.props.id}`}>Enregistrer comme client</Link>
+				<div className={ 'card-action'+ ( this.props.extra ? ' green lighten-4' : '') }>
+					<Link className={( this.props.extra && 'black-text' )} to={`/add/customer/${this.props.id}`}>Enregistrer</Link>
 				</div>
 			</li>
 		)
 	}
 
+}
+ResultSuggestion.propTypes = {
+	phone		: PropTypes.string,
+	title		: PropTypes.string,
+	street	: PropTypes.string,
+	postcode: PropTypes.string,
+	city		: PropTypes.string,
+	extra		: PropTypes.bool,
+};
+ResultSuggestion.defaultProps = {
+	phone		: null,
+	title		: null,
+	street	: null,
+	postcode: null,
+	city		: null,
+	extra		: false,
 }
 
 export default ResultSuggestion

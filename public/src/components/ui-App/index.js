@@ -193,8 +193,18 @@ class App extends React.Component {
 			.then( res => {
 				if ( ! isNil(res.alerts) ) {
 					this.addAlerts( res.alerts );
-					res = [];
 				}
+
+				if ( isNull(res.suggestions) || !Array.isArray(res.suggestions) ) {
+					res.suggestions = [];
+				}
+
+				// Always add an extra suggestion to register a new customer with the current phone searched
+				res.suggestions.push({
+					phone: value,
+					extra: true,
+				});
+
 				this.setState({ suggestions: {
 					loading			: false,
 					items				: res.suggestions,
