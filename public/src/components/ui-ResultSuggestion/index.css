@@ -1,14 +1,25 @@
 .remote-results {
+	position: relative;
 	flex: 0 0 25%;
-	min-height: calc( 100vh - 170px );
-	padding: 0 50px 0 25px;
+	height: calc( 100vh - 170px );
+	overflow-y: hidden;
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.remote-results h2 { padding: 0 50px 0 25px; }
+
+.remote-results .suggestions {
+	height: calc(100% - (1.5rem + 1.78rem + 1.424rem));
+	margin: 0;
+	padding: 0 50px 0 25px;
+	overflow-y: scroll;
 }
 
 .result-suggestion {
 	display: flex;
 	flex-flow: column;
 	padding: 0;
+	
 }
 
 .result-suggestion .card-header {

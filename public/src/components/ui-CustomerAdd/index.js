@@ -1,5 +1,6 @@
 // Assets depedencies (Style & images)
 import 'styles/form.css'
+import './index.css'
 
 // React
 import React from 'react';
@@ -153,7 +154,7 @@ class CustomerAdd extends React.Component {
 		if ( !isNull(this.props.city) )			{ defaultAddress.push( this.props.city ); }
 
 		return (
-			<div>
+			<div className="customer-add">
 				{ this.state.success && <Redirect to={this.state.redirect} /> }
 				<h1>Ajouter un client</h1>
 				<form onSubmit={this.handleSubmit} className="white" method="POST" action='/customer/add/'>

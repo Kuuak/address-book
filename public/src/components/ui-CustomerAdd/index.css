@@ -1,0 +1,9 @@
+.customer-add {
+	height: calc(100vh - 170px);
+	overflow-y: hidden;
+}
+
+.customer-add form {
+	height: calc(100% - 2rem - 2.1rem - 1.68rem);
+	overflow-y: scroll;
+}
