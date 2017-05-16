@@ -167,7 +167,7 @@ class CustomerAdd extends React.Component {
 							<label htmlFor="address">Adresse</label>
 							<input type="search" id="address" defaultValue={ defaultAddress.join(' ') } />
 						</div>
-						<fieldset className="address">
+						<div className="fieldset address">
 							<div className="input-wrap sixt required">
 								<label htmlFor="route">Rue</label>
 								<input type="text" id="route" name="street" required />
@@ -184,8 +184,8 @@ class CustomerAdd extends React.Component {
 								<label htmlFor="locality">Localité</label>
 								<input type="text" id="locality" name="city" required />
 							</div>
-						</fieldset>
-						<fieldset className="building">
+						</div>
+						<div className="fieldset building">
 							<div className="input-wrap half">
 								<label htmlFor="doorcode">Code de porte</label>
 								<input type="text" id="doorcode" name="doorcode"  />
@@ -194,12 +194,12 @@ class CustomerAdd extends React.Component {
 								<label htmlFor="floor">Étage</label>
 								<input type="text" id="floor" name="floor"  />
 							</div>
-						</fieldset>
+						</div>
 						<div className="input-wrap">
 							<label htmlFor="notes">Information complémentaires</label>
 							<textarea id="notes" name="notes" className="materialize-textarea"></textarea>
 						</div>
-						<fieldset className="customer-info">
+						<div className="fieldset customer-info">
 							<div className="input-wrap full">
 								<label className="input-rdo-label">Genre</label>
 								<span className="input-rdo">
@@ -223,10 +223,10 @@ class CustomerAdd extends React.Component {
 								<label htmlFor="email">Email</label>
 								<input type="email" id="email" name="email" defaultValue={ this.props.email } placeholder={ `${this.state.name_placeholder.first}.${this.state.name_placeholder.last}@example.com`.toLowerCase() } />
 							</div>
-						</fieldset>
-						<fieldset className="input-wrap btn-wrap">
+						</div>
+						<div className="fieldset input-wrap btn-wrap">
 							<button type="submit" className="btn red btn-large half">Enregistrer</button>
-						</fieldset>
+						</div>
 					</div>
 				</form>
 			</div>
