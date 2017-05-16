@@ -103,7 +103,7 @@ class Customer extends React.Component {
 				else {
 					this.setMapDirection( addr );
 				}
-			}, 400 );
+			}, 300 );
 		}
 
 		this.setState({
@@ -155,7 +155,7 @@ class Customer extends React.Component {
 			route: null,
 		});
 
-		setTimeout( () => this.setState({ loadingMap: false }), 400 );
+		setTimeout( () => this.setState({ loadingMap: false }), 300 );
 	}
 
 	render() {

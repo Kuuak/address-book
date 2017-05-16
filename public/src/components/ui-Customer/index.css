@@ -76,7 +76,7 @@
 	height: 100%;
 	opacity: .8;
 	background-color: #000;
-	transition: opacity .4s ease-in-out;
+	transition: opacity .3s ease-in-out;
 }
 .loading-enter .veil { opacity: 0; }
 .loading-enter.loading-enter-active .veil { opacity: .8; }
