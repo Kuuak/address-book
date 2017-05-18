@@ -1,18 +1,15 @@
 // Assets depedencies (Style & images)
 import './index.css';
 
-// APP settings
-import config from '../../../../config';
-
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 // Components
-import Preloader from 'components/ui-Preloader';
+import Gmap from 'components/ui-Gmap';
 
 // Helpers
 import isNull from 'lodash.isnull';
@@ -29,133 +26,40 @@ class Customer extends React.Component {
 			lastname		: '',
 			email				: null,
 			addresses		: [],
-			selectedAddr: this.props.addr,
-			showMap			: false,
-			loadingMap	: false,
+			showSidebar	: false,
 		};
 
-		this.closeMap = this.closeMap.bind( this );
-		this.handleChangeAddr = this.handleChangeAddr.bind( this );
-
-		this.map = null;
-		this.directionsService = null;
-		this.directionsRenderer = null;
+		this.openSidebar		= this.openSidebar.bind( this );
+		this.closeSidebar		= this.closeSidebar.bind( this );
 	}
 
 	componentDidMount() {
+		this.fetchCustomerData();
+	}
 
+	fetchCustomerData() {
 		fetch( `/search/customer/${this.props.phone}/` )
 			.then( res => res.json() )
 			.then ( res => {
 				if ( 1 === res.customers.length && !isEmpty(res.customers[0]) ) {
 					this.setState( res.customers[0] );
-
-					if ( ! isEmpty(this.state.selectedAddr) ) {
-						this.changeAddr( this.state.selectedAddr );
-					}
 				}
 			} );
 	}
 
-	handleChangeAddr( event ) {
-		if ( this.state.selectedAddr !== event.target.value ) {
-			this.changeAddr( event.target.value );
+	openSidebar() {
+
+		if ( ! this.state.showSidebar ) {
+			this.setState({
+				showSidebar: true,
+			});
 		}
 	}
 
-	initMap( addr ) {
-
-		this.map = new google.maps.Map(document.getElementById('mapWrapper'), {
-			center: config.map.latlng,
-			zoom: config.map.zoom,
-		});
-
-		this.directionsService = new google.maps.DirectionsService;
-		this.directionsRenderer = new google.maps.DirectionsRenderer();
-
-		this.directionsRenderer.setMap( this.map );
-
-		// Wait the init's end before to render direction
-		this.map.idleListener = this.map.addListener( 'idle', () => {
-			this.map.idleListener.remove(); // remove the event listener
-
-			// Add new listener for when direction is rendered
-			this.map.addListener( 'idle', () => this.setState({ loadingMap: false }) );
-
-			// render the direction
-			this.setMapDirection( addr );
-		} );
-
-	}
-
-	changeAddr( addrId ) {
-
-		let addr = this.state.addresses[addrId];
-
-		if ( this.state.showMap ) {
-			this.setMapDirection( addr );
-		}
-		else {
-			setTimeout( () => {
-				if ( isNull(this.map) ) {
-					this.initMap( addr );
-				}
-				else {
-					this.setMapDirection( addr );
-				}
-			}, 300 );
-		}
-
+	closeSidebar() {
 		this.setState({
-			showMap			: true,
-			loadingMap	: true,
-			selectedAddr: addrId,
+			showSidebar: false,
 		});
-	}
-
-	setMapDirection( addr ) {
-
-		this.directionsService.route( {
-			origin: config.map.address,
-			destination: `${addr.street} ${addr.number},${addr.postcode} ${addr.city}`,
-			travelMode: 'DRIVING',
-			provideRouteAlternatives: true,
-		}, (response, status) => {
-
-			if (status === 'OK') {
-				this.directionsRenderer.setDirections(response);
-				this.setState({
-					route: {
-						duration: response.routes[0].legs[0].duration.text,
-						distance: response.routes[0].legs[0].distance.text,
-					}
-				});
-			}
-			else {
-				this.props.addAlerts( {
-					icon		: 'error',
-					status	: 'error',
-					title		: 'Oups',
-					message	: 'Une erreur est apparue lors du chargement de l\'itinéraire. Merci de contacter l\'administrateur si cela persiste.',
-				} );
-				this.setState({ loadingMap: false });
-			}
-		} );
-
-	}
-
-	closeMap() {
-
-		document.getElementById(`addr_${this.state.selectedAddr}`).checked = false;
-
-		this.setState({
-			showMap: false,
-			loadingMap: true,
-			selectedAddr: 0,
-			route: null,
-		});
-
-		setTimeout( () => this.setState({ loadingMap: false }), 300 );
 	}
 
 	render() {
@@ -185,9 +89,8 @@ class Customer extends React.Component {
 										{ ( ! isEmpty(addr.doorcode) ) && <div><strong>Code de porte</strong> : <span>{this.doorcode}</span></div> }
 										{ ( ! isEmpty(addr.floor) ) && <div><strong>Étage</strong> : <span>{this.floor}</span></div> }
 										{ ( ! isEmpty(addr.note) ) && <div><strong>information complémentaire</strong> : <span>{this.note}</span></div> }
-										<div className="input-rdio">
-											<input defaultChecked={ this.state.selectedAddr == i } type="radio" id={ `addr_${i}` } value={i} name="addr" onChange={ this.handleChangeAddr }/>
-											<label htmlFor={ `addr_${i}` }><i htmlFor={ `addr_${i}` } className="material-icons tiny">local_shipping</i></label>
+										<div className="addr-actions">
+											<Link to={`/customer/${this.props.phone}/address/${i}/directions/`} onClick={this.openSidebar}><i className="material-icons direction">directions</i></Link>
 										</div>
 									</address>
 								</li>
@@ -195,15 +98,14 @@ class Customer extends React.Component {
 						}</ul>
 					</div>
 				</div>
-				<div className={ 'address-map'+ ( this.state.showMap ? ' open' : '' ) + ( this.state.loadingMap ? ' loading' : '' ) }>
-					<CSSTransitionGroup component="div" transitionName="loading" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
-						{ this.state.loadingMap && <div className="veil"></div> }
-						{ this.state.loadingMap && <Preloader center={true} active={true} /> }
-					</CSSTransitionGroup>
-					<div id="mapWrapper" className="map-wrapper"></div>
-					{ this.state.route && <i className="close-map material-icons small" onClick={ this.closeMap }>close</i> }
-					{ this.state.route && <button className="btn red">{`Temps de trajet: ${this.state.route.duration} (${this.state.route.distance})`}</button> }
-				</div>
+				<sidebar className={ ( this.state.showSidebar ? 'open' : '' ) }>
+					<Link to={ `/customer/${this.props.phone}/` } onClick={ this.closeSidebar }>
+						<i className="close material-icons small">close</i>
+					</Link>
+					<Route path="/customer/:number/address/:addrId/directions/" component={ ({match}) =>
+						<Gmap addr={ this.state.addresses[match.params.addrId] } addAlerts={this.props.addAlerts} />
+					} />
+				</sidebar>
 			</div>
 		);
 	}

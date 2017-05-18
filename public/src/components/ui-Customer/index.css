@@ -25,88 +25,42 @@
 
 .customer-details address { position: relative; }
 
-.customer-details .input-rdio {
+.customer-details .addr-actions {
 	position: absolute;
 	top: 50%;
 	right: 0;
-	display: block;
 	transform: translateY(-50%);
 }
-.customer-details .input-rdio label {
-	position: relative;
-	width: 26px;
-	height: 26px;
+.customer-details .addr-actions a {
+	display: inline-block;
+	margin-left: .5rem;
 	padding: 0;
+	line-height: 1;
+	border: none;
+	background-color: transparent;
 }
-.customer-details .input-rdio label::before {
-	border: 2px solid #5a5a5a;
-	border-radius: 0;
-	width: 26px;
-	height: 26px;
-	margin: 0;
-}
-.customer-details .input-rdio label::after { display: none !important; }
 
-.customer-details .input-rdio label i {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	color: transparent;
-	transform: translate(-50%,-50%);
-	transition: color .2s ease-in-out;
-}
-.customer-details .input-rdio label:hover i { color: #ccc; }
-.customer-details input:checked + label i,
-.customer-details input:checked + label:hover i { color: #000; }
+.customer-details .addr-actions i { transition: color .2s ease-in-out; }
+.customer-details .addr-actions i:hover { color: #9e9e9e; }
+.customer-details .addr-actions i.direction:hover { color: #2979ff; }
 
-.address-map {
+sidebar {
 	position: relative;
 	flex: 0 1 0;
 	min-height: calc(100vh - 170px);
 	transition: flex-basis .3s ease-in-out;
 }
-.address-map.open { flex-basis: 60%; }
+sidebar.open { flex-basis: 60%; }
 
-.veil {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 10;
-	width: 100%;
-	height: 100%;
-	opacity: .8;
-	background-color: #000;
-	transition: opacity .3s ease-in-out;
-}
-.loading-enter .veil { opacity: 0; }
-.loading-enter.loading-enter-active .veil { opacity: .8; }
-.loading-leave .veil { opacity: .8; }
-.loading-leave.loading-leave-active .veil { opacity: 0; }
-
-.map-wrapper {
-	width: 100%;
-	height: 100%;
-}
-
-.address-map .close-map {
+sidebar .close {
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
 	z-index: 50;
+	display: none;
 	opacity: .4;
 	cursor: pointer;
 	transition: opacity .2s ease-in-out;
 }
-.address-map .close-map:hover { opacity: .9; }
-.address-map.loading .close-map { opacity: 0; }
-
-.address-map button {
-	position: absolute;
-	left: 50%;
-	bottom: 2rem;
-	z-index: 5;
-	opacity: 1;
-	transform: translateX(-50%);
-	transition: opacity .3s ease-int-out;
-}
-.address-map.loading button { opacity: 0; }
+sidebar.open .close { display: block; }
+sidebar .close:hover { opacity: .9; }
