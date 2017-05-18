@@ -14,10 +14,8 @@ dbCustomers.ensureIndex({ fieldName: 'phone', unique: true });
 
 function add( data, callback ) {
 
-	let success		= true,
-			fields		= [],
-			alerts		= [],
-			redirect	= {};
+	let redirect	= {},
+			{ success, fields, alerts } = validateAddress( data );
 
 	if ( isEmpty(data.phone) ) {
 		success = false;
@@ -27,46 +25,6 @@ function add( data, callback ) {
 			status	: 'error',
 			title		: 'Oups',
 			message	: 'Le téléphone est obligatoire.',
-		} );
-	}
-	if ( isEmpty(data.street) ) {
-		success = false;
-		fields.push( 'street' );
-		alerts.push( {
-			icon		: 'error',
-			status	: 'error',
-			title		: 'Oups',
-			message	: 'La rue est obligatoire.',
-		} );
-	}
-	if ( isEmpty(data.number) ) {
-		success = false;
-		fields.push( 'number' );
-		alerts.push( {
-			icon		: 'error',
-			status	: 'error',
-			title		: 'Oups',
-			message	: 'Le numero est obligatoire.',
-		} );
-	}
-	if ( isEmpty(data.postcode) ) {
-		success = false;
-		fields.push( 'postcode' );
-		alerts.push( {
-			icon		: 'error',
-			status	: 'error',
-			title		: 'Oups',
-			message	: 'Le NPA est obligatoire.',
-		} );
-	}
-	if ( isEmpty(data.city) ) {
-		success = false;
-		fields.push( 'city' );
-		alerts.push( {
-			icon		: 'error',
-			status	: 'error',
-			title		: 'Oups',
-			message	: 'La localité est obligatoire.',
 		} );
 	}
 	if ( !isEmpty(data.email) && !Isemail.validate(data.email) ) {
@@ -89,6 +47,7 @@ function add( data, callback ) {
 			lastname	: data.lastname,
 			email			: data.email,
 			addresses	: [ {
+				id				: 1,
 				street		: data.street,
 				number		: data.number,
 				postcode	: data.postcode,
@@ -179,5 +138,54 @@ function find( number, callback ) {
 
 }
 
+function validateAddress( address ) {
+
+	let success		= true,
+			fields		= [],
+			alerts		= [];
+
+	if ( isEmpty(address.street) ) {
+		success = false;
+		fields.push( 'street' );
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'La rue est obligatoire.',
+		} );
+	}
+	if ( isEmpty(address.number) ) {
+		success = false;
+		fields.push( 'number' );
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'Le numero est obligatoire.',
+		} );
+	}
+	if ( isEmpty(address.postcode) ) {
+		success = false;
+		fields.push( 'postcode' );
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'Le NPA est obligatoire.',
+		} );
+	}
+	if ( isEmpty(address.city) ) {
+		success = false;
+		fields.push( 'city' );
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'La localité est obligatoire.',
+		} );
+	}
+
+	return { success: success, fields: fields, alerts: alerts };
+}
 exports.add = add;
 exports.find = find;
