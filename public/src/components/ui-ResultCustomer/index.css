@@ -1,8 +1,7 @@
 .local-results {
 	position: relative;
 	flex: 0 1 75%;
-	height: calc( 100vh - 170px );
-	overflow-y: hidden;
+	height: 100%;
 }
 
 .local-results h2 { padding: 0 25px 0 50px; }
@@ -11,6 +10,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	width: 100%;
 	height: calc(100% - (1.5rem + 1.78rem + 1.424rem));
 	margin: 0;
 	padding: 0 25px 0 50px;

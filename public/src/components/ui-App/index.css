@@ -1,10 +1,19 @@
+.app-wrapper {
+	height: 100vh;
+	display: flex;
+	flex-flow: column nowrap;
+	overflow: hidden;
+}
 header  {
 	position: relative;
 	z-index: 50;
+	flex-grow: 0;
 }
 
 main {
-	height: calc( 100vh - 170px );
+	height: 100%;
+	flex-grow: 1;
+	overflow-x: scroll;
 }
 
-footer {}
+footer { flex-grow: 0; }

@@ -217,7 +217,7 @@ class App extends React.Component {
 
 		return (
 			<BrowserRouter>
-				<div>
+				<div className="app-wrapper">
 					<header className="page-header" >
 						<Nav />
 						<Route exact path="/" render={ () => <SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} /> }/>
