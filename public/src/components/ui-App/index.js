@@ -218,12 +218,12 @@ class App extends React.Component {
 		return (
 			<BrowserRouter>
 				<div>
-					<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 					<header className="page-header" >
 						<Nav />
 						<Route exact path="/" render={ () => <SearchBar searchValue={this.state.searchValue} onChange={this.handleChangeSearch} /> }/>
 					</header>
 					<main>
+						<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
 						<Route path="/customers/" render={ () => <Customers /> } />
 						<Route path="/customer/:phone/" render={ ({ match, history } ) => <Customer phone={match.params.phone} history={history} addAlerts={this.addAlerts} /> } />

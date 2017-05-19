@@ -1,6 +1,6 @@
 .alerts {
 	position: fixed;
-	top: 1rem;
+	top: calc(100px + 1rem);
 	right: 1rem;
 	z-index: 9999;
 	margin: 0;
