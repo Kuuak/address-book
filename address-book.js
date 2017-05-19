@@ -44,12 +44,15 @@ app
 		customer.delete( req.params.number, result => res.end( JSON.stringify( result ) ) );
 	} )
 
-	// Insert (POST), update (PUT) or delete an address
+	// View (GET), insert (POST), update (PUT) or delete an address
+	.get		( '/customer/:number/address/((:addrId/edit)|add)?', (req, res) => {
+		res.sendFile( __dirname +'/public/index.html' );
+	} )
 	.post		( '/customer/:number/address/', (req, res) => {
-		customer.addressAdd( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
+		customer.addressInsert( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.put		( '/customer/:number/address/', (req, res) => {
-		customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
+		customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.delete	( '/customer/:number/address/:addrId', (req, res) => {
 		customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );

@@ -279,7 +279,7 @@ function validateAddress( address ) {
 	return { success: success, fields: fields, alerts: alerts };
 }
 
-function addressAdd( number, address, callback ) {
+function addressInsert( number, address, callback ) {
 
 	let { success, fields, alerts } = validateAddress( address );
 
@@ -439,6 +439,6 @@ exports.insert	= insert;
 exports.update	= update;
 exports.delete	= remove;
 
-exports.addressAdd		= addressAdd;
+exports.addressInsert	= addressInsert;
 exports.addressUpdate	= addressUpdate;
 exports.addressDelete	= addressDelete;
