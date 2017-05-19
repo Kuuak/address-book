@@ -73,7 +73,7 @@ class CustomerAdd extends React.Component {
 			data.append( 'random_email', emailAddress.toLowerCase() );
 		}
 
-		fetch( '/customer/add/', {
+		fetch( form.action, {
 			method: 'POST',
 			body: formData2UrlEncoded( data ),
 			headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
@@ -157,7 +157,7 @@ class CustomerAdd extends React.Component {
 			<div className="customer-add">
 				{ this.state.success && <Redirect to={this.state.redirect} /> }
 				<h1>Ajouter un client</h1>
-				<form onSubmit={this.handleSubmit} className="white" method="POST" action='/customer/add/'>
+				<form onSubmit={this.handleSubmit} className="white" method="POST" action='/customer/'>
 					<Preloader active={this.state.processing} />
 					<div className="wrapper">
 						<div className="input-wrap required">

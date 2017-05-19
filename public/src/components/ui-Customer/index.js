@@ -12,6 +12,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Gmap from 'components/ui-Gmap';
 import Address from 'components/ui-Address';
 import AddressForm from 'components/ui-AddressForm';
+import CustomerForm from 'components/ui-CustomerForm';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
@@ -32,22 +33,59 @@ class Customer extends React.Component {
 
 		this.openSidebar		= this.openSidebar.bind( this );
 		this.closeSidebar		= this.closeSidebar.bind( this );
+		this.deleteCustomer	= this.deleteCustomer.bind( this );
 
 		this.Gmap					= this.Gmap.bind( this );
 	}
 
 	componentDidMount() {
-		this.fetchCustomerData();
+		this.getCustomer( () => {
+			if ( this.props.location.pathname.match( /\/edit|add|directions\/?/ ) ) {
+				this.openSidebar();
+			}
+		} );
 	}
 
-	fetchCustomerData() {
+	componentDidUpdate( prevProps ) {
+		if ( prevProps.phone !== this.props.phone ) {
+			this.getCustomer();
+		}
+	}
+
+	getCustomer( callback ) {
 		fetch( `/search/customer/${this.props.phone}/` )
 			.then( res => res.json() )
 			.then ( res => {
 				if ( 1 === res.customers.length && !isEmpty(res.customers[0]) ) {
 					this.setState( res.customers[0] );
+
+					if ( typeof callback === 'function' ) {
+						callback();
+					}
 				}
 			} );
+	}
+
+	deleteCustomer( event ) {
+		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cet client ?") ) {
+			fetch( `/customer/${this.props.phone}/`, { method: 'DELETE'} )
+				.then( res => res.json() )
+				.then( res => {
+					if ( res ) {
+
+						if ( ! isEmpty(res.alerts) ) {
+							this.props.addAlerts( res.alerts );
+						}
+
+						if ( res.success ) {
+							this.props.history.push( `/customers/` );
+						}
+					}
+				} );
+		}
+		else {
+			event.preventDefault();
+		}
 	}
 
 	openSidebar() {
@@ -65,11 +103,11 @@ class Customer extends React.Component {
 		});
 
 		if ( refreshData || false ) {
-			this.fetchCustomerData();
+			this.getCustomer();
 		}
 	}
 
-	deleteAddress( addrId ) {
+	deleteAddress( addrId, event ) {
 		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?") ) {
 			fetch( `/customer/${this.props.phone}/address/${addrId}/`, { method: 'DELETE'} )
 				.then( res => res.json() )
@@ -85,6 +123,9 @@ class Customer extends React.Component {
 					}
 				} );
 		}
+		else {
+			event.preventDefault();
+		}
 	}
 
 	Gmap({ match }) {
@@ -97,6 +138,9 @@ class Customer extends React.Component {
 			let addr = isEmpty(match.params.addrId) ? {} : this.state.addresses[ this.state.addresses.findIndex( a => a.id == match.params.addrId ) ];
 			return <AddressForm phone={match.params.number} {...addr} addAlerts={ this.props.addAlerts } closeSidebar={ this.closeSidebar } />;
 		};
+		const customerForm = ({ match, history }) => {
+			return <CustomerForm phone={match.params.number} {...this.state} history={history} addAlerts={ this.props.addAlerts } closeSidebar={ this.closeSidebar }/>;
+		};
 
 		return (
 			<div className="customer">
@@ -106,7 +150,7 @@ class Customer extends React.Component {
 							<h1 className="card-title">{ this.props.phone }</h1>
 							<h2>
 								{ `${this.state.firstname} ${this.state.lastname}`  }
-								{ ( !isEmpty(this.state.gender) ) && <small>({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small> }
+								<small> ({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small>
 							</h2>
 							{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
 							<h3>Adresses</h3>
@@ -115,7 +159,9 @@ class Customer extends React.Component {
 							</CSSTransitionGroup>
 						</div>
 						<div className="card-action">
+							<Link to={ `/customer/${this.props.phone}/edit/` } onClick={ this.openSidebar } >Modifier</Link>
 							<Link to={ `/customer/${this.props.phone}/address/add/` } onClick={ this.openSidebar } >Ajouter une adresse</Link>
+							<Link to={ `/customer/${this.props.phone}/delete/` }  className="red-text right" onClick={ this.deleteCustomer } >Supprimer</Link>
 						</div>
 					</div>
 				</div>
@@ -123,8 +169,11 @@ class Customer extends React.Component {
 					<Link to={ `/customer/${this.props.phone}/` } className="close" onClick={ this.closeSidebar }>
 						<i className="material-icons small">close</i>
 					</Link>
+					<Route exact path="/customer/:number/edit/" render={ customerForm } />
+
 					<Route exact path="/customer/:number/address/add/" component={ addressForm } />
 					<Route exact path="/customer/:number/address/:addrId/edit/" component={ addressForm } />
+
 					<Route exact path="/customer/:number/address/:addrId/directions/" render={ this.Gmap } />
 				</sidebar>
 			</div>

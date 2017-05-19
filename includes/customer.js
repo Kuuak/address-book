@@ -12,7 +12,28 @@ const dbCustomers	= new Datastore({ filename: `${__dirname}/..${config.database.
 // Set unique constraint to phone field
 dbCustomers.ensureIndex({ fieldName: 'phone', unique: true });
 
-function add( data, callback ) {
+function find( query, callback ) {
+
+	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { phone: new RegExp( query ) } );
+
+	dbCustomers.find( query, (err, docs) => {
+
+		if ( ! isNull(err) ) {
+			callback({ 'err': err, alerts: [{
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
+			}] });
+
+			return;
+		}
+
+		callback( { customers: docs } );
+	} );
+
+}
+function insert( data, callback ) {
 
 	let redirect	= {},
 			{ success, fields, alerts } = validateAddress( data );
@@ -65,7 +86,7 @@ function add( data, callback ) {
 					icon				: 'done',
 					status			: 'success',
 					title				: 'Bravo',
-					message			: 'Le client à bien été enregistré.',
+					message			: 'Le client a été enregistré.',
 					linkButton	: `/customer/${data.phone}/`,
 					titleButton	: 'Fiche client',
 				} );
@@ -115,27 +136,97 @@ function add( data, callback ) {
 	}
 
 };
+function update( data, callback ) {
 
-function find( number, callback ) {
+	let success		= true,
+			fields		= [],
+			alerts		= [];
 
-	let query = ( (! isEmpty(number)) ? { phone: new RegExp( number ) } : {} );
-
-	dbCustomers.find( query, (err, docs) => {
-
-		if ( ! isNull(err) ) {
-			callback({ alerts: [{
+	if ( isEmpty(data.phone) ) {
+		success = false;
+		fields.push( 'phone' );
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'Le téléphone est obligatoire.',
+		} );
+	}
+	if ( !isEmpty(data.email) && !Isemail.validate(data.email) ) {
+			success = false;
+			fields.push( 'email' );
+			alerts.push( {
 				icon		: 'error',
 				status	: 'error',
 				title		: 'Oups',
-				message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
-			}] });
+				message	: 'Cette adresse email n\'est pas valide.',
+			} );
+		}
 
+	if ( ! success ) {
+		callback({ success: success, fields: fields, alerts: alerts });
+		return;
+	}
+
+	let customerFields = { $set: {
+		phone			: data.phone,
+		gender		: data.gender,
+		firstname	: data.firstname,
+		lastname	: data.lastname,
+		email			: data.email,
+	} };
+
+	dbCustomers.update( { _id: new RegExp( data._id ) }, customerFields, (err, numUpdated) => {
+
+		if( err || 1 !== numUpdated ) {
+			success	= false;
+			alerts	= {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Impossible de modifier ce client. Contacter l\'administrateur si cela continue.',
+			};
+		}
+		else {
+			success = true;
+			alerts	= {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'Le client a été modifié.',
+			};
+		}
+
+		callback({ success: success, alerts: alerts });
+
+	});
+
+}
+function remove( number, callback ) {
+	dbCustomers.remove( { phone: new RegExp( number ) }, (err, numRemoved) => {
+		if( err || 1 !== numRemoved ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de supprimer ce client. Contacter l\'administrateur si cela continue.',
+				},
+			});
 			return;
 		}
 
-		callback( { customers: docs } );
-	} );
-
+		callback({
+			success: true,
+			alerts: {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'Le client a été supprimé.',
+			},
+		});
+	});
 }
 
 function validateAddress( address ) {
@@ -343,8 +434,10 @@ function addressDelete( number, addrId, callback ) {
 	});
 }
 
-exports.add		= add;
-exports.find	= find;
+exports.find		= find;
+exports.insert	= insert;
+exports.update	= update;
+exports.delete	= remove;
 
 exports.addressAdd		= addressAdd;
 exports.addressUpdate	= addressUpdate;

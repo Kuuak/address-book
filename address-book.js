@@ -30,17 +30,24 @@ app
 		suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
 
-	// Create a new customer
-	.post( '/customer/', (req, res) => {
-		customer.add( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
+	// View (GET), insert (POST), update (PUT) or delete a customer
+	.get		( '/customer/(:number)|(:number/edit)', (req, res) => {
+		res.sendFile( __dirname +'/public/index.html' );
+	} )
+	.post		( '/customer/', (req, res) => {
+		customer.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
 	})
+	.put		( '/customer/', (req, res) => {
+		customer.update( req.body, result => res.end( JSON.stringify( result ) ) );
+	} )
+	.delete	( '/customer/:number', (req, res) => {
+		customer.delete( req.params.number, result => res.end( JSON.stringify( result ) ) );
+	} )
 
 	// Insert (POST), update (PUT) or delete an address
 	.post		( '/customer/:number/address/', (req, res) => {
 		customer.addressAdd( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
 	} )
-	.post( '/customer/edit/', (req, res) => {} )
-	.post( '/customer/delete/', (req, res) => {} )
 	.put		( '/customer/:number/address/', (req, res) => {
 		customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
 	} )
