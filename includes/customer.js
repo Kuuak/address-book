@@ -66,13 +66,13 @@ function add( data, callback ) {
 					status			: 'success',
 					title				: 'Bravo',
 					message			: 'Le client à bien été enregistré.',
-					linkButton	: `/costumer/${data.phone}`,
+					linkButton	: `/customer/${data.phone}/`,
 					titleButton	: 'Fiche client',
 				} );
 
 				redirect = {
 					timeout		: 5000,
-					to: `/costumer/${data.phone}`,
+					to: `/customer/${data.phone}`,
 				};
 			}
 			else if ( 'uniqueViolated' === err.errorType ) {
@@ -82,7 +82,7 @@ function add( data, callback ) {
 					status			: 'error',
 					title				: 'Oups!',
 					message			: 'Ce téléphone est déjà enregistré pour un autre client.',
-					linkButton	: `/costumer/${data.phone}`,
+					linkButton	: `/customer/${data.phone}/`,
 					titleButton	: 'Fiche client',
 					timeout			: 0,
 				} );
