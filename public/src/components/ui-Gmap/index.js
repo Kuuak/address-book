@@ -22,11 +22,7 @@ class Gmap extends React.Component {
 			isLoading: true,
 		};
 
-		// Allow to trigger the new setMapDirection only when addr changed on re-render
-		this.willSetDirection = false;
-
 		this.initMap					= this.initMap.bind( this );
-		this.toggleLoading		= this.toggleLoading.bind( this );
 		this.setMapDirection	= this.setMapDirection.bind( this );
 	}
 
@@ -39,21 +35,13 @@ class Gmap extends React.Component {
 		setTimeout( this.initMap, 300 );
 	}
 
-	componentWillReceiveProps( nextProps ) {
-		this.willSetDirection = true;
-	}
+	componentDidUpdate( prevProps ) {
 
-	componentDidUpdate() {
-		if ( this.willSetDirection ) {
-			this.willSetDirection = false;
-			this.toggleLoading();
+		// Update directions only if destination address has changed
+		if ( prevProps.addr.id !== this.props.addr.id ) {
+			this.setState({ isLoading: true })
 			this.setMapDirection();
 		}
-	}
-
-
-	toggleLoading() {
-		this.setState({ isLoading: ! this.state.isLoading })
 	}
 
 	initMap() {
@@ -74,7 +62,7 @@ class Gmap extends React.Component {
 			this.map.idleListener.remove();
 
 			// Add new listener for when direction is rendered
-			this.map.addListener( 'idle', this.toggleLoading );
+			this.map.addListener( 'idle', () => this.setState({ isLoading: false }) );
 
 			// render the direction
 			this.setMapDirection();
@@ -104,7 +92,7 @@ class Gmap extends React.Component {
 					title		: 'Oups',
 					message	: 'Une erreur est apparue lors du chargement de l\'itinéraire. Merci de contacter l\'administrateur si cela persiste.',
 				} );
-				this.props.toggleLoading();
+				this.setState({ isLoading: false });
 			}
 		} );
 
