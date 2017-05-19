@@ -1,4 +1,5 @@
 // Assets depedencies (Style & images)
+import 'styles/bounce.css';
 import './index.css';
 
 // React
@@ -15,8 +16,8 @@ class Alerts extends React.Component {
 
 	render() {
 		return (
-			<CSSTransitionGroup component="ul" className="alerts" transitionName="alert" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-				{ this.props.alerts.map( (alert, i) => <Alert key={i} {...alert} dismiss={this.props.dismiss} style={{ transitionDelay: (i*50) +'ms'}} /> ) }
+			<CSSTransitionGroup component="ul" className="alerts" transitionName="alert" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+				{ this.props.alerts.map( (alert, i) => <Alert key={alert.id} {...alert} dismiss={this.props.dismiss} style={{ transitionDelay: (i*50) +'ms'}} /> ) }
 			</CSSTransitionGroup>
 		);
 	}

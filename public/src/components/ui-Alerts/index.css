@@ -67,25 +67,5 @@
 /**
  * TRANSITIONS
  */
-.alert-enter {
-	position: relative;
-	opacity: 0;
-	transform: translateY(20%);
-}
-
-.alert-enter.alert-enter-active {
-	opacity: .8;
-	transform: translateY(0);
-	transition: opacity 500ms ease-in, transform 300ms ease-in;
-}
-
-.alert-leave {
-	position: relative;
-	opacity: .8;
-}
-
-.alert-leave.alert-leave-active {
-	opacity: 0.01;
-	transition: opacity 300ms ease-in;
-	transition-delay: 0 !important;
-}
+.alert-enter-active { animation: bounceIn .5s linear 1; }
+.alert-leave-active { animation: bounceOut .5s linear 1; }
