@@ -13,7 +13,6 @@ import Gmap from 'components/ui-Gmap';
 import Address from 'components/ui-Address';
 
 // Helpers
-import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 
 class Customer extends React.Component {
@@ -72,28 +71,33 @@ class Customer extends React.Component {
 		return (
 			<div className="customer">
 				<div className="customer-details">
-					<div className="wrap">
-						<h1>{ this.props.phone }</h1>
-						<h2>
-							{ `${this.state.firstname} ${this.state.lastname}`  }
-							{ ( !isEmpty(this.state.gender) ) && <small>({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small> }
-						</h2>
-						{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
-						<h3>Adresses</h3>
-						<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-							{ this.state.addresses.map( (addr) => <Address key={addr.id} phone={this.props.phone} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
-						</CSSTransitionGroup>
+					<div className="card">
+						<div className="card-content">
+							<h1 className="card-title">{ this.props.phone }</h1>
+							<h2>
+								{ `${this.state.firstname} ${this.state.lastname}`  }
+								{ ( !isEmpty(this.state.gender) ) && <small>({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small> }
+							</h2>
+							{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
+							<h3>Adresses</h3>
+							<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+								{ this.state.addresses.map( (addr) => <Address key={addr.id} phone={this.props.phone} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
+							</CSSTransitionGroup>
+						</div>
+						<div className="card-action">
+						</div>
 					</div>
 				</div>
-				<sidebar className={ ( this.state.showSidebar ? 'open' : '' ) }>
-					<Link to={ `/customer/${this.props.phone}/` } onClick={ this.closeSidebar }>
-						<i className="close material-icons small">close</i>
+				<sidebar className={ 'white'+  ( this.state.showSidebar ? ' open' : '' ) }>
+					<Link to={ `/customer/${this.props.phone}/` } className="close" onClick={ this.closeSidebar }>
+						<i className="material-icons small">close</i>
 					</Link>
 					<Route exact path="/customer/:number/address/:addrId/directions/" render={ this.Gmap } />
 				</sidebar>
 			</div>
 		);
 	}
+
 }
 Customer.propTypes = {
 	addr			: PropTypes.string,
