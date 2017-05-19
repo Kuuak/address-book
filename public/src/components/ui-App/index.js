@@ -226,7 +226,7 @@ class App extends React.Component {
 					<main>
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
 						<Route path="/customers/" render={ () => <Customers /> } />
-						<Route path="/customer/:phone/" render={ ({ match } ) => <Customer phone={match.params.phone} addAlerts={this.addAlerts} /> } />
+						<Route path="/customer/:phone/" render={ ({ match, history } ) => <Customer phone={match.params.phone} history={history} addAlerts={this.addAlerts} /> } />
 						<Route path="/add/customer/:addrId?" render={ ({ match }) => {
 							let suggestion = null;
 							if ( ! isNull( match.params.addrId ) ) {

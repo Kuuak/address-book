@@ -35,12 +35,18 @@ app
 		customer.add( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
 	})
 
+	// Insert (POST), update (PUT) or delete an address
+	.post		( '/customer/:number/address/', (req, res) => {
+		customer.addressAdd( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
 	} )
 	.post( '/customer/edit/', (req, res) => {} )
-	.post( '/customer/add/address/', (req, res) => {} )
-	.post( '/customer/edit/address/', (req, res) => {} )
 	.post( '/customer/delete/', (req, res) => {} )
-	.post( '/customer/delete/address/', (req, res) => {} )
+	.put		( '/customer/:number/address/', (req, res) => {
+		customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) )
+	} )
+	.delete	( '/customer/:number/address/:addrId', (req, res) => {
+		customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
+	} )
 
 	// If request does not match any route
 	.use( '/', (req, res) => res.redirect( '/' ) );

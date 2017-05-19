@@ -187,5 +187,165 @@ function validateAddress( address ) {
 
 	return { success: success, fields: fields, alerts: alerts };
 }
-exports.add = add;
-exports.find = find;
+
+function addressAdd( number, address, callback ) {
+
+	let { success, fields, alerts } = validateAddress( address );
+
+	if ( ! success ) {
+		callback({
+				success	: false,
+				fields	: fields,
+				alerts	: alerts,
+		});
+		return;
+	}
+
+	find( number, (result) => {
+		if( 1 !== result.customers.length ) {
+			callback({ success: false });
+			return;
+		}
+		let customer = result.customers[0];
+
+		// Add Address ID
+		address.id = ( 0 == customer.addresses.length ? 1 : parseInt(customer.addresses[customer.addresses.length-1].id) + 1 );
+
+		// Insert new address in customer's addresses
+		customer.addresses.push( address );
+
+		// Update customer
+		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+
+			if ( 1 !== numReplaced ) {
+				callback({ success: false });
+				return;
+			}
+
+			callback({
+				success	: true,
+				alerts	: {
+					icon		: 'done',
+					status	: 'success',
+					title		: 'Bravo',
+					message	: 'L\'adresse à été ajoutée.',
+				}
+			});
+		});
+	});
+}
+function addressUpdate( number, address, callback ) {
+
+	let { success, fields, alerts } = validateAddress( address );
+
+	if ( isEmpty(address.id) ) {
+		success = false;
+		alerts.push( {
+			icon		: 'error',
+			status	: 'error',
+			title		: 'Oups',
+			message	: 'Impossible de modifier cette adresse. Contacter l\'administrateur si cela continue.',
+		} );
+	}
+
+	// Make sure that the id is an interger
+	address.id = parseInt(address.id);
+
+	if ( ! success ) {
+		callback({
+				success	: false,
+				fields	: fields,
+				alerts	: alerts,
+		});
+		return;
+	}
+
+	find( number, (result) => {
+		if( 1 !== result.customers.length ) {
+			callback({ success: false });
+			return;
+		}
+		let customer = result.customers[0];
+
+		// Add Address ID
+		let addrIndex = customer.addresses.findIndex( addr => addr.id == address.id );
+
+		if( 1 !== result.customers.length ) {
+			callback({ success: false, error: 'did not find address' });
+			return;
+		}
+
+		// Replace the addresse with new values
+		customer.addresses[addrIndex] = address;
+
+		// Update customer
+		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+
+			if ( 1 !== numReplaced ) {
+				callback({ success: false });
+				return;
+			}
+
+			callback({
+				success	: true,
+				alerts	: {
+					icon		: 'done',
+					status	: 'success',
+					title		: 'Bravo',
+					message	: 'L\'adresse à été modifiée.',
+				}
+			});
+		});
+	});
+}
+function addressDelete( number, addrId, callback ) {
+
+	find( number, (result) => {
+		if( 1 !== result.customers.length ) {
+			callback({ success: false, error: 'did not find number' });
+			return;
+		}
+
+		let customer = result.customers[0];
+
+		// Find index of address
+		let addrIndex = customer.addresses.findIndex( addr => addr.id == addrId );
+
+		// The given addrId does not exists in addresses
+		if ( -1 === addrIndex ) {
+			callback({ success: false, error: 'findIndex -1' });
+			return;
+		}
+
+		// Unable to remove the specified address from adresses
+		if ( -1 === customer.addresses.splice( addrIndex, 1 ).length ) {
+			callback({ success: false, error: 'splice -1' });
+			return;
+		}
+
+		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+
+			if ( 1 !== numReplaced ) {
+				callback({ success: false, error: 'numReplaced 0' });
+				return;
+			}
+
+			callback({
+				success	: true,
+				alerts	: {
+					icon		: 'done',
+					status	: 'success',
+					title		: 'Succès',
+					message	: "L'adresse a été supprimée.",
+				}
+			});
+		});
+	});
+}
+
+exports.add		= add;
+exports.find	= find;
+
+exports.addressAdd		= addressAdd;
+exports.addressUpdate	= addressUpdate;
+exports.addressDelete	= addressDelete;

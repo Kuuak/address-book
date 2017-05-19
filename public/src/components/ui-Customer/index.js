@@ -11,6 +11,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 // Components
 import Gmap from 'components/ui-Gmap';
 import Address from 'components/ui-Address';
+import AddressForm from 'components/ui-AddressForm';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
@@ -58,16 +59,45 @@ class Customer extends React.Component {
 		}
 	}
 
-	closeSidebar() {
+	closeSidebar( refreshData ) {
 		this.setState({
 			showSidebar: false,
 		});
+
+		if ( refreshData || false ) {
+			this.fetchCustomerData();
+		}
 	}
+
+	deleteAddress( addrId ) {
+		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?") ) {
+			fetch( `/customer/${this.props.phone}/address/${addrId}/`, { method: 'DELETE'} )
+				.then( res => res.json() )
+				.then( res => {
+					if ( res ) {
+
+						if ( ! isEmpty(res.alerts) ) {
+							this.props.addAlerts( res.alerts );
+						}
+
+						this.closeSidebar( true );
+						this.props.history.push( `/customer/${this.props.phone}/` );
+					}
+				} );
+		}
+	}
+
 	Gmap({ match }) {
 		return <Gmap addr={ this.state.addresses[ this.state.addresses.findIndex( addr => addr.id == match.params.addrId ) ] } addAlerts={this.props.addAlerts} />;
 	}
 
 	render() {
+
+		const addressForm = ({ match }) => {
+			let addr = isEmpty(match.params.addrId) ? {} : this.state.addresses[ this.state.addresses.findIndex( a => a.id == match.params.addrId ) ];
+			return <AddressForm phone={match.params.number} {...addr} addAlerts={ this.props.addAlerts } closeSidebar={ this.closeSidebar } />;
+		};
+
 		return (
 			<div className="customer">
 				<div className="customer-details">
@@ -85,6 +115,7 @@ class Customer extends React.Component {
 							</CSSTransitionGroup>
 						</div>
 						<div className="card-action">
+							<Link to={ `/customer/${this.props.phone}/address/add/` } onClick={ this.openSidebar } >Ajouter une adresse</Link>
 						</div>
 					</div>
 				</div>
@@ -92,6 +123,8 @@ class Customer extends React.Component {
 					<Link to={ `/customer/${this.props.phone}/` } className="close" onClick={ this.closeSidebar }>
 						<i className="material-icons small">close</i>
 					</Link>
+					<Route exact path="/customer/:number/address/add/" component={ addressForm } />
+					<Route exact path="/customer/:number/address/:addrId/edit/" component={ addressForm } />
 					<Route exact path="/customer/:number/address/:addrId/directions/" render={ this.Gmap } />
 				</sidebar>
 			</div>
