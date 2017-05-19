@@ -10,6 +10,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
 import Gmap from 'components/ui-Gmap';
+import Address from 'components/ui-Address';
 
 // Helpers
 import isNull from 'lodash.isnull';
@@ -79,28 +80,9 @@ class Customer extends React.Component {
 						</h2>
 						{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
 						<h3>Adresses</h3>
-						<ul className="addresses collection">{
-							this.state.addresses.map( (addr, i) => (
-								<li className="collection-item" key={i}>
-									<address>
-										<div>
-											<span className="street">{addr.street}</span>&nbsp;
-											<span className="number">{addr.number}</span>
-										</div>
-										<div>
-											<span className="postcode">{addr.postcode}</span>&nbsp;
-											<span className="city">{addr.city}</span>
-										</div>
-										{ ( ! isEmpty(addr.doorcode) ) && <div><strong>Code de porte</strong> : <span>{this.doorcode}</span></div> }
-										{ ( ! isEmpty(addr.floor) ) && <div><strong>Étage</strong> : <span>{this.floor}</span></div> }
-										{ ( ! isEmpty(addr.note) ) && <div><strong>information complémentaire</strong> : <span>{this.note}</span></div> }
-										<div className="addr-actions">
-											<Link to={`/customer/${this.props.phone}/address/${i}/directions/`} onClick={this.openSidebar}><i className="material-icons direction">directions</i></Link>
-										</div>
-									</address>
-								</li>
-							) )
-						}</ul>
+						<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+							{ this.state.addresses.map( (addr) => <Address key={addr.id} phone={this.props.phone} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
+						</CSSTransitionGroup>
 					</div>
 				</div>
 				<sidebar className={ ( this.state.showSidebar ? 'open' : '' ) }>

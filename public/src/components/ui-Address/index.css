@@ -1,0 +1,34 @@
+.address {
+	position: relative;
+	background-color: transparent;
+}
+.address.add-active { animation: fadeIn .3s linear 1; }
+.address.delete-active { animation: fadeOut .3s linear 1; }
+
+.address .details {
+	position: relative;
+	padding-right: 6rem;
+}
+
+.address .actions {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+.address .actions a {
+	display: inline-block;
+	margin-left: .5rem;
+	padding: 0;
+	line-height: 1;
+	border: none;
+	background-color: transparent;
+}
+
+.address .actions i { transition: color .2s ease-in-out; }
+.address .actions i:hover { color: #9e9e9e; }
+.address .actions i.direction:hover { color: #2979ff; }
+.address .actions button:hover i.delete { color: #b71c1c; }
+
+.address .extra span,
+.address .extra strong { display: inline-block; }

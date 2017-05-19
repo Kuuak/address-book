@@ -23,27 +23,6 @@
 .customer-details h2 { margin: .5rem 0; }
 .customer-details h3 { margin-top: 2rem; }
 
-.customer-details address { position: relative; }
-
-.customer-details .addr-actions {
-	position: absolute;
-	top: 50%;
-	right: 0;
-	transform: translateY(-50%);
-}
-.customer-details .addr-actions a {
-	display: inline-block;
-	margin-left: .5rem;
-	padding: 0;
-	line-height: 1;
-	border: none;
-	background-color: transparent;
-}
-
-.customer-details .addr-actions i { transition: color .2s ease-in-out; }
-.customer-details .addr-actions i:hover { color: #9e9e9e; }
-.customer-details .addr-actions i.direction:hover { color: #2979ff; }
-
 sidebar {
 	position: relative;
 	flex: 0 1 0;
