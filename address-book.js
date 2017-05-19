@@ -30,8 +30,11 @@ app
 		suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
 
-	.post( '/customer/add/', (req, res) => {
-		customer.add( req.body, result => res.end( JSON.stringify( result ) ) );
+	// Create a new customer
+	.post( '/customer/', (req, res) => {
+		customer.add( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
+	})
+
 	} )
 	.post( '/customer/edit/', (req, res) => {} )
 	.post( '/customer/add/address/', (req, res) => {} )

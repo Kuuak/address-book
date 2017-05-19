@@ -22,6 +22,9 @@ class Gmap extends React.Component {
 			isLoading: true,
 		};
 
+		// Allow to trigger the new setMapDirection only when addr changed on re-render
+		this.willSetDirection = false;
+
 		this.initMap					= this.initMap.bind( this );
 		this.toggleLoading		= this.toggleLoading.bind( this );
 		this.setMapDirection	= this.setMapDirection.bind( this );
@@ -35,6 +38,19 @@ class Gmap extends React.Component {
 		// Wait for the sidebar to be fully openend before to init the map
 		setTimeout( this.initMap, 300 );
 	}
+
+	componentWillReceiveProps( nextProps ) {
+		this.willSetDirection = true;
+	}
+
+	componentDidUpdate() {
+		if ( this.willSetDirection ) {
+			this.willSetDirection = false;
+			this.toggleLoading();
+			this.setMapDirection();
+		}
+	}
+
 
 	toggleLoading() {
 		this.setState({ isLoading: ! this.state.isLoading })

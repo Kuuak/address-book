@@ -31,6 +31,8 @@ class Customer extends React.Component {
 
 		this.openSidebar		= this.openSidebar.bind( this );
 		this.closeSidebar		= this.closeSidebar.bind( this );
+
+		this.Gmap					= this.Gmap.bind( this );
 	}
 
 	componentDidMount() {
@@ -60,6 +62,9 @@ class Customer extends React.Component {
 		this.setState({
 			showSidebar: false,
 		});
+	}
+	Gmap({ match }) {
+		return <Gmap addr={ this.state.addresses[ this.state.addresses.findIndex( addr => addr.id == match.params.addrId ) ] } addAlerts={this.props.addAlerts} />;
 	}
 
 	render() {
@@ -102,9 +107,7 @@ class Customer extends React.Component {
 					<Link to={ `/customer/${this.props.phone}/` } onClick={ this.closeSidebar }>
 						<i className="close material-icons small">close</i>
 					</Link>
-					<Route path="/customer/:number/address/:addrId/directions/" component={ ({match}) =>
-						<Gmap addr={ this.state.addresses[match.params.addrId] } addAlerts={this.props.addAlerts} />
-					} />
+					<Route exact path="/customer/:number/address/:addrId/directions/" render={ this.Gmap } />
 				</sidebar>
 			</div>
 		);
