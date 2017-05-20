@@ -19,17 +19,28 @@ function find( query, callback ) {
 	dbCustomers.find( query, (err, docs) => {
 
 		if ( ! isNull(err) ) {
-			callback({ 'err': err, alerts: [{
-				icon		: 'error',
-				status	: 'error',
-				title		: 'Oups',
-				message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
-			}] });
+			callback({
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
+				}
+			});
 
 			return;
 		}
 
 		callback( { customers: docs } );
+	} );
+
+}
+function count( query, callback ) {
+
+	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { phone: new RegExp( query ) } );
+
+	dbCustomers.count( query, (err, count) => {
+		callback( count );
 	} );
 
 }
@@ -444,6 +455,7 @@ function addressDelete( number, addrId, callback ) {
 }
 
 exports.find		= find;
+exports.count		= count;
 exports.insert	= insert;
 exports.update	= update;
 exports.delete	= remove;
