@@ -178,22 +178,31 @@ function update( data, callback ) {
 
 	dbCustomers.update( { _id: new RegExp( data._id ) }, customerFields, (err, numUpdated) => {
 
-		if( err || 1 !== numUpdated ) {
-			success	= false;
-			alerts	= {
-				icon		: 'error',
-				status	: 'error',
-				title		: 'Oups',
-				message	: 'Impossible de modifier ce client. Contacter l\'administrateur si cela continue.',
-			};
-		}
-		else {
+		if ( isNull(err) && 1== numUpdated ) {
 			success = true;
 			alerts	= {
 				icon		: 'done',
 				status	: 'success',
 				title		: 'Bravo',
 				message	: 'Le client a été modifié.',
+			};
+		}
+		else if ( 'uniqueViolated' === err.errorType ) {
+			success = false;
+			alerts = {
+				icon				: 'error',
+				status			: 'error',
+				title				: 'Oups!',
+				message			: 'Ce téléphone est déjà enregistré pour un autre client.',
+			};
+		}
+		else {
+			success = false;
+			alerts = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups!',
+				message	: 'Impossible de modifier ce client. Merci de contacter l\'administrateur.',
 			};
 		}
 
