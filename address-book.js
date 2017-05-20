@@ -9,8 +9,8 @@ const io					= require( 'socket.io' )( server );
 const bodyParser	= require( 'body-parser' ); // Parse the urlencoded format POST data
 
 // Customer related precesses
-const customer = require( './includes/customer' );
-const suggestion = require( './includes/suggestion' );
+const Customer		= require( './includes/customer' );
+const Suggestion	= require( './includes/suggestion' );
 
 // Call Monitor
 const fritzMonitor = require( './includes/fritzmonitor' );
@@ -27,10 +27,10 @@ app
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.get( '/search/customer/:number?', (req, res) => {
-		customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
+		Customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
 	} )
 	.get( '/search/suggestion/:number', (req, res) => {
-		suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
+		Suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
 
 	// View (GET), insert (POST), update (PUT) or delete a customer
@@ -38,13 +38,13 @@ app
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.post		( '/customer/', (req, res) => {
-		customer.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
+		Customer.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
 	})
 	.put		( '/customer/', (req, res) => {
-		customer.update( req.body, result => res.end( JSON.stringify( result ) ) );
+		Customer.update( req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.delete	( '/customer/:number', (req, res) => {
-		customer.delete( req.params.number, result => res.end( JSON.stringify( result ) ) );
+		Customer.delete( req.params.number, result => res.end( JSON.stringify( result ) ) );
 	} )
 
 	// View (GET), insert (POST), update (PUT) or delete an address
@@ -52,13 +52,13 @@ app
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.post		( '/customer/:number/address/', (req, res) => {
-		customer.addressInsert( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
+		Customer.addressInsert( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.put		( '/customer/:number/address/', (req, res) => {
-		customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
+		Customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.delete	( '/customer/:number/address/:addrId', (req, res) => {
-		customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
+		Customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
 	} )
 
 	// If request does not match any route
