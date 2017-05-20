@@ -1,3 +1,6 @@
+// APP settings
+const config = require( './config' );
+
 // Server, Express & Socket.io
 const express			= require( 'express' );
 const app					= express();
@@ -69,4 +72,4 @@ io.on( 'connection', socket => fritzMonitor.listen( socket ) );
 /**
  * Start server
  */
-server.listen( 8080 );
+server.listen( config.port );
