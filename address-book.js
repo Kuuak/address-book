@@ -26,6 +26,9 @@ app
 	.get( '/', (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
+	.get( '/customers/', (req, res) => {
+		res.sendFile( __dirname +'/public/index.html' );
+	} )
 	.get( '/search/customer/:number?', (req, res) => {
 		Customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
 	} )
