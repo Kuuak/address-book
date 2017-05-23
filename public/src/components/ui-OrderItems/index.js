@@ -68,17 +68,18 @@ class OrderItems extends React.Component {
 
 	handleNextStep( event ) {
 		event.preventDefault();
-		if ( isEmpty(this.props.items) ) {
-			this.props.addAlerts({
-				icon		: 'error',
-				status	: 'error',
-				title		: 'Oups',
-				message	: 'Merci d\'ajouter au moins un plat dans le panier.',
-			});
-		}
-		else {
-			this.props.nextStep();
-		}
+		this.props.nextStep();
+		// if ( isEmpty(this.props.items) ) {
+		// 	this.props.addAlerts({
+		// 		icon		: 'error',
+		// 		status	: 'error',
+		// 		title		: 'Oups',
+		// 		message	: 'Merci d\'ajouter au moins un plat dans le panier.',
+		// 	});
+		// }
+		// else {
+		// Process to next step
+		// }
 
 	}
 
