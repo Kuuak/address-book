@@ -23,8 +23,6 @@ class OrderItems extends React.Component {
 			selectedItem: null,
 		};
 
-		console.log( 'location', this.props.location );
-
 		this.addDish = this.addDish.bind( this );
 		this.addExtra = this.addExtra.bind( this );
 		this.addIngredient = this.addIngredient.bind( this );
