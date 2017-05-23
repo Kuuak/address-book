@@ -37,7 +37,7 @@ class Customers extends React.Component {
 	render() {
 		return (
 			<div className="customer-all">
-				<h1>Tous les cients</h1>
+				<h1>Tous les clients</h1>
 				<Preloader active={this.state.loading} />
 				<CSSTransitionGroup component="ul" className="customers" transitionName="appears" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
 					{ this.state.customers && this.state.customers.map( (customer, i) => <ResultCustomer key={i} id={i} {...customer} /> ) }

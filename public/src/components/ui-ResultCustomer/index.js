@@ -28,9 +28,7 @@ class ResultCostumer extends React.Component {
 										<span className="postcode">{addr.postcode}</span>&nbsp;
 										<span className="city">{addr.city}</span>&nbsp;
 									</address>
-									<Link to={`/customer/${this.props.phone}/${i}/`} className="btn blue accent-2 waves-effect waves-light">
-										<i className="material-icons">local_shipping</i>
-									</Link>
+									<Link to={`/order/customer/${this.props.phone}/address/${addr.id}/`} className="material-icons">local_shipping</Link>
 								</li>
 							) )
 						}

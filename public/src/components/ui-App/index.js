@@ -16,6 +16,7 @@ import Customer from 'components/ui-Customer';
 import SearchBar from 'components/ui-SearchBar';
 import Customers from 'components/ui-Customers';
 import CustomerAdd from 'components/ui-CustomerAdd';
+import Order from 'components/ui-Order';
 
 // Helpers
 import isNil from 'lodash.isnil';
@@ -234,6 +235,9 @@ class App extends React.Component {
 							}
 							return <CustomerAdd {...suggestion} onAlertsChange={this.addAlerts} />;
 						}} />
+					<Route path="/order/customer/:number/address/:addrId" render={ ({ match, history, location }) =>
+							<Order phone={match.params.number} addrId={match.params.addrId} location={location} history={history} addAlerts={this.addAlerts} />
+						} />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">

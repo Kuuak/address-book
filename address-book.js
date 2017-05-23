@@ -9,8 +9,11 @@ const io					= require( 'socket.io' )( server );
 const bodyParser	= require( 'body-parser' ); // Parse the urlencoded format POST data
 
 // Customer related precesses
+const Dish				= require( './includes/dish' );
+const Order				= require( './includes/order' );
 const Customer		= require( './includes/customer' );
 const Suggestion	= require( './includes/suggestion' );
+const Ingredient	= require( './includes/ingredient' );
 
 // Call Monitor
 const fritzMonitor = require( './includes/fritzmonitor' );
@@ -63,6 +66,22 @@ app
 	.delete	( '/customer/:number/address/:addrId', (req, res) => {
 		Customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
 	} )
+
+	// Retrieve (GET), insert (POST), update (PUT) or delete dish
+	.get( '/dish/:id?', (req, res) => {
+		Dish.find( req.params.id, {}, result => res.end( JSON.stringify( result ) ) );
+	})
+	.post	( '/dish', (req, res) => {
+		Dish.insert( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+
+	// Retrieve (GET), insert (POST), update (PUT) or delete ingredient
+	.get( '/ingredient/:id?', (req, res) => {
+		Ingredient.find( req.params.id, {}, result => res.end( JSON.stringify( result ) ) );
+	})
+	.post	( '/ingredient', (req, res) => {
+		Ingredient.insert( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
 
 	// If request does not match any route
 	.use( '/', (req, res) => res.redirect( '/' ) );

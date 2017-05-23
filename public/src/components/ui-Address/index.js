@@ -27,6 +27,9 @@ class Address extends React.Component {
 					<Route path="/customer/:number" render={ () => {
 						return (
 							<div className="actions">
+								<Link to={ `/order/customer/${this.props.phone}/address/${this.props.id}` } >
+									<i className="material-icons direction">local_shipping</i>
+								</Link>
 								<Link to={`/customer/${this.props.phone}/address/${this.props.id}/directions/`} onClick={ this.props.openSidebar }>
 									<i className="material-icons direction">directions</i>
 								</Link>
