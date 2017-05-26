@@ -16,6 +16,7 @@ import CustomerForm from 'components/ui-CustomerForm';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
+import isFunction from 'lodash.isfunction';
 
 class Customer extends React.Component {
 
@@ -23,12 +24,14 @@ class Customer extends React.Component {
 		super( props );
 
 		this.state = {
+			phone				: '',
 			gender			: null,
 			firstname		: '',
 			lastname		: '',
 			email				: null,
 			addresses		: [],
 			showSidebar	: false,
+			loading			: true,
 		};
 
 		this.openSidebar		= this.openSidebar.bind( this );
@@ -46,29 +49,32 @@ class Customer extends React.Component {
 		} );
 	}
 
-	componentDidUpdate( prevProps ) {
-		if ( prevProps.phone !== this.props.phone ) {
-			this.getCustomer();
-		}
-	}
-
 	getCustomer( callback ) {
-		fetch( `/search/customer/${this.props.phone}/` )
+
+		this.setState({ loading: true });
+		fetch( `/customer/${this.props.id}/`, { headers: new Headers({ 'Accept': 'application/json' }) } )
 			.then( res => res.json() )
 			.then ( res => {
-				if ( 1 === res.customers.length && !isEmpty(res.customers[0]) ) {
-					this.setState( res.customers[0] );
 
-					if ( typeof callback === 'function' ) {
+				if ( res.alerts ) {
+					this.props.addAlerts( res.alerts );
+				}
+
+				if ( res.success ) {
+					this.setState( res.customer );
+
+					if ( isFunction(callback) ) {
 						callback();
 					}
+
+					this.setState({ loading: false });
 				}
 			} );
 	}
 
 	deleteCustomer( event ) {
 		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cet client ?") ) {
-			fetch( `/customer/${this.props.phone}/`, { method: 'DELETE'} )
+			fetch( `/customer/${this.props.id}/`, { method: 'DELETE'} )
 				.then( res => res.json() )
 				.then( res => {
 					if ( res ) {
@@ -109,7 +115,7 @@ class Customer extends React.Component {
 
 	deleteAddress( addrId, event ) {
 		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?") ) {
-			fetch( `/customer/${this.props.phone}/address/${addrId}/`, { method: 'DELETE'} )
+			fetch( `/customer/${this.props.id}/address/${addrId}/`, { method: 'DELETE'} )
 				.then( res => res.json() )
 				.then( res => {
 					if ( res ) {
@@ -119,7 +125,7 @@ class Customer extends React.Component {
 						}
 
 						this.closeSidebar( true );
-						this.props.history.push( `/customer/${this.props.phone}/` );
+						this.props.history.push( `/customer/${this.props.id}/` );
 					}
 				} );
 		}
@@ -147,7 +153,7 @@ class Customer extends React.Component {
 				<div className="customer-details">
 					<div className="card">
 						<div className="card-content">
-							<h1 className="card-title">{ this.props.phone }</h1>
+							<h1 className="card-title">{ this.state.phone }</h1>
 							<h2>
 								{ `${this.state.firstname} ${this.state.lastname}`  }
 								<small> ({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small>
@@ -155,36 +161,36 @@ class Customer extends React.Component {
 							{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
 							<h3>Adresses</h3>
 							<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-								{ this.state.addresses.map( (addr) => <Address key={addr.id} phone={this.props.phone} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
+								{ this.state.addresses.map( (addr) => <Address key={addr.id} custId={this.props.id} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
 							</CSSTransitionGroup>
 						</div>
 						<div className="card-action">
-							<Link to={ `/customer/${this.props.phone}/edit/` } onClick={ this.openSidebar } >Modifier</Link>
-							<Link to={ `/customer/${this.props.phone}/address/add/` } onClick={ this.openSidebar } >Ajouter une adresse</Link>
-							<Link to={ `/customer/${this.props.phone}/delete/` }  className="red-text right" onClick={ this.deleteCustomer } >Supprimer</Link>
+							<Link to={ `/customer/${this.props.id}/edit/` } onClick={ this.openSidebar } >Modifier</Link>
+							<Link to={ `/customer/${this.props.id}/address/add/` } onClick={ this.openSidebar } >Ajouter une adresse</Link>
+							<Link to={ `/customer/${this.props.id}/delete/` }  className="red-text right" onClick={ this.deleteCustomer } >Supprimer</Link>
 						</div>
 					</div>
 				</div>
 				<sidebar className={ 'white'+  ( this.state.showSidebar ? ' open' : '' ) }>
-					<Link to={ `/customer/${this.props.phone}/` } className="close" onClick={ this.closeSidebar }>
+					<Link to={ `/customer/${this.props.id}/` } className="close" onClick={ this.closeSidebar }>
 						<i className="material-icons small">close</i>
 					</Link>
-					<Route exact path="/customer/:number/edit/" render={ customerForm } />
+					<Route exact path="/customer/:custId/edit/" render={ customerForm } />
 
-					<Route exact path="/customer/:number/address/add/" component={ addressForm } />
-					<Route exact path="/customer/:number/address/:addrId/edit/" component={ addressForm } />
+					<Route exact path="/customer/:custId/address/add/" component={ addressForm } />
+					<Route exact path="/customer/:custId/address/:addrId/edit/" component={ addressForm } />
 
-					<Route exact path="/customer/:number/address/:addrId/directions/" render={ this.Gmap } />
 				</sidebar>
+					<Route exact path="/customer/:custId/address/:addrId/directions/" render={ this.Gmap } />
 			</div>
 		);
 	}
 
 }
 Customer.propTypes = {
-	addr			: PropTypes.string,
-	phone			: PropTypes.string.isRequired,
+	id				: PropTypes.number.isRequired,
 	addAlerts	: PropTypes.func.isRequired,
+	history		: PropTypes.object.isRequired,
 };
 
 export default Customer;
