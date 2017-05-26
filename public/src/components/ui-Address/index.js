@@ -46,7 +46,7 @@ class Address extends React.Component {
 				<div className="extra">
 					{ ( ! isEmpty(this.props.doorcode) ) && <div><strong>Code de porte:</strong> <span>{this.props.doorcode}</span></div> }
 					{ ( ! isEmpty(this.props.floor) ) && <div><strong>Étage:</strong> <span>{this.props.floor}</span></div> }
-					{ ( ! isEmpty(this.props.notes) ) && <div><strong>information:</strong> <span>{this.props.notes}</span></div> }
+					{ ( ! isEmpty(this.props.notes) ) && <div><strong>Information:</strong> <span>{this.props.notes}</span></div> }
 				</div>
 			</li>
 		);
