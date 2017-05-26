@@ -171,7 +171,7 @@ class Customer extends React.Component {
 						</div>
 					</div>
 				</div>
-				<sidebar className={ 'white'+  ( this.state.showSidebar ? ' open' : '' ) }>
+				<aside className={ 'white'+  ( this.state.showSidebar ? ' open' : '' ) }>
 					<Link to={ `/customer/${this.props.id}/` } className="close" onClick={ this.closeSidebar }>
 						<i className="material-icons small">close</i>
 					</Link>
@@ -180,8 +180,8 @@ class Customer extends React.Component {
 					<Route exact path="/customer/:custId/address/add/" component={ addressForm } />
 					<Route exact path="/customer/:custId/address/:addrId/edit/" component={ addressForm } />
 
-				</sidebar>
 					<Route exact path="/customer/:custId/address/:addrId/directions/" render={ this.Gmap } />
+				</aside>
 			</div>
 		);
 	}
