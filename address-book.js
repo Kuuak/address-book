@@ -41,7 +41,12 @@ app
 
 		// View (GET), insert (POST), update (PUT) or delete an address
 	.get		( '/customer/:custId/address/:addrId?', (req, res) => {
+		if ( req.accepts( 'html' ) ) {
 			res.sendFile( __dirname +'/public/index.html' );
+		}
+		else {
+			Customer.addressGet( req.params.custId, req.params.addrId, result => res.end( JSON.stringify( result ) ) );
+		}
 	} )
 	.post		( '/customer/:custId/address/', (req, res) => {
 		console.log( 'POST', `/customer/${req.params.custId}/address/`);
@@ -55,8 +60,13 @@ app
 	} )
 
 	// View (GET), insert (POST), update (PUT) or delete a customer
-		res.sendFile( __dirname +'/public/index.html' );
 	.get		( '/customer/:custId', (req, res) => {
+		if ( req.accepts( 'html' ) ) {
+			res.sendFile( __dirname +'/public/index.html' );
+		}
+		else {
+			Customer.get( req.params.custId, result => res.end( JSON.stringify( result ) ) );
+		}
 	} )
 	.post		( '/customer/', (req, res) => {
 		Customer.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
