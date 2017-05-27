@@ -39,9 +39,34 @@ app
 		Suggestion.find( req.params.number, (err, results) => res.end( JSON.stringify( results ) ) );
 	} )
 
+		// View (GET), insert (POST), update (PUT) or delete an address
+	.get		( '/customer/:custId/address/:addrId?', (req, res) => {
+		if ( req.accepts( 'html' ) ) {
+			res.sendFile( __dirname +'/public/index.html' );
+		}
+		else {
+			Customer.addressGet( req.params.custId, req.params.addrId, result => res.end( JSON.stringify( result ) ) );
+		}
+	} )
+	.post		( '/customer/:custId/address/', (req, res) => {
+		console.log( 'POST', `/customer/${req.params.custId}/address/`);
+		Customer.addressInsert( req.params.custId, req.body, result => res.end( JSON.stringify( result ) ) );
+	} )
+	.put		( '/customer/:custId/address/', (req, res) => {
+		Customer.addressUpdate( req.params.custId, req.body, result => res.end( JSON.stringify( result ) ) );
+	} )
+	.delete	( '/customer/:custId/address/:addrId', (req, res) => {
+		Customer.addressDelete( req.params.custId, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
+	} )
+
 	// View (GET), insert (POST), update (PUT) or delete a customer
-	.get		( '/customer/(:number)|(:number/edit)', (req, res) => {
-		res.sendFile( __dirname +'/public/index.html' );
+	.get		( '/customer/:custId', (req, res) => {
+		if ( req.accepts( 'html' ) ) {
+			res.sendFile( __dirname +'/public/index.html' );
+		}
+		else {
+			Customer.get( req.params.custId, result => res.end( JSON.stringify( result ) ) );
+		}
 	} )
 	.post		( '/customer/', (req, res) => {
 		Customer.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
@@ -49,22 +74,8 @@ app
 	.put		( '/customer/', (req, res) => {
 		Customer.update( req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
-	.delete	( '/customer/:number', (req, res) => {
-		Customer.delete( req.params.number, result => res.end( JSON.stringify( result ) ) );
-	} )
-
-	// View (GET), insert (POST), update (PUT) or delete an address
-	.get		( '/customer/:number/address/((:addrId/edit)|add)?', (req, res) => {
-		res.sendFile( __dirname +'/public/index.html' );
-	} )
-	.post		( '/customer/:number/address/', (req, res) => {
-		Customer.addressInsert( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
-	} )
-	.put		( '/customer/:number/address/', (req, res) => {
-		Customer.addressUpdate( req.params.number, req.body, result => res.end( JSON.stringify( result ) ) );
-	} )
-	.delete	( '/customer/:number/address/:addrId', (req, res) => {
-		Customer.addressDelete( req.params.number, req.params.addrId, success => res.end( JSON.stringify( success ) ) );
+	.delete	( '/customer/:custId', (req, res) => {
+		Customer.delete( req.params.custId, result => res.end( JSON.stringify( result ) ) );
 	} )
 
 	// Retrieve (GET), insert (POST), update (PUT) or delete dish

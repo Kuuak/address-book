@@ -15,7 +15,7 @@ import Results from 'components/ui-Results';
 import Customer from 'components/ui-Customer';
 import SearchBar from 'components/ui-SearchBar';
 import Customers from 'components/ui-Customers';
-import CustomerAdd from 'components/ui-CustomerAdd';
+import CustomerForm from 'components/ui-CustomerForm/customer';
 import Order from 'components/ui-Order';
 
 // Helpers
@@ -227,16 +227,16 @@ class App extends React.Component {
 						<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
 						<Route path="/customers/" render={ () => <Customers /> } />
-						<Route path="/customer/:phone/" render={ ({ match, location, history } ) => <Customer phone={match.params.phone} location={location} history={history} addAlerts={this.addAlerts} /> } />
-						<Route path="/add/customer/:addrId?" render={ ({ match }) => {
+						<Route path="/customer/:id" render={ ({ match, location, history } ) => <Customer id={ parseInt(match.params.id) } location={location} history={history} addAlerts={this.addAlerts} /> } />
+						<Route path="/add/customer/:suggestId?" render={ ({ match, history }) => {
 							let suggestion = null;
-							if ( ! isNull( match.params.addrId ) ) {
-								suggestion = this.state.suggestions.items[ match.params.addrId ];
+							if ( ! isNull( match.params.suggestId ) ) {
+								suggestion = this.state.suggestions.items[ match.params.suggestId ];
 							}
-							return <CustomerAdd {...suggestion} onAlertsChange={this.addAlerts} />;
+							return <CustomerForm suggest={ suggestion } history={ history } addAlerts={ this.addAlerts } />;
 						}} />
-					<Route path="/order/customer/:number/address/:addrId" render={ ({ match, history, location }) =>
-							<Order phone={match.params.number} addrId={match.params.addrId} location={location} history={history} addAlerts={this.addAlerts} />
+						<Route path="/order/customer/:custId/address/:addrId" render={ ({ match, history, location }) =>
+							<Order custId={match.params.custId} addrId={match.params.addrId} location={location} history={history} addAlerts={this.addAlerts} />
 						} />
 					</main>
 					<footer className="page-footer indigo">

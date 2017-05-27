@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 // Helpers
-import isNull from 'lodash.isnull';
+import isNil from 'lodash.isnil';
 import Timer from 'includes/timer.js';
 
 class Alerts extends React.Component {
@@ -45,7 +45,7 @@ export class Alert extends React.Component {
 	}
 
 	handleMouseOverOut( event ) {
-		if ( ! isNull(this.timer) ) {
+		if ( ! isNil(this.timer) ) {
 			switch (event.type) {
 				case 'mouseover':
 					this.timer.pause();
@@ -58,14 +58,14 @@ export class Alert extends React.Component {
 	}
 
 	handleCloseButton() {
-		this.props.dismiss( this.props.id );
-		if ( ! isNull(this.timer) ) {
-			this.timeout.clear();
+		if ( ! isNil(this.timer) ) {
+			this.timer.clear();
 		}
+		this.props.dismiss( this.props.id );
 	}
 
 	handleClickLink( event ) {
-		if ( ! isNull(this.timer) ) {
+		if ( ! isNil(this.timer) ) {
 			this.timer.clear();
 		}
 		this.props.dismiss( this.props.id );

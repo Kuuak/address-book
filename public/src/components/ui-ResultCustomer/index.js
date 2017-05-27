@@ -28,14 +28,14 @@ class ResultCostumer extends React.Component {
 										<span className="postcode">{addr.postcode}</span>&nbsp;
 										<span className="city">{addr.city}</span>&nbsp;
 									</address>
-									<Link to={`/order/customer/${this.props.phone}/address/${addr.id}/`} className="material-icons">local_shipping</Link>
+									<Link to={`/order/customer/${this.props._id}/address/${addr.id}/`} className="material-icons">local_shipping</Link>
 								</li>
 							) )
 						}
 					</ul>
 				</div>
 				<div className="card-action">
-					<Link to={`/customer/${this.props.phone}/`} >Voir la fiche client</Link>
+					<Link to={`/customer/${this.props._id}/`} >Voir la fiche client</Link>
 				</div>
 			</li>
 		);

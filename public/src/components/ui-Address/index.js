@@ -24,19 +24,19 @@ class Address extends React.Component {
 						<span className="postcode">{this.props.postcode}</span>&nbsp;
 						<span className="city">{this.props.city}</span>
 					</div>
-					<Route path="/customer/:number" render={ () => {
+					<Route path="/customer/:custId" render={ () => {
 						return (
 							<div className="actions">
-								<Link to={ `/order/customer/${this.props.phone}/address/${this.props.id}` } >
+								<Link to={ `/order/customer/${this.props.custId}/address/${this.props.id}` } >
 									<i className="material-icons direction">local_shipping</i>
 								</Link>
-								<Link to={`/customer/${this.props.phone}/address/${this.props.id}/directions/`} onClick={ this.props.openSidebar }>
+								<Link to={`/customer/${this.props.custId}/address/${this.props.id}/directions/`} onClick={ this.props.openSidebar }>
 									<i className="material-icons direction">directions</i>
 								</Link>
-								<Link to={`/customer/${this.props.phone}/address/${this.props.id}/edit/`} onClick={ this.props.openSidebar }>
+								<Link to={`/customer/${this.props.custId}/address/${this.props.id}/edit/`} onClick={ this.props.openSidebar }>
 									<i className="material-icons edit">edit</i>
 								</Link>
-								<Link to={`/customer/${this.props.phone}/address/${this.props.id}/delete/`} onClick={ this.props.deleteAddress }>
+								<Link to={`/customer/${this.props.custId}/address/${this.props.id}/delete/`} onClick={ this.props.deleteAddress }>
 									<i className="material-icons delete">delete</i>
 								</Link>
 							</div>
@@ -46,7 +46,7 @@ class Address extends React.Component {
 				<div className="extra">
 					{ ( ! isEmpty(this.props.doorcode) ) && <div><strong>Code de porte:</strong> <span>{this.props.doorcode}</span></div> }
 					{ ( ! isEmpty(this.props.floor) ) && <div><strong>Étage:</strong> <span>{this.props.floor}</span></div> }
-					{ ( ! isEmpty(this.props.notes) ) && <div><strong>information:</strong> <span>{this.props.notes}</span></div> }
+					{ ( ! isEmpty(this.props.notes) ) && <div><strong>Information:</strong> <span>{this.props.notes}</span></div> }
 				</div>
 			</li>
 		);
@@ -54,7 +54,7 @@ class Address extends React.Component {
 }
 Address.propTypes = {
 	id						: PropTypes.number.isRequired,
-	phone					: PropTypes.string.isRequired,
+	custId				: PropTypes.number.isRequired,
 	street				: PropTypes.string.isRequired,
 	number				: PropTypes.string.isRequired,
 	postcode			: PropTypes.string.isRequired,

@@ -24,19 +24,19 @@
 .customer-details h2 { margin: .5rem 0; }
 .customer-details h3 { margin-top: 2rem; }
 
-sidebar {
+aside {
 	position: relative;
 	flex: 0 1 0;
 	height: calc(100vh - 170px);
 	overflow: hidden;
 	transition: flex-basis .3s ease-in-out;
 }
-sidebar.open {
+aside.open {
 	flex-basis: 60%;
 	overflow-x: scroll;
 }
 
-sidebar .close {
+aside .close {
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
@@ -46,5 +46,5 @@ sidebar .close {
 	cursor: pointer;
 	transition: opacity .2s ease-in-out;
 }
-sidebar.open .close { display: block; }
-sidebar .close:hover { opacity: .9; }
+aside.open .close { display: block; }
+aside .close:hover { opacity: .9; }

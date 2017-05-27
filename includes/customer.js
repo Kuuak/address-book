@@ -12,6 +12,41 @@ const dbCustomers	= new Datastore({ filename: `${__dirname}/..${config.database.
 // Set unique constraint to phone field
 dbCustomers.ensureIndex({ fieldName: 'phone', unique: true });
 
+// Init the currentId cursor
+let currentId = 1;
+find( {}, result => {
+	if ( result.customers.length ) {
+		currentId = ( result.customers[ result.customers.length - 1 ]._id + 1 );
+	}
+} );
+
+function get( id, callback ) {
+	dbCustomers.findOne( { _id: parseInt(id) }, (err, doc) => {
+		let success = true,
+				alert		= null;
+
+		if ( ! isNull(err) ) {
+			success = false;
+			alert = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Une erreur s\'est produite durant la recherche.',
+			};
+		}
+		else if ( isNull(doc) ) {
+			success = false;
+			alert = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Impossible de trouver ce client.',
+			};
+		}
+
+		callback({ success: success, customer: doc, alerts: alert });
+	} );
+}
 function find( query, callback ) {
 
 	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { phone: new RegExp( query ) } );
@@ -24,7 +59,7 @@ function find( query, callback ) {
 					icon		: 'error',
 					status	: 'error',
 					title		: 'Oups',
-					message	: 'Une erreur s\'est produite durant la recherche. Merci de contacter l\'administrateur si cela continue.',
+					message	: 'Une erreur s\'est produite durant la recherche.',
 				}
 			});
 
@@ -70,81 +105,90 @@ function insert( data, callback ) {
 		} );
 	}
 
-	if ( success ) {
-
-		let newCustomer = {
-			phone			: data.phone,
-			gender		: data.gender,
-			firstname	: data.firstname,
-			lastname	: data.lastname,
-			email			: data.email,
-			addresses	: [ {
-				id				: 1,
-				street		: data.street,
-				number		: data.number,
-				postcode	: data.postcode,
-				city			: data.city,
-				doorcode	: data.doorcode,
-				floor			: data.floor,
-				notes			: data.notes,
-			} ]
-		};
-
-		dbCustomers.insert( newCustomer , (err, newDoc) => {
-
-			if ( isNull(err) ) {
-				alerts.push( {
-					icon				: 'done',
-					status			: 'success',
-					title				: 'Bravo',
-					message			: 'Le client a été enregistré.',
-					linkButton	: `/customer/${data.phone}/`,
-					titleButton	: 'Fiche client',
-				} );
-
-				redirect = {
-					timeout		: 5000,
-					to: `/customer/${data.phone}`,
-				};
-			}
-			else if ( 'uniqueViolated' === err.errorType ) {
-				success = false;
-				alerts.push( {
-					icon				: 'error',
-					status			: 'error',
-					title				: 'Oups!',
-					message			: 'Ce téléphone est déjà enregistré pour un autre client.',
-					linkButton	: `/customer/${data.phone}/`,
-					titleButton	: 'Fiche client',
-					timeout			: 0,
-				} );
-			}
-			else {
-				success = false;
-				alerts.push( {
-					icon		: 'error',
-					status	: 'error',
-					title		: 'Oups!',
-					message	: 'Une erreur c\'est produite. Merci de contacter l\'administrateur.',
-				} );
-			}
-
-			callback( {
-				success: success,
-				fields: fields,
-				alerts: alerts,
-				redirect: redirect,
-			} );
-		} );
-
-	}
-	else {
+	if ( ! success ) {
 		callback( {
 			fields: fields,
 			alerts: alerts,
 			redirect: redirect,
 		} );
+		return;
 	}
+
+	let newCustomer = {
+		_id				: currentId+1,
+		phone			: data.phone,
+		gender		: data.gender,
+		firstname	: data.firstname,
+		lastname	: data.lastname,
+		email			: data.email,
+		addresses	: [ {
+			id				: 1,
+			street		: data.street,
+			number		: data.number,
+			postcode	: data.postcode,
+			city			: data.city,
+			doorcode	: data.doorcode,
+			floor			: data.floor,
+			notes			: data.notes,
+		} ]
+	};
+	dbCustomers.insert( newCustomer , (err, newDoc) => {
+
+		if ( isNull(err) ) {
+
+			// Saves the currentId
+			currentId = newDoc._id;
+
+			callback( {
+				success: true,
+				alerts: {
+					icon				: 'done',
+					status			: 'success',
+					title				: 'Bravo',
+					message			: 'Le client a été enregistré.',
+					linkButton	: `/customer/${newDoc._id}/`,
+					titleButton	: 'Fiche client',
+				},
+				fields: [],
+				redirect: {
+					timeout		: 5000,
+					to: `/customer/${newDoc._id}`,
+				},
+			} );
+			return;
+		}
+		else {
+
+			if ( 'uniqueViolated' === err.errorType ) {
+				find( data.phone, results => {
+					callback({
+						success: false,
+						alerts: {
+							icon				: 'error',
+							status			: 'error',
+							title				: 'Oups!',
+							message			: 'Ce téléphone est déjà enregistré pour un autre client.',
+							linkButton	: `/customer/${results.customers[0]._id}/`,
+							titleButton	: 'Fiche client',
+							timeout			: 0,
+						}
+					});
+				} );
+				return;
+			}
+			else {
+				callback({
+					success: false,
+					alerts: {
+						icon		: 'error',
+						status	: 'error',
+						title		: 'Oups!',
+						message	: 'Une erreur c\'est produite. Merci de contacter l\'administrateur.',
+					}
+				});
+			}
+		}
+	} );
 
 };
 function update( data, callback ) {
@@ -187,9 +231,9 @@ function update( data, callback ) {
 		email			: data.email,
 	} };
 
-	dbCustomers.update( { _id: new RegExp( data._id ) }, customerFields, (err, numUpdated) => {
+	dbCustomers.update( { _id: parseInt(data.id) }, customerFields, (err, numUpdated) => {
 
-		if ( isNull(err) && 1== numUpdated ) {
+		if ( isNull(err) && 1 == numUpdated ) {
 			success = true;
 			alerts	= {
 				icon		: 'done',
@@ -198,7 +242,7 @@ function update( data, callback ) {
 				message	: 'Le client a été modifié.',
 			};
 		}
-		else if ( 'uniqueViolated' === err.errorType ) {
+		else if ( !isNull(err) && 'uniqueViolated' === err.errorType ) {
 			success = false;
 			alerts = {
 				icon				: 'error',
@@ -222,8 +266,8 @@ function update( data, callback ) {
 	});
 
 }
-function remove( number, callback ) {
-	dbCustomers.remove( { phone: new RegExp( number ) }, (err, numRemoved) => {
+function remove( id, callback ) {
+	dbCustomers.remove( { _id: parseInt( id ) }, (err, numRemoved) => {
 		if( err || 1 !== numRemoved ) {
 			callback({
 				success: false,
@@ -231,7 +275,7 @@ function remove( number, callback ) {
 					icon		: 'error',
 					status	: 'error',
 					title		: 'Oups',
-					message	: 'Impossible de supprimer ce client. Contacter l\'administrateur si cela continue.',
+					message	: 'Impossible de supprimer ce client.',
 				},
 			});
 			return;
@@ -299,7 +343,39 @@ function validateAddress( address ) {
 	return { success: success, fields: fields, alerts: alerts };
 }
 
-function addressInsert( number, address, callback ) {
+function addressGet( custId, id, callback ) {
+	let success = true,
+			address = null,
+			alert = null;
+
+		console.log('addressGet', custId, id );
+	get( custId, result => {
+
+		if ( result.success ) {
+			address = result.customer.addresses[ result.customer.addresses.findIndex( addr => addr.id == id ) ];
+			if ( ! address ) {
+				success = false;
+				alert = {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de trouver cette adresse.',
+				}
+			}
+		}
+		else {
+			success = false;
+			alert = result.alerts
+		}
+
+		callback({
+			success: success,
+			address: address,
+			alerts: alert,
+		});
+	} );
+}
+function addressInsert( custId, address, callback ) {
 
 	let { success, fields, alerts } = validateAddress( address );
 
@@ -312,12 +388,23 @@ function addressInsert( number, address, callback ) {
 		return;
 	}
 
-	find( number, (result) => {
-		if( 1 !== result.customers.length ) {
-			callback({ success: false });
+	get( custId, result => {
+		if( ! result.success ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de modifier cette adresse, car le client est introuvable.',
+				}
+			});
 			return;
 		}
-		let customer = result.customers[0];
+		let customer = result.customer;
+
+		// Make sure that the id is an interger
+		address.id = parseInt(address.id);
 
 		// Add Address ID
 		address.id = ( 0 == customer.addresses.length ? 1 : parseInt(customer.addresses[customer.addresses.length-1].id) + 1 );
@@ -326,26 +413,35 @@ function addressInsert( number, address, callback ) {
 		customer.addresses.push( address );
 
 		// Update customer
-		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+		dbCustomers.update( { _id: parseInt(custId) }, customer, {}, ( err, newDoc ) => {
 
-			if ( 1 !== numReplaced ) {
-				callback({ success: false });
+			if ( 1 !== newDoc ) {
+				callback({
+					success: false,
+					alerts: {
+						icon		: 'error',
+						status	: 'error',
+						title		: 'Oups',
+						message	: 'L\'adresse n\'a pas pu être enregirée.',
+					}
+				});
 				return;
 			}
 
 			callback({
 				success	: true,
+				address	: newDoc,
 				alerts	: {
 					icon		: 'done',
 					status	: 'success',
 					title		: 'Bravo',
 					message	: 'L\'adresse à été ajoutée.',
-				}
+				},
 			});
 		});
 	});
 }
-function addressUpdate( number, address, callback ) {
+function addressUpdate( custId, address, callback ) {
 
 	let { success, fields, alerts } = validateAddress( address );
 
@@ -355,12 +451,9 @@ function addressUpdate( number, address, callback ) {
 			icon		: 'error',
 			status	: 'error',
 			title		: 'Oups',
-			message	: 'Impossible de modifier cette adresse. Contacter l\'administrateur si cela continue.',
+			message	: 'Impossible de modifier cette adresse.',
 		} );
 	}
-
-	// Make sure that the id is an interger
-	address.id = parseInt(address.id);
 
 	if ( ! success ) {
 		callback({
@@ -371,18 +464,37 @@ function addressUpdate( number, address, callback ) {
 		return;
 	}
 
-	find( number, (result) => {
-		if( 1 !== result.customers.length ) {
-			callback({ success: false });
+	get( custId, (result) => {
+		if( ! result.success ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de modifier cette adresse, car le client est introuvable.',
+				}
+			});
 			return;
 		}
-		let customer = result.customers[0];
+		let customer = result.customer;
+
+		// Make sure that the id is an interger
+		address.id = parseInt(address.id);
 
 		// Add Address ID
 		let addrIndex = customer.addresses.findIndex( addr => addr.id == address.id );
 
-		if( 1 !== result.customers.length ) {
-			callback({ success: false, error: 'did not find address' });
+		if( ! result.success ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de modifier cette adresse, car celle-ci est est introuvable.',
+				}
+			});
 			return;
 		}
 
@@ -390,10 +502,18 @@ function addressUpdate( number, address, callback ) {
 		customer.addresses[addrIndex] = address;
 
 		// Update customer
-		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+		dbCustomers.update( { _id: parseInt(custId) }, customer, {}, ( err, numReplaced ) => {
 
 			if ( 1 !== numReplaced ) {
-				callback({ success: false });
+				callback({
+					success: false,
+					alerts: {
+						icon		: 'error',
+						status	: 'error',
+						title		: 'Oups',
+						message	: 'L\'adresse n\'a pas pu être modifiée.',
+					}
+				});
 				return;
 			}
 
@@ -409,35 +529,56 @@ function addressUpdate( number, address, callback ) {
 		});
 	});
 }
-function addressDelete( number, addrId, callback ) {
+function addressDelete( custId, addrId, callback ) {
 
-	find( number, (result) => {
-		if( 1 !== result.customers.length ) {
-			callback({ success: false, error: 'did not find number' });
+	get( custId, result => {
+		if( ! result.success ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de supprimer cette adresse, car le client est introuvable.',
+				}
+			});
 			return;
 		}
 
-		let customer = result.customers[0];
+		let customer = result.customer;
 
 		// Find index of address
 		let addrIndex = customer.addresses.findIndex( addr => addr.id == addrId );
 
 		// The given addrId does not exists in addresses
 		if ( -1 === addrIndex ) {
-			callback({ success: false, error: 'findIndex -1' });
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de modifier cette adresse, car celle-ci est est introuvable.',
+				}
+			});
 			return;
 		}
 
-		// Unable to remove the specified address from adresses
-		if ( -1 === customer.addresses.splice( addrIndex, 1 ).length ) {
-			callback({ success: false, error: 'splice -1' });
-			return;
-		}
+		// Remove the specified address from adresses
+		customer.addresses.splice( addrIndex, 1 )
 
-		dbCustomers.update( { phone: new RegExp( number ) }, customer, {}, ( err, numReplaced ) => {
+		dbCustomers.update( { _id: parseInt( custId ) }, customer, {}, ( err, numReplaced ) => {
 
 			if ( 1 !== numReplaced ) {
-				callback({ success: false, error: 'numReplaced 0' });
+				callback({
+					success: false,
+					alerts: {
+						icon		: 'error',
+						status	: 'error',
+						title		: 'Oups',
+						message	: 'L\'adresse n\'a pas pu être supprimée.',
+					}
+				});
 				return;
 			}
 
@@ -454,12 +595,14 @@ function addressDelete( number, addrId, callback ) {
 	});
 }
 
+exports.get			= get;
 exports.find		= find;
 exports.count		= count;
 exports.insert	= insert;
 exports.update	= update;
 exports.delete	= remove;
 
+exports.addressGet		= addressGet;
 exports.addressInsert	= addressInsert;
 exports.addressUpdate	= addressUpdate;
 exports.addressDelete	= addressDelete;
