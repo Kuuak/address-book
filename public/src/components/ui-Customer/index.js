@@ -11,8 +11,8 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 // Components
 import Gmap from 'components/ui-Gmap';
 import Address from 'components/ui-Address';
-import AddressForm from 'components/ui-AddressForm';
-import CustomerForm from 'components/ui-CustomerForm';
+import AddressForm from 'components/ui-CustomerForm/address';
+import CustomerFormDetails from 'components/ui-CustomerForm/details';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
@@ -139,13 +139,15 @@ class Customer extends React.Component {
 	}
 
 	render() {
-
+		const submitSuccess = () => {
+			this.closeSidebar( true );
+			this.props.history.push( `/customer/${this.props.id}/` );
+		};
 		const addressForm = ({ match }) => {
-			let addr = isEmpty(match.params.addrId) ? {} : this.state.addresses[ this.state.addresses.findIndex( a => a.id == match.params.addrId ) ];
-			return <AddressForm phone={match.params.number} {...addr} addAlerts={ this.props.addAlerts } closeSidebar={ this.closeSidebar } />;
+			return <AddressForm id={ parseInt(match.params.addrId) } custId={ parseInt(match.params.custId) } addAlerts={ this.props.addAlerts } onSubmitSucess={ submitSuccess } />;
 		};
 		const customerForm = ({ match, history }) => {
-			return <CustomerForm phone={match.params.number} {...this.state} history={history} addAlerts={ this.props.addAlerts } closeSidebar={ this.closeSidebar }/>;
+			return <CustomerFormDetails id={ parseInt(match.params.custId) } addAlerts={ this.props.addAlerts } onSubmitSucess={ submitSuccess } />;
 		};
 
 		return (
