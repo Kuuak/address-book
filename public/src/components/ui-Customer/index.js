@@ -135,7 +135,7 @@ class Customer extends React.Component {
 	}
 
 	Gmap({ match }) {
-		return <Gmap addr={ this.state.addresses[ this.state.addresses.findIndex( addr => addr.id == match.params.addrId ) ] } addAlerts={this.props.addAlerts} />;
+		return <Gmap custId={ this.props.id } addrId={ parseInt(match.params.addrId) } addAlerts={this.props.addAlerts} />;
 	}
 
 	render() {

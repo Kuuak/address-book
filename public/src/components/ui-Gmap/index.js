@@ -12,6 +12,9 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 // Components
 import Preloader from 'components/ui-Preloader';
 
+// Helpers
+import isEmpty from 'lodash.isempty';
+
 class Gmap extends React.Component {
 
 	constructor( props ) {
@@ -38,7 +41,7 @@ class Gmap extends React.Component {
 	componentDidUpdate( prevProps ) {
 
 		// Update directions only if destination address has changed
-		if ( prevProps.addr.id !== this.props.addr.id ) {
+		if ( prevProps.addrId !== this.props.addrId ) {
 			this.setState({ isLoading: true })
 			this.setMapDirection();
 		}
@@ -69,33 +72,46 @@ class Gmap extends React.Component {
 		} );
 	}
 	setMapDirection() {
-		this.directionsService.route( {
-			origin: config.map.address,
-			destination: `${this.props.addr.street} ${this.props.addr.number},${this.props.addr.postcode} ${this.props.addr.city}`,
-			travelMode: 'DRIVING',
-			provideRouteAlternatives: true,
-		}, (response, status) => {
+		fetch( `/customer/${this.props.custId}/address/${this.props.addrId}/`, { headers: new Headers({ 'Accept': 'application/json' }) } )
+			.then( res => res.json() )
+			.then( res => {
 
-			if (status === 'OK') {
-				this.directionsRenderer.setDirections(response);
-				this.setState({
-					dest: {
-						duration: response.routes[0].legs[0].duration.text,
-						distance: response.routes[0].legs[0].distance.text,
-					}
-				});
-			}
-			else {
-				this.props.addAlerts( {
-					icon		: 'error',
-					status	: 'error',
-					title		: 'Oups',
-					message	: 'Une erreur est apparue lors du chargement de l\'itinéraire. Merci de contacter l\'administrateur si cela persiste.',
-				} );
-				this.setState({ isLoading: false });
-			}
-		} );
+				if ( ! isEmpty(res.alerts) ) {
+					this.addAlerts( res.alerts );
+				}
 
+				if ( res.success ) {
+					this.directionsService.route( {
+						origin: config.map.address,
+						destination: `${res.address.street} ${res.address.number}, ${res.address.postcode} ${res.address.city}`,
+						travelMode: 'DRIVING',
+						provideRouteAlternatives: true,
+					}, (response, status) => {
+
+						if (status === 'OK') {
+							this.directionsRenderer.setDirections(response);
+							this.setState({
+								dest: {
+									duration: response.routes[0].legs[0].duration.text,
+									distance: response.routes[0].legs[0].distance.text,
+								}
+							});
+						}
+						else {
+							this.props.addAlerts( {
+								icon		: 'error',
+								status	: 'error',
+								title		: 'Oups',
+								message	: 'Une erreur est apparue lors du chargement de l\'itinéraire. Merci de contacter l\'administrateur si cela persiste.',
+							} );
+							this.setState({ isLoading: false });
+						}
+					} );
+				}
+				else {
+					this.setState({ isLoading: false });
+				}
+			});
 	}
 
 	render() {
@@ -112,7 +128,8 @@ class Gmap extends React.Component {
 	}
 }
 Gmap.propTypes = {
-	addr			: PropTypes.object.isRequired,
+	custId		: PropTypes.number.isRequired,
+	addrId		: PropTypes.number.isRequired,
 	addAlerts	: PropTypes.func.isRequired,
 };
 
