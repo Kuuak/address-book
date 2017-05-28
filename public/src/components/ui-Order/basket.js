@@ -1,6 +1,6 @@
 // Assets depedencies (Style & images)
 import 'styles/fade.css';
-import './index.css';
+import './basket.css';
 
 // React
 import React from 'react';
@@ -13,7 +13,7 @@ import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
-class OrderItems extends React.Component {
+class OrderBasket extends React.Component {
 	constructor( props ) {
 		super( props );
 
@@ -102,29 +102,29 @@ class OrderItems extends React.Component {
 
 	render() {
 		return (
-			<section className={'order-step step-items '+ ( this.props.active && 'active' ) }>
-				<Link className="lateral" to={ `${this.props.location}items/` } >Commande</Link>
+			<section className={'order-step step-items '+ ( this.props.active && 'step-active' ) }>
+				<div className="lateral">Commande</div>
 				<div className="content">
 					<h1>Commande</h1>
 					<div className="row">
 						<div className="column-left">
 							<ul className={ 'ingredients collection with-header'+ ( this.state.selectedItem ? ' active' : '' ) }>
-							<li className="collection-header">
-								<h2>Suppléments</h2>
-								<i onClick={ this.toggleIngredients } className="material-icons">clear</i>
-							</li>
-							{ this.state.ingredients.map( ingredient => <Ingredient key={ ingredient._id } { ...ingredient } addExtra={ this.addExtra } /> ) }
-							<li className="collection-footer">
-								<IngredientForm addIngredient={ this.addIngredient } addExtra={ this.addExtra } addAlerts={ this.props.addAlerts } />
-							</li>
-						</ul>
+								<li className="collection-header">
+									<h2>Suppléments</h2>
+									<i onClick={ this.toggleIngredients } className="material-icons">clear</i>
+								</li>
+								{ this.state.ingredients.map( ingredient => <Ingredient key={ ingredient._id } { ...ingredient } addExtra={ this.addExtra } /> ) }
+								<li className="collection-footer">
+									<IngredientForm addIngredient={ this.addIngredient } addExtra={ this.addExtra } addAlerts={ this.props.addAlerts } />
+								</li>
+							</ul>
 							<ul className="dishes card collection with-header">
-							<li className="collection-header"><h2>Plats</h2></li>
-							{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} addItem={ this.props.addItem } /> ) }
-							<li className="collection-footer">
-								<DishForm addDish={ this.addDish } addItem={ this.props.addItem } addAlerts={ this.props.addAlerts } />
-							</li>
-						</ul>
+								<li className="collection-header"><h2>Plats</h2></li>
+									{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} addItem={ this.props.addItem } /> ) }
+								<li className="collection-footer">
+									<DishForm addDish={ this.addDish } addItem={ this.props.addItem } addAlerts={ this.props.addAlerts } />
+								</li>
+							</ul>
 						</div>
 						<div className="column-right">
 							<CSSTransitionGroup component="ul" className="selected-items card collection with-header" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
@@ -136,8 +136,8 @@ class OrderItems extends React.Component {
 								</li>
 							</CSSTransitionGroup>
 							<div className="order-process-action">
-								<Link to='/' className="btn grey lighten-1 order-cancel">Annuler</Link>
-								<Link to={ `${this.props.location}delivery/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+								<Link to={ `${this.props.location}delivery/` } onClick={ this.props.prevStep } className="btn red lighten-2 order-return">Retour</Link>
+								<Link to={ `${this.props.location}validation/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
 							</div>
 						</div>
 					</div>
@@ -146,11 +146,11 @@ class OrderItems extends React.Component {
 		);
 	}
 }
-OrderItems.defaultProps = {
+OrderBasket.defaultProps = {
 	items: [],
 	active: false,
 };
-OrderItems.PropTypes = {
+OrderBasket.PropTypes = {
 	items				: PropTypes.array,
 	active			: PropTypes.bool,
 	addItem			: PropTypes.func.isRequired,
@@ -159,6 +159,8 @@ OrderItems.PropTypes = {
 	addExtra		: PropTypes.func.isRequired,
 	removeExtra	: PropTypes.func.isRequired,
 	addAlerts		: PropTypes.func.isRequired,
+	nextStep		: PropTypes.func.isRequired,
+	prevStep		: PropTypes.func.isRequired,
 };
 
 class Dish extends React.Component {
@@ -495,7 +497,7 @@ class Extra extends React.Component {
 		);
 	}
 }
-IngredientForm.PropTypes = {
+Extra.PropTypes = {
 	id		: PropTypes.number.isRequired,
 	type	: PropTypes.string.isRequired,
 	name	: PropTypes.string.isRequired,
@@ -504,4 +506,4 @@ IngredientForm.PropTypes = {
 	remove: PropTypes.func.isRequired,
 };
 
-export default OrderItems;
+export default OrderBasket;

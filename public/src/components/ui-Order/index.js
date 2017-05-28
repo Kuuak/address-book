@@ -5,10 +5,9 @@ import './index.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
-import OrderItems from 'components/ui-OrderItems';
+import Basket from 'components/ui-Order/basket';
 
 class Order extends React.Component {
 
@@ -28,6 +27,8 @@ class Order extends React.Component {
 		};
 
 		this.nextStep = this.nextStep.bind(this);
+		this.prevStep = this.prevStep.bind(this);
+		this.gotoStep = this.gotoStep.bind(this);
 
 		this.addItem			= this.addItem.bind(this);
 		this.copyItem			= this.copyItem.bind(this);
@@ -36,10 +37,16 @@ class Order extends React.Component {
 		this.removeExtra	= this.removeExtra.bind(this);
 	}
 
+
+	prevStep() {
+		this.gotoStep( this.state.step - 1 );
+	}
 	nextStep() {
-		let nextStep = this.state.step + 1
-		this.setState({ step: nextStep });
-		this.props.history.push( this.state.location + this.steps[nextStep] +'/' )
+		this.gotoStep( this.state.step + 1 );
+	}
+	gotoStep( stepId ) {
+		this.setState({ step: stepId });
+		this.props.history.push( this.state.location + this.steps[stepId] +'/' )
 	}
 
 	addItem( dish ) {
@@ -112,25 +119,8 @@ class Order extends React.Component {
 	render() {
 		return (
 			<div className={ `order step-${this.steps[this.state.step]}` }>
-				<OrderItems
-					active={ 0 == this.state.step }
-					items={ this.state.items }
-					addItem={ this.addItem }
-					copyItem={ this.copyItem }
-					removeItem={ this.removeItem }
-					addExtra={ this.addExtra }
-					removeExtra={ this.removeExtra }
-					addAlerts={ this.props.addAlerts }
-					location={ this.state.location }
-					nextStep={ this.nextStep }
-				/>
-			<section className={'order-step step-items'+ ( 1 == this.state.step ? ' active' : '' ) }>
-					<Link className="lateral" to={ `${this.state.location}delivery/` }>Livraison</Link>
-					<div className="content">
-						<h1>Livraison</h1>
+				<Basket active={ 1 == this.state.step } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } nextStep={ this.nextStep } prevStep={ this.prevStep } />
 
-					</div>
-				</section>
 				<section className={'order-step step-items'+ ( 2 == this.state.step ? ' active' : '' ) }>
 					<Link className="lateral" to={ `${this.state.location}validation/` }>Validation</Link>
 					<div className="content">
@@ -151,9 +141,10 @@ class Order extends React.Component {
 }
 Order.PropTypes = {
 	id				: PropTypes.number,
-	phone			: PropTypes.string,
+	custId		: PropTypes.number,
 	addrId		: PropTypes.number,
 	addAlerts	: PropTypes.func.isRequired,
+	history		: PropTypes.object.isRequired,
 };
 
 export default Order

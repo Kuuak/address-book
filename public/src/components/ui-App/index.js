@@ -236,7 +236,7 @@ class App extends React.Component {
 							return <CustomerForm suggest={ suggestion } history={ history } addAlerts={ this.addAlerts } />;
 						}} />
 						<Route path="/order/customer/:custId/address/:addrId" render={ ({ match, history, location }) =>
-							<Order custId={match.params.custId} addrId={match.params.addrId} location={location} history={history} addAlerts={this.addAlerts} />
+							<Order custId={parseInt(match.params.custId)} addrId={parseInt(match.params.addrId)} location={location} history={history} addAlerts={this.addAlerts} />
 						} />
 					</main>
 					<footer className="page-footer indigo">
