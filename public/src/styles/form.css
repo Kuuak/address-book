@@ -42,6 +42,23 @@ fieldset, .fieldset {
 }
 .input-rdo:first-of-type { margin-left: 0; }
 
+.input-chk input[type="radio"] + label::before,
+.input-chk input[type="radio"] + label::after {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+	border: 2px solid #5a5a5a;
+	border-radius: 1px;
+}
+.input-chk input[type="radio"] + label::after {
+	top: 4px;
+	left: 4px;
+	width: 10px;
+	height: 10px;
+	border: none;
+	border-radius: 0;
+}
+
 .input-phone {
 	font-size: 1.2rem;
 	font-weight: bold;
@@ -61,5 +78,5 @@ input[type=number],
 input[type=search],
 textarea.materialize-textarea {
 	padding-left: .2rem;
-	padding-right: .2rem; 
+	padding-right: .2rem;
 }
