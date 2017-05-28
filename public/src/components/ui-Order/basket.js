@@ -67,20 +67,14 @@ class OrderBasket extends React.Component {
 	}
 
 	handleNextStep( event ) {
-		event.preventDefault();
-		this.props.nextStep();
 		// if ( isEmpty(this.props.items) ) {
+		// 	event.preventDefault();
 		// 	this.props.addAlerts({
 		// 		icon		: 'error',
 		// 		status	: 'error',
 		// 		title		: 'Oups',
 		// 		message	: 'Merci d\'ajouter au moins un plat dans le panier.',
 		// 	});
-		// }
-		// else {
-		// Process to next step
-		// }
-
 	}
 
 	calcTotal() {
@@ -136,8 +130,8 @@ class OrderBasket extends React.Component {
 								</li>
 							</CSSTransitionGroup>
 							<div className="order-process-action">
-								<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/delivery/` } onClick={ this.props.prevStep } className="btn red lighten-2 order-return">Retour</Link>
-								<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/validation/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+								<Link to="/order/delivery/" className="btn red lighten-2 order-return">Retour</Link>
+								<Link to="/order/validation/" onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
 							</div>
 						</div>
 					</div>
@@ -159,8 +153,6 @@ OrderBasket.PropTypes = {
 	addExtra		: PropTypes.func.isRequired,
 	removeExtra	: PropTypes.func.isRequired,
 	addAlerts		: PropTypes.func.isRequired,
-	nextStep		: PropTypes.func.isRequired,
-	prevStep		: PropTypes.func.isRequired,
 	customer		: PropTypes.number.isRequired,
 	address			: PropTypes.number.isRequired,
 };

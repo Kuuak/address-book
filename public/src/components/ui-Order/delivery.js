@@ -29,17 +29,14 @@ class OrderDelivery extends React.Component {
 	}
 
 	handleNextStep( event ) {
-		event.preventDefault();
 		if ( isNaN(this.props.customer) || isNaN(this.props.address) ) {
+			event.preventDefault();
 			this.props.addAlerts({
 				icon		: 'error',
 				status	: 'error',
 				title		: 'Oups',
 				message	: 'Veuillez sélectionner un client et une adresse de livraison.',
 			});
-		}
-		else {
-			this.props.nextStep();
 		}
 	}
 
@@ -72,7 +69,7 @@ class OrderDelivery extends React.Component {
 	}
 
 	handleChange( event, custId, addrId ) {
-		this.props.history.push( `/order/customer/${custId}/address/${addrId}/delivery/` );
+		this.props.history.push( `/order/delivery/?address=${addrId}` );
 	}
 
 	render() {
@@ -97,8 +94,8 @@ class OrderDelivery extends React.Component {
 							<Gmap custId={ this.props.customer } addrId={ this.props.address } addAlerts={ this.props.addAlerts } />
 						</div>
 						<div className="order-process-action">
-							<Link to='/' className="btn grey lighten-1 order-cancel">Annuler</Link>
-							<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/basket/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+							<Link to="/" className="btn grey lighten-1 order-cancel">Annuler</Link>
+							<Link to="/order/basket/" onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
 						</div>
 					</div>
 				</div>
@@ -118,8 +115,6 @@ OrderDelivery.PropTypes = {
 	active				: PropTypes.bool,
 	customer			: PropTypes.number.isRequired,
 	address				: PropTypes.number.isRequired,
-	nextStep			: PropTypes.func.isRequired,
-	prevStep			: PropTypes.func.isRequired,
 	addAlerts			: PropTypes.func.isRequired,
 	history				: PropTypes.object.isRequired,
 };

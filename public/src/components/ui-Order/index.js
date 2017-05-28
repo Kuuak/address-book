@@ -17,21 +17,13 @@ class Order extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.steps		= [ 'delivery', 'basket', 'validation', 'confirmation' ];
-
 		this.state = {
-			step: 0,
 			items: [],
 			delivery: {
 				customer: this.props.custId,
 				address	: this.props.addrId,
 			},
-			location: this.props.location.pathname.replace( new RegExp( this.steps.join('|') + '/' ), '' ),
 		};
-
-		this.nextStep = this.nextStep.bind(this);
-		this.prevStep = this.prevStep.bind(this);
-		this.gotoStep = this.gotoStep.bind(this);
 
 		this.addItem			= this.addItem.bind(this);
 		this.copyItem			= this.copyItem.bind(this);
@@ -41,29 +33,19 @@ class Order extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.history.replace( this.state.location + this.steps[this.state.step] +'/' );
+		this.props.history.replace( `/order/${this.props.step}/` ); // remove the queryString (search)
 	}
 
 	componentDidUpdate() {
-		if ( this.props.custId != this.state.delivery.customer || this.props.addrId != this.state.delivery.address ) {
+		if ( ! isNaN(this.props.addrId) && this.props.addrId != this.state.delivery.address ) {
 			this.setState({
 				delivery: {
-					customer: this.props.custId,
-					address	: this.props.addrId,
+					customer: this.state.delivery.customer,
+					address: this.props.addrId
 				}
 			});
+			this.props.history.replace( `/order/${this.props.step}/` ); // remove the queryString (search)
 		}
-	}
-
-	prevStep() {
-		this.gotoStep( this.state.step - 1 );
-	}
-	nextStep() {
-		this.gotoStep( this.state.step + 1 );
-	}
-	gotoStep( stepId ) {
-		this.setState({ step: stepId });
-		this.props.history.push( this.state.location + this.steps[stepId] +'/' );
 	}
 
 	addItem( dish ) {
@@ -135,9 +117,6 @@ class Order extends React.Component {
 
 	render() {
 		return (
-			<div className={ `order step-${this.steps[this.state.step]}` }>
-				<Delivery active={ 0 == this.state.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } nextStep={ this.nextStep }  />
-				<Basket active={ 1 == this.state.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } nextStep={ this.nextStep } prevStep={ this.prevStep } />
 
 				<section className={'order-step step-items'+ ( 2 == this.state.step ? ' active' : '' ) }>
 					<Link className="lateral" to={ `${this.state.location}validation/` }>Validation</Link>
@@ -153,11 +132,15 @@ class Order extends React.Component {
 
 					</div>
 				</section>
+			<div className="order">
+				<Delivery active={ 'delivery' == this.props.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } />
+				<Basket active={ 'basket' == this.props.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } />
 			</div>
 		);
 	}
 }
 Order.PropTypes = {
+	step			: PropTypes.string.isRequired,
 	id				: PropTypes.number,
 	custId		: PropTypes.number,
 	addrId		: PropTypes.number,
