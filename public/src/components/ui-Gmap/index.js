@@ -116,13 +116,13 @@ class Gmap extends React.Component {
 
 	render() {
 		return (
-			<div className="gmap-wrapper">
+			<div className={`gmap-wrapper`+ ( this.state.isLoading ? ' loading' : '' ) }>
 				<CSSTransitionGroup component="div" transitionName="loading" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
 					{ this.state.isLoading && <div className="veil"></div> }
 					{ this.state.isLoading && <Preloader center={true} active={true} /> }
 				</CSSTransitionGroup>
 				<div id="gmap" className="gmap"></div>
-				{ this.state.dest && <button className="btn red">{`Temps de trajet: ${this.state.dest.duration} (${this.state.dest.distance})`}</button> }
+				{ this.state.dest && <div className="chip blue darken-3 white-text">{`Trajet: ${this.state.dest.duration.replace('minutes', 'min')} (${this.state.dest.distance})`}</div> }
 			</div>
 		);
 	}

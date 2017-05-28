@@ -4,16 +4,17 @@
 	height: 100%;
 }
 
-.gmap-wrapper button {
+.gmap-wrapper .chip {
 	position: absolute;
 	left: 50%;
 	bottom: 2rem;
 	z-index: 5;
 	opacity: 1;
+	font-size: 1rem;
 	transform: translateX(-50%);
-	transition: opacity .3s ease-int-out;
+	transition: opacity .3s ease-in-out;
 }
-.loading .gmap-wrapper button { opacity: 0; }
+.gmap-wrapper.loading .chip { opacity: 0; }
 
 .gmap-wrapper .veil {
 	position: absolute;
