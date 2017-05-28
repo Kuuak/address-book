@@ -1,0 +1,12 @@
+.customer-card {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.customer-card h1 {
+	text-align: left;
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+.customer-card h2 { margin: .5rem 0; }
+.customer-card h3 { margin-top: 2rem; }

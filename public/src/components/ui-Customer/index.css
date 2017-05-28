@@ -12,18 +12,6 @@
 	transition: flex-basis .3s ease-in-out .1s;
 }
 
-.customer-details .card {
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-.customer-details h1 {
-	text-align: left;
-	margin-bottom: 0;
-}
-.customer-details h2 { margin: .5rem 0; }
-.customer-details h3 { margin-top: 2rem; }
-
 aside {
 	position: relative;
 	flex: 0 1 0;

@@ -5,12 +5,12 @@ import './index.css';
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 
 // Components
 import Gmap from 'components/ui-Gmap';
 import Address from 'components/ui-Address';
+import Card from 'components/ui-Customer/card';
 import AddressForm from 'components/ui-CustomerForm/address';
 import CustomerFormDetails from 'components/ui-CustomerForm/details';
 
@@ -24,12 +24,6 @@ class Customer extends React.Component {
 		super( props );
 
 		this.state = {
-			phone				: '',
-			gender			: null,
-			firstname		: '',
-			lastname		: '',
-			email				: null,
-			addresses		: [],
 			showSidebar	: false,
 			loading			: true,
 		};
@@ -37,39 +31,53 @@ class Customer extends React.Component {
 		this.openSidebar		= this.openSidebar.bind( this );
 		this.closeSidebar		= this.closeSidebar.bind( this );
 		this.deleteCustomer	= this.deleteCustomer.bind( this );
+		this.handleCardClick	= this.handleCardClick.bind( this );
 
 		this.Gmap					= this.Gmap.bind( this );
 	}
 
 	componentDidMount() {
-		this.getCustomer( () => {
-			if ( this.props.location.pathname.match( /\/edit|add|directions\/?/ ) ) {
-				this.openSidebar();
-			}
-		} );
+		if ( this.props.location.pathname.match( /\/edit|add|directions\/?/ ) ) {
+			this.openSidebar();
+		}
 	}
 
-	getCustomer( callback ) {
+	handleCardClick( event, id, addrId ) {
 
-		this.setState({ loading: true });
-		fetch( `/customer/${this.props.id}/`, { headers: new Headers({ 'Accept': 'application/json' }) } )
-			.then( res => res.json() )
-			.then ( res => {
+		switch ( event.target.rel ) {
+			case 'edit':
+			case 'add':
+			case 'address-directions':
+			case 'address-edit':
+				this.openSidebar();
+				break;
 
-				if ( res.alerts ) {
-					this.props.addAlerts( res.alerts );
-				}
+			case 'delete':
+				this.deleteCustomer( event );
+				break;
 
-				if ( res.success ) {
-					this.setState( res.customer );
+			case 'address-delete':
+				this.deleteAddress( event, addrId );
+				break;
+		}
+	}
 
-					if ( isFunction(callback) ) {
-						callback();
-					}
+	openSidebar() {
 
-					this.setState({ loading: false });
-				}
-			} );
+		if ( ! this.state.showSidebar ) {
+			this.setState({
+				showSidebar: true,
+			});
+		}
+	}
+	closeSidebar( refreshData ) {
+		this.setState({
+			showSidebar: false,
+		});
+
+		if ( refreshData || false ) {
+			this.card.getCustomer();
+		}
 	}
 
 	deleteCustomer( event ) {
@@ -93,27 +101,7 @@ class Customer extends React.Component {
 			event.preventDefault();
 		}
 	}
-
-	openSidebar() {
-
-		if ( ! this.state.showSidebar ) {
-			this.setState({
-				showSidebar: true,
-			});
-		}
-	}
-
-	closeSidebar( refreshData ) {
-		this.setState({
-			showSidebar: false,
-		});
-
-		if ( refreshData || false ) {
-			this.getCustomer();
-		}
-	}
-
-	deleteAddress( addrId, event ) {
+	deleteAddress( event, addrId ) {
 		if ( window.confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?") ) {
 			fetch( `/customer/${this.props.id}/address/${addrId}/`, { method: 'DELETE'} )
 				.then( res => res.json() )
@@ -153,25 +141,7 @@ class Customer extends React.Component {
 		return (
 			<div className="customer">
 				<div className="customer-details">
-					<div className="card">
-						<div className="card-content">
-							<h1 className="card-title">{ this.state.phone }</h1>
-							<h2>
-								{ `${this.state.firstname} ${this.state.lastname}`  }
-								<small> ({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small>
-							</h2>
-							{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
-							<h3>Adresses</h3>
-							<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-								{ this.state.addresses.map( (addr) => <Address key={addr.id} custId={this.props.id} {...addr} openSidebar={this.openSidebar} deleteAddress={this.deleteAddress.bind(this, addr.id)} /> ) }
-							</CSSTransitionGroup>
-						</div>
-						<div className="card-action">
-							<Link to={ `/customer/${this.props.id}/edit/` } onClick={ this.openSidebar } >Modifier</Link>
-							<Link to={ `/customer/${this.props.id}/address/add/` } onClick={ this.openSidebar } >Ajouter une adresse</Link>
-							<Link to={ `/customer/${this.props.id}/delete/` }  className="red-text right" onClick={ this.deleteCustomer } >Supprimer</Link>
-						</div>
-					</div>
+					<Card id={ this.props.id } onClick={ this.handleCardClick } addAlerts={ this.props.addAlerts } location={ `/customer/${this.props.id}/` } ref={ card => this.card = card } />
 				</div>
 				<aside className={ 'white'+  ( this.state.showSidebar ? ' open' : '' ) }>
 					<Link to={ `/customer/${this.props.id}/` } className="close" onClick={ this.closeSidebar }>
@@ -193,6 +163,7 @@ Customer.propTypes = {
 	id				: PropTypes.number.isRequired,
 	addAlerts	: PropTypes.func.isRequired,
 	history		: PropTypes.object.isRequired,
+	location	: PropTypes.object.isRequired,
 };
 
 export default Customer;
