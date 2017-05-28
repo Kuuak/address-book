@@ -136,8 +136,8 @@ class OrderBasket extends React.Component {
 								</li>
 							</CSSTransitionGroup>
 							<div className="order-process-action">
-								<Link to={ `${this.props.location}delivery/` } onClick={ this.props.prevStep } className="btn red lighten-2 order-return">Retour</Link>
-								<Link to={ `${this.props.location}validation/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+								<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/delivery/` } onClick={ this.props.prevStep } className="btn red lighten-2 order-return">Retour</Link>
+								<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/validation/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
 							</div>
 						</div>
 					</div>
@@ -161,6 +161,8 @@ OrderBasket.PropTypes = {
 	addAlerts		: PropTypes.func.isRequired,
 	nextStep		: PropTypes.func.isRequired,
 	prevStep		: PropTypes.func.isRequired,
+	customer		: PropTypes.number.isRequired,
+	address			: PropTypes.number.isRequired,
 };
 
 class Dish extends React.Component {

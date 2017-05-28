@@ -131,7 +131,7 @@ class Order extends React.Component {
 		return (
 			<div className={ `order step-${this.steps[this.state.step]}` }>
 				<Delivery active={ 0 == this.state.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } nextStep={ this.nextStep }  />
-				<Basket active={ 1 == this.state.step } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } nextStep={ this.nextStep } prevStep={ this.prevStep } />
+				<Basket active={ 1 == this.state.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } nextStep={ this.nextStep } prevStep={ this.prevStep } />
 
 				<section className={'order-step step-items'+ ( 2 == this.state.step ? ' active' : '' ) }>
 					<Link className="lateral" to={ `${this.state.location}validation/` }>Validation</Link>
