@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 // Components
 import Basket from 'components/ui-Order/basket';
 import Delivery from 'components/ui-Order/delivery';
+// import Validation from 'components/ui-Order/validation';
+// import Confirmation from 'components/ui-Order/confirmation';
 
 class Order extends React.Component {
 
@@ -38,6 +40,10 @@ class Order extends React.Component {
 		this.removeExtra	= this.removeExtra.bind(this);
 	}
 
+	componentDidMount() {
+		this.props.history.replace( this.state.location + this.steps[this.state.step] +'/' );
+	}
+
 	componentDidUpdate() {
 		if ( this.props.custId != this.state.delivery.customer || this.props.addrId != this.state.delivery.address ) {
 			this.setState({
@@ -57,7 +63,7 @@ class Order extends React.Component {
 	}
 	gotoStep( stepId ) {
 		this.setState({ step: stepId });
-		this.props.history.push( this.state.location + this.steps[stepId] +'/' )
+		this.props.history.push( this.state.location + this.steps[stepId] +'/' );
 	}
 
 	addItem( dish ) {
