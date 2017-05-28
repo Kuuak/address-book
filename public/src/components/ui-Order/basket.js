@@ -4,16 +4,17 @@ import './basket.css';
 
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Helpers
 import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
+import isFunction from 'lodash.isfunction';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
-class OrderBasket extends React.Component {
+export default class OrderBasket extends React.Component {
 	constructor( props ) {
 		super( props );
 
@@ -28,6 +29,7 @@ class OrderBasket extends React.Component {
 		this.addIngredient = this.addIngredient.bind( this );
 		this.toggleIngredients = this.toggleIngredients.bind( this );
 		this.handleNextStep = this.handleNextStep.bind( this );
+		this.handleClickItem = this.handleClickItem.bind( this );
 	}
 
 	componentDidMount() {
@@ -46,8 +48,25 @@ class OrderBasket extends React.Component {
 			} );
 	}
 
+	handleClickItem( action, itemId, extraId ) {
+		switch (action) {
+			case 'copy':
+				this.props.copyItem( itemId );
+				break;
+			case 'extra':
+				this.toggleIngredients( itemId );
+				break;
+			case 'delete':
+				this.props.removeItem( itemId );
+				break;
+			case 'extra-delete':
+				this.props.removeExtra( itemId, extraId );
+				break;
+		}
+	}
+
 	toggleIngredients( itemId ) {
-		this.setState({ selectedItem: (typeof itemId == 'object' ? null : itemId) });
+		this.setState({ selectedItem: ( typeof itemId == 'object' ? null : ( itemId == this.state.selectedItem ? null : itemId ) ) });
 	}
 
 	addDish( dish ) {
@@ -123,7 +142,7 @@ class OrderBasket extends React.Component {
 						<div className="column-right">
 							<CSSTransitionGroup component="ul" className="selected-items card collection with-header" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
 								<li key="header" className="item collection-header"><h2>Panier</h2></li>
-								{ this.props.items.map( item => <Item key={ item.id } selected={ item.id == this.state.selectedItem } { ...item } copy={ this.props.copyItem } remove={ this.props.removeItem } openIngredients={ this.toggleIngredients } removeExtra={ this.props.removeExtra } /> ) }
+								{ this.props.items.map( item => <Item key={ item.id } selected={ item.id == this.state.selectedItem } { ...item } onClick={ this.handleClickItem } /> ) }
 								<li key="footer" className="collection-footer">
 									<h3>Total</h3>
 									<h3 className="secondary-content black-text">{ this.calcTotal() }</h3>
@@ -286,45 +305,43 @@ DishForm.PropTypes = {
 	addItem: PropTypes.func.isRequired,
 };
 
-class Item extends React.Component {
+export class Item extends React.Component {
 
 	constructor( props ) {
 		super( props );
 
-		this.handleClickCopy				= this.handleClickCopy.bind( this );
-		this.handleClickRemove			= this.handleClickRemove.bind( this );
-		this.handleClickOpenExtra		= this.handleClickOpenExtra.bind( this );
-		this.handleClickRemoveExtra	= this.handleClickRemoveExtra.bind( this );
+		this.handleClick			= this.handleClick.bind( this );
+		this.handleExtraClick	= this.handleExtraClick.bind( this );
 	}
 
-	handleClickCopy() {
-		this.props.copy( this.props.id );
+	handleClick( event ) {
+		if ( isFunction( this.props.onClick ) ) {
+			this.props.onClick( event.target.rel, this.props.id );
+		}
 	}
-	handleClickRemove() {
-		this.props.remove( this.props.id );
-	}
-	handleClickOpenExtra() {
-		this.props.openIngredients( this.props.id );
-	}
-	handleClickRemoveExtra() {
-		this.props.removeExtra( this.props.id );
+	handleExtraClick( action, extraId ) {
+		if ( isFunction( this.props.onClick ) ) {
+			this.props.onClick( `extra-${action}`, this.props.id, extraId );
+		}
 	}
 
 	render() {
 		return (
 			<li className={ 'item collection-item'+ ( this.props.selected ? ' selected' : '' ) } >
 				<div className="item-detail">
-					<span className="collection-item-action">
-						<a onClick={ this.handleClickRemove } className="delete material-icons" title="Supprimer">delete</a>
-						<a onClick={ this.handleClickCopy } className="copy material-icons" title="Copier">add_box</a>
-						<a onClick={ this.handleClickOpenExtra } className="extra material-icons" title="Suppléments">exposure</a>
-					</span>
+					<Route path="/order/basket" render={ () => (
+						<span className="collection-item-action">
+							<a onClick={ this.handleClick } rel="delete" className="delete material-icons" title="Supprimer">delete</a>
+							<a onClick={ this.handleClick } rel="copy" className="copy material-icons" title="Copier">add_box</a>
+							<a onClick={ this.handleClick } rel="extra" className="extra material-icons" title="Suppléments">exposure</a>
+						</span>
+					)} />
 					<span className="item-name">{this.props.name}</span>
 					<span className="item-price secondary-content black-text">{this.props.price.toFixed(2)}</span>
 				</div>
 				<div>
 					<ul className="item-extra">
-						{ this.props.extras && this.props.extras.map( extra => <Extra key={ extra.id } { ...extra } itemId={ this.props.id } remove={ this.props.removeExtra } /> ) }
+						{ this.props.extras && this.props.extras.map( extra => <Extra key={ extra.id } { ...extra } onClick={ this.handleExtraClick } /> ) }
 					</ul>
 				</div>
 			</li>
@@ -336,15 +353,12 @@ Item.defaultProps = {
 	selected: false,
 };
 Item.PropTypes = {
-	id							: PropTypes.number.isRequired,
-	name						: PropTypes.string.isRequired,
-	price						: PropTypes.number.isRequired,
-	extras					: PropTypes.array,
-	selected				: PropTypes.bool,
-	copy						: PropTypes.func.isRequired,
-	remove					: PropTypes.func.isRequired,
-	removeExtra			: PropTypes.func.isRequired,
-	openIngredients	: PropTypes.func.isRequired,
+	id			: PropTypes.number.isRequired,
+	name		: PropTypes.string.isRequired,
+	price		: PropTypes.number.isRequired,
+	extras	: PropTypes.array,
+	selected: PropTypes.bool,
+	onClick	: PropTypes.func,
 };
 
 class Ingredient extends React.Component {
@@ -476,13 +490,15 @@ class Extra extends React.Component {
 	}
 
 	handleClick() {
-		this.props.remove( this.props.itemId, this.props.id )
+		if ( isFunction(this.props.onClick) ) {
+			this.props.onClick( 'delete', this.props.id );
+		}
 	}
 
 	render() {
 		return (
 			<li className="extra">
-				<a onClick={ this.handleClick } title="Supprimer">
+				<a onClick={ this.handleClick } rel="delete" title="Supprimer">
 					<strong className={ 'add' == this.props.type ? 'green-text' : 'red-text' }>{ 'add' == this.props.type ? '+' : '-' }</strong>
 					<span className="extra-name">{this.props.name}</span>
 					{ this.props.price && <span className="extra-price secondary-content black-text">{ ('add' == this.props.type ? '+' : '-' ) + this.props.price.toFixed(2) }</span> }
@@ -492,12 +508,9 @@ class Extra extends React.Component {
 	}
 }
 Extra.PropTypes = {
-	id		: PropTypes.number.isRequired,
-	type	: PropTypes.string.isRequired,
-	name	: PropTypes.string.isRequired,
-	price	: PropTypes.number.isRequired,
-	itemId: PropTypes.number.isRequired,
-	remove: PropTypes.func.isRequired,
+	id			: PropTypes.number.isRequired,
+	type		: PropTypes.string.isRequired,
+	name		: PropTypes.string.isRequired,
+	price		: PropTypes.number.isRequired,
+	onClick	: PropTypes.func,
 };
-
-export default OrderBasket;
