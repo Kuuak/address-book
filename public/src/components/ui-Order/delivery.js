@@ -98,7 +98,7 @@ class OrderDelivery extends React.Component {
 						</div>
 						<div className="order-process-action">
 							<Link to='/' className="btn grey lighten-1 order-cancel">Annuler</Link>
-							<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/items/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+							<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/basket/` } onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
 						</div>
 					</div>
 				</div>

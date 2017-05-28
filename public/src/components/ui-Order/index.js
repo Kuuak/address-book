@@ -15,7 +15,7 @@ class Order extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.steps		= [ 'delivery', 'items', 'validation', 'confirmation' ];
+		this.steps		= [ 'delivery', 'basket', 'validation', 'confirmation' ];
 
 		this.state = {
 			step: 0,
