@@ -44,21 +44,27 @@ class Order extends React.Component {
 
 	addItem( dish ) {
 
-		let newItems = this.state.items;
+		let newId			= ( this.state.items.length ? this.state.items[this.state.items.length-1].id + 1 : 1 ),
+				newItems	= this.state.items;
+
 		newItems.push( {
-			id		: ( this.state.items.length ? this.state.items[this.state.items.length-1].id + 1 : 1 ),
+			id		: newId,
 			dish	: dish.id,
 			name	: dish.name,
 			price	: dish.price,
-			extras: ( Array.isArray(dish.extras) ? dish.extras : [] ),
+			extras: [],
 		} );
 
 		this.setState({ items: newItems });
+
+		return newId;
 	}
 	copyItem( itemId ) {
 
-		let index = this.state.items.findIndex( item => item.id == itemId );
-		this.addItem( this.state.items[ index ] );
+		let index		= this.state.items.findIndex( item => item.id == itemId ),
+				newItemId	= this.addItem( this.state.items[ index ] );
+
+		this.state.items[ index ].extras.forEach( extra => this.addExtra(newItemId, extra.type, { id: extra.ingredient, name: extra.name, price: extra.price } ) );
 	}
 	removeItem( itemId ) {
 
