@@ -8,20 +8,21 @@ import PropTypes from 'prop-types';
 
 // Components
 import Basket from 'components/ui-Order/basket';
+import Delivery from 'components/ui-Order/delivery';
 
 class Order extends React.Component {
 
 	constructor( props ) {
 		super( props );
 
-		this.steps		= [ 'items', 'delivery', 'validation', 'confirmation' ];
+		this.steps		= [ 'delivery', 'items', 'validation', 'confirmation' ];
 
 		this.state = {
 			step: 0,
 			items: [],
-			customer: {
-				phone: this.props.phone,
-				address: this.props.addrId,
+			delivery: {
+				customer: this.props.custId,
+				address	: this.props.addrId,
 			},
 			location: this.props.location.pathname.replace( new RegExp( this.steps.join('|') + '/' ), '' ),
 		};
@@ -37,6 +38,16 @@ class Order extends React.Component {
 		this.removeExtra	= this.removeExtra.bind(this);
 	}
 
+	componentDidUpdate() {
+		if ( this.props.custId != this.state.delivery.customer || this.props.addrId != this.state.delivery.address ) {
+			this.setState({
+				delivery: {
+					customer: this.props.custId,
+					address	: this.props.addrId,
+				}
+			});
+		}
+	}
 
 	prevStep() {
 		this.gotoStep( this.state.step - 1 );
@@ -119,6 +130,7 @@ class Order extends React.Component {
 	render() {
 		return (
 			<div className={ `order step-${this.steps[this.state.step]}` }>
+				<Delivery active={ 0 == this.state.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } nextStep={ this.nextStep }  />
 				<Basket active={ 1 == this.state.step } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } nextStep={ this.nextStep } prevStep={ this.prevStep } />
 
 				<section className={'order-step step-items'+ ( 2 == this.state.step ? ' active' : '' ) }>

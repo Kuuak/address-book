@@ -1,0 +1,36 @@
+.step-delivery .column-gmap,
+.step-delivery .column-customer {
+	flex-basis: 49%;
+	height: calc(100% - 36px - 2rem);
+	overflow-y: scroll;
+}
+
+.step-delivery .gmap-wrapper { position: relative; }
+
+.step-delivery .order-process-action { flex-basis: 100%; }
+
+.step-delivery aside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	transform: translate3d(0, -110%, 0);
+	transition: transform .3s ease-in-out;
+}
+.step-delivery aside.open { transform: translate3d(0, 0, 0); }
+
+.step-delivery aside .close {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	z-index: 100;
+	display: none;
+	opacity: .4;
+	cursor: pointer;
+	transition: opacity .2s ease-in-out;
+}
+.step-delivery aside.open .close { display: block; }
+.step-delivery aside .close:hover { opacity: .9; }
