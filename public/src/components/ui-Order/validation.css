@@ -1,0 +1,50 @@
+.step-validation .column-customer { flex-basis: 45%; }
+
+.step-validation .column-basket,
+.step-validation .column-customer {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.step-validation .customer-card h3,
+.step-validation .customer-card .card-action,
+.step-validation .customer-card .collection-item { display: none; }
+
+.step-validation .customer-card {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.step-validation .customer-card .collection-item.selected {
+	display: block;
+	border: none;
+	background-color: transparent;
+}
+
+.step-validation .gmap {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+
+
+
+.step-validation .column-basket { flex-basis: 45%; }
+.step-validation .selected-items {
+	margin-top: 0;
+	overflow-y: scroll;
+}
+.step-validation .selected-items .extra a:hover {
+	cursor: default;
+	text-decoration: none;
+}
+
+.step-validation .order-informations { flex-shrink: 0; }
+
+.step-validation .selected-items h2,
+.step-validation .order-informations h2 { font-size: 1.3rem; }
+
+.step-validation .order-informations .collection-item { padding-left: 20px; }
+
+.step-validation .order-informations textarea { margin-bottom: 0; }

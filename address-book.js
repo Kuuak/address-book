@@ -24,6 +24,7 @@ const fritzMonitor = require( './includes/fritzmonitor' );
 app
 	.use( express.static( __dirname +'/public' ) )
 	.use( bodyParser.urlencoded({ extended: true }) )
+	.use( bodyParser.json() )
 
 	// ROUTES
 	.get( '/', (req, res) => {
@@ -76,6 +77,10 @@ app
 	} )
 	.delete	( '/customer/:custId', (req, res) => {
 		Customer.delete( req.params.custId, result => res.end( JSON.stringify( result ) ) );
+	} )
+
+	.post		( '/order', (req, res) => {
+		Order.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
 	} )
 
 	// Retrieve (GET), insert (POST), update (PUT) or delete dish

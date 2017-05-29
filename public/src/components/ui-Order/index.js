@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 // Components
 import Basket from 'components/ui-Order/basket';
 import Delivery from 'components/ui-Order/delivery';
-// import Validation from 'components/ui-Order/validation';
+import Validation from 'components/ui-Order/validation';
 // import Confirmation from 'components/ui-Order/confirmation';
 
 class Order extends React.Component {
@@ -117,14 +117,6 @@ class Order extends React.Component {
 
 	render() {
 		return (
-
-				<section className={'order-step step-items'+ ( 2 == this.state.step ? ' active' : '' ) }>
-					<Link className="lateral" to={ `${this.state.location}validation/` }>Validation</Link>
-					<div className="content">
-						<h1>Validation</h1>
-
-					</div>
-				</section>
 				<section className={'order-step step-items'+ ( 3 == this.state.step ? ' active' : '' ) }>
 					<Link className="lateral" to={ `${this.state.location}confirmation/` }>Confirmation</Link>
 					<div className="content">
@@ -135,6 +127,7 @@ class Order extends React.Component {
 			<div className="order">
 				<Delivery active={ 'delivery' == this.props.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 				<Basket active={ 'basket' == this.props.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } />
+				<Validation active={ 'validation' == this.props.step } { ...this.state.delivery } items={ this.state.items } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 			</div>
 		);
 	}

@@ -53,7 +53,7 @@ class Address extends React.Component {
 									<Link to={`${rmSlash(this.props.location)}/address/${this.props.id}/delete/`} rel="address-delete" onClick={ this.handleClick } className="material-icons delete">delete</Link>
 								</div>
 							) } />
-							<Route path="/order" render={ () => (
+							<Route path="/order/delivery" render={ () => (
 								<div className="input-chk">
 									<input type="radio" id={ `addr_${this.props.id}` } name={`addr_${this.props.uniqueId}`} value={ this.props.id } onChange={ this.handleChange } defaultChecked={ this.props.selected } />
 									<label htmlFor={ `addr_${this.props.id}` }></label>
