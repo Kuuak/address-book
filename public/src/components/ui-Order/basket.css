@@ -60,23 +60,24 @@
 	max-height: calc(100% - 2rem - 36px);
 	overflow-y: scroll;
 }
-.step-items .selected-items .item { padding-left: 20px; }
-.item.add-active { animation: fadeIn .3s linear 1; }
-.item.delete-active { animation: fadeOut .3s linear 1; }
 
-.item .collection-item-action .extra { transform: rotate(180deg); }
+.selected-items .collection-item.item { padding-left: 20px; }
+.selected-items .item.add-active { animation: fadeIn .3s linear 1; }
+.selected-items .item.delete-active { animation: fadeOut .3s linear 1; }
 
-.step-items .item-name,
-.step-items .item-price { font-size: 1.2rem; }
+.selected-items .item .collection-item-action .extra { transform: rotate(180deg); }
 
-.step-items .item-extra {
+.selected-items .item-name,
+.selected-items .item-price { font-size: 1.2rem; }
+
+.selected-items .item-extra {
 	display: block;
 	margin-left: 1rem;
 	font-size: .9rem;
 }
-.step-items .item-extra a:hover {
+.selected-items .item-extra a:hover {
 	text-decoration: underline;
 	cursor: not-allowed;
 }
 
-.step-items .extra-name { margin-left: .2rem; }
+.selected-items .extra-name { margin-left: .2rem; }
