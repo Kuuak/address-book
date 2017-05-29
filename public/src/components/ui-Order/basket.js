@@ -103,6 +103,7 @@ export default class OrderBasket extends React.Component {
 	}
 
 	handleNextStep( event ) {
+		this.toggleIngredients( this.state.selectedItem );
 		// if ( isEmpty(this.props.items) ) {
 		// 	event.preventDefault();
 		// 	this.props.addAlerts({
