@@ -348,7 +348,6 @@ function addressGet( custId, id, callback ) {
 			address = null,
 			alert = null;
 
-		console.log('addressGet', custId, id );
 	get( custId, result => {
 
 		if ( result.success ) {
