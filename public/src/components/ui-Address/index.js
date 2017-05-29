@@ -55,7 +55,7 @@ class Address extends React.Component {
 							) } />
 							<Route path="/order" render={ () => (
 								<div className="input-chk">
-									<input type="radio" id={ `addr_${this.props.id}` } name="addr" value={ this.props.id } onChange={ this.handleChange } defaultChecked={ this.props.selected } />
+									<input type="radio" id={ `addr_${this.props.id}` } name={`addr_${this.props.uniqueId}`} value={ this.props.id } onChange={ this.handleChange } defaultChecked={ this.props.selected } />
 									<label htmlFor={ `addr_${this.props.id}` }></label>
 								</div>
 							) } />
@@ -84,6 +84,7 @@ Address.propTypes = {
 	onClick	: PropTypes.func,
 	onChange: PropTypes.func,
 	location: PropTypes.string.isRequired,
+	uniqueId: PropTypes.number.isRequired,
 };
 Address.defaultProps = {
 	selected: false,

@@ -25,6 +25,8 @@ class CustomerCard extends React.Component {
 			loading		: false,
 		};
 
+		this.uniqueId = Date.now();
+
 		this.handleClick = this.handleClick.bind( this );
 		this.handleClickAddress = this.handleClickAddress.bind( this );
 		this.handleChangeAddress = this.handleChangeAddress.bind( this );
@@ -88,7 +90,7 @@ class CustomerCard extends React.Component {
 					{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
 					<h3>Adresses</h3>
 					<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-						{ this.state.addresses.map( (addr) => <Address key={addr.id} custId={this.props.id} {...addr} selected={ addr.id == this.props.addrId } location={ this.props.location } onClick={ this.handleClickAddress } onChange={ this.handleChangeAddress } /> ) }
+						{ this.state.addresses.map( (addr) => <Address key={addr.id} custId={this.props.id} {...addr} selected={ addr.id == this.props.addrId } location={ this.props.location } onClick={ this.handleClickAddress } onChange={ this.handleChangeAddress } uniqueId={ this.uniqueId }/> ) }
 					</CSSTransitionGroup>
 				</div>
 				<div className="card-action">

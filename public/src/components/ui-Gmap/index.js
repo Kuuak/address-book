@@ -20,6 +20,8 @@ class Gmap extends React.Component {
 	constructor( props ) {
 		super( props );
 
+		this.uniqueId = Date.now();
+
 		this.state = {
 			dest: null,
 			isLoading: true,
@@ -48,7 +50,7 @@ class Gmap extends React.Component {
 	}
 
 	initMap() {
-		this.map = new google.maps.Map(document.getElementById('gmap'), {
+		this.map = new google.maps.Map(document.getElementById( `gmap_${this.uniqueId}` ), {
 			center: config.map.latlng,
 			zoom: config.map.zoom,
 		});
@@ -121,7 +123,7 @@ class Gmap extends React.Component {
 					{ this.state.isLoading && <div className="veil"></div> }
 					{ this.state.isLoading && <Preloader center={true} active={true} /> }
 				</CSSTransitionGroup>
-				<div id="gmap" className="gmap"></div>
+				<div id={ `gmap_${this.uniqueId}` } className="gmap"></div>
 				{ this.state.dest && <div className="chip blue darken-3 white-text">{`Trajet: ${this.state.dest.duration.replace('minutes', 'min')} (${this.state.dest.distance})`}</div> }
 			</div>
 		);
