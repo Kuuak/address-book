@@ -90,8 +90,8 @@ class OrderDelivery extends React.Component {
 								ref={ customer => this.customer = customer }
 							/>
 						</div>
-						<div className="column-gmap">
-							<Gmap custId={ this.props.customer } addrId={ this.props.address } addAlerts={ this.props.addAlerts } />
+						<div className="column-gmap card">
+							{ this.props.active && <Gmap custId={ this.props.customer } addrId={ this.props.address } addAlerts={ this.props.addAlerts } /> }
 						</div>
 						<div className="order-process-action">
 							<Link to="/" className="btn grey lighten-1 order-cancel">Annuler</Link>
