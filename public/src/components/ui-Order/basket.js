@@ -14,6 +14,23 @@ import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
+export function calcItemsTotal( items ) {
+	let totalPrice = 0;
+
+	items.forEach( item => {
+		let itemPrice = item.price;
+
+		item.extras.forEach( extra => {
+			if ( 'add' == extra.type ) { itemPrice += extra.price; }
+			else { itemPrice -= extra.price; }
+		} );
+
+		totalPrice += itemPrice;
+	} );
+
+	return totalPrice.toFixed(2);
+}
+
 export default class OrderBasket extends React.Component {
 	constructor( props ) {
 		super( props );
@@ -96,23 +113,6 @@ export default class OrderBasket extends React.Component {
 		// 	});
 	}
 
-	calcTotal() {
-		let totalPrice = 0;
-
-		this.props.items.forEach( item => {
-			let itemPrice = item.price;
-
-			item.extras.forEach( extra => {
-				if ( 'add' == extra.type ) { itemPrice += extra.price; }
-				else { itemPrice -= extra.price; }
-			} );
-
-			totalPrice += itemPrice;
-		} );
-
-		return totalPrice.toFixed(2);
-	}
-
 	render() {
 		return (
 			<section className={'order-step step-items '+ ( this.props.active && 'step-active' ) }>
@@ -145,7 +145,7 @@ export default class OrderBasket extends React.Component {
 								{ this.props.items.map( item => <Item key={ item.id } selected={ item.id == this.state.selectedItem } { ...item } onClick={ this.handleClickItem } /> ) }
 								<li key="footer" className="collection-footer">
 									<h3>Total</h3>
-									<h3 className="secondary-content black-text">{ this.calcTotal() }</h3>
+									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ) }</h3>
 								</li>
 							</CSSTransitionGroup>
 							<div className="order-process-action">
