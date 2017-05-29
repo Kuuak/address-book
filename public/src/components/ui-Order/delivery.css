@@ -3,6 +3,7 @@
 	flex-basis: 49%;
 	height: calc(100% - 36px - 2rem);
 	overflow-y: scroll;
+	margin: 0;
 }
 
 .step-delivery .gmap-wrapper { position: relative; }
