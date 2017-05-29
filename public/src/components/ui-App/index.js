@@ -25,7 +25,7 @@ import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
 
 
-class App extends React.Component {
+export default class App extends React.Component {
 
 	constructor( props ) {
 		super( props );

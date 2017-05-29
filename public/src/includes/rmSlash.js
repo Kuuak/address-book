@@ -7,8 +7,6 @@
  * @param		string	str		The string to remove the slash
  * @return	string
  */
-function rmSlash( str ) {
+export default function rmSlash( str ) {
 	return str.replace(/\/$/, "");
 }
-
-export default rmSlash;

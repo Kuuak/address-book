@@ -8,7 +8,7 @@
  * @param		int				delay									Optional. The time, in milliseconds (thousandths of a second), the timer should wait before the specified function or code is executed. Default to 0, meaning execute "immediately", or more accurately, as soon as possible.
  * @param		mixed			param1, ..., paramN		Optional. Additional parameters which are passed through to the function specified by func once the timer expires.
  */
-class Timer {
+export default class Timer {
 
 	constructor( callback, delay ) {
 		this.args			= arguments;
@@ -35,5 +35,3 @@ class Timer {
 		);
 	};
 }
-
-export default Timer

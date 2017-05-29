@@ -177,7 +177,7 @@ OrderBasket.PropTypes = {
 	address			: PropTypes.number.isRequired,
 };
 
-class Dish extends React.Component {
+export class Dish extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -215,7 +215,7 @@ Dish.PropTypes = {
 	addItem	: PropTypes.func.isRequired,
 };
 
-class DishForm extends React.Component {
+export class DishForm extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -362,7 +362,7 @@ Item.PropTypes = {
 	onClick	: PropTypes.func,
 };
 
-class Ingredient extends React.Component {
+export class Ingredient extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -398,7 +398,7 @@ Ingredient.PropTypes = {
 	addExtra: PropTypes.func.isRequired,
 };
 
-class IngredientForm extends React.Component {
+export class IngredientForm extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -482,7 +482,7 @@ IngredientForm.PropTypes = {
 	addIngredient	: PropTypes.func.isRequired,
 };
 
-class Extra extends React.Component {
+export class Extra extends React.Component {
 
 	constructor( props ) {
 		super( props );

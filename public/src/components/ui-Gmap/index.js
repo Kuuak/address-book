@@ -15,7 +15,7 @@ import Preloader from 'components/ui-Preloader';
 // Helpers
 import isEmpty from 'lodash.isempty';
 
-class Gmap extends React.Component {
+export default class Gmap extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -134,5 +134,3 @@ Gmap.propTypes = {
 	addrId		: PropTypes.number.isRequired,
 	addAlerts	: PropTypes.func.isRequired,
 };
-
-export default Gmap;

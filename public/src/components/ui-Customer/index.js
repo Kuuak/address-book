@@ -18,7 +18,7 @@ import CustomerFormDetails from 'components/ui-CustomerForm/details';
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 
-class Customer extends React.Component {
+export default class Customer extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -165,5 +165,3 @@ Customer.propTypes = {
 	history		: PropTypes.object.isRequired,
 	location	: PropTypes.object.isRequired,
 };
-
-export default Customer;

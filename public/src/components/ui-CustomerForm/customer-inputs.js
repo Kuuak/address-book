@@ -8,7 +8,7 @@ import genderNames from './data/names.json';
 // Helpers
 import randomInt from 'includes/randomInt';
 
-class CustomerInputs extends React.Component {
+export default class CustomerInputs extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -73,5 +73,3 @@ CustomerInputs.propTypes = {
 	lastname		: PropTypes.string,
 	email				: PropTypes.string,
 };
-
-export default CustomerInputs;

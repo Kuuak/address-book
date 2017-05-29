@@ -12,7 +12,7 @@ import ResultCustomer from 'components/ui-ResultCustomer';
 // Helpers
 import isEmpty from 'lodash.isempty';
 
-class Customers extends React.Component {
+export default class Customers extends React.Component {
 
 	constructor( props ) {
 		super(props);
@@ -46,5 +46,3 @@ class Customers extends React.Component {
 		);
 	}
 }
-
-export default Customers;

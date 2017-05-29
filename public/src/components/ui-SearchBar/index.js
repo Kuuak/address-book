@@ -7,7 +7,7 @@ import DebounceInput from 'react-debounce-input';
 
 import isEmpty from 'lodash.isempty';
 
-class SearchBar extends React.Component {
+export default class SearchBar extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -31,4 +31,3 @@ class SearchBar extends React.Component {
 		)
 	}
 }
-export default SearchBar;

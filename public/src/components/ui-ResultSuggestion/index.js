@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-class ResultSuggestion extends React.Component {
+export default class ResultSuggestion extends React.Component {
 
 	render() {
 
@@ -50,5 +50,3 @@ ResultSuggestion.defaultProps = {
 	city		: null,
 	extra		: false,
 }
-
-export default ResultSuggestion

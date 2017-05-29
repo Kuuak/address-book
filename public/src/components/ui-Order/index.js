@@ -12,7 +12,7 @@ import Delivery from 'components/ui-Order/delivery';
 import Validation from 'components/ui-Order/validation';
 // import Confirmation from 'components/ui-Order/confirmation';
 
-class Order extends React.Component {
+export default class Order extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -140,5 +140,3 @@ Order.PropTypes = {
 	addAlerts	: PropTypes.func.isRequired,
 	history		: PropTypes.object.isRequired,
 };
-
-export default Order

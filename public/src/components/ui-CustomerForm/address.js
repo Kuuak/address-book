@@ -16,7 +16,7 @@ import Preloader from 'components/ui-Preloader';
 import AddressInputs from 'components/ui-CustomerForm/address-inputs';
 
 
-class AddressForm extends React.Component {
+export default class AddressForm extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -103,5 +103,3 @@ AddressForm.propTypes = {
 	addAlerts			: PropTypes.func.isRequired,
 	onSubmitSucess: PropTypes.func,
 };
-
-export default AddressForm;

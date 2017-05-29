@@ -16,7 +16,7 @@ import PhoneInput from 'components/ui-CustomerForm/phone-input'
 import AddressInputs from 'components/ui-CustomerForm/address-inputs'
 import CustomerInputs from 'components/ui-CustomerForm/customer-inputs'
 
-class CustomerForm extends React.Component {
+export default class CustomerForm extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -91,5 +91,3 @@ CustomerForm.propTypes = {
 	history: PropTypes.object.isRequired,
 	addAlerts: PropTypes.func.isRequired,
 };
-
-export default CustomerForm;

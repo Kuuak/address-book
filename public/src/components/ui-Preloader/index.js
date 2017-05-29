@@ -5,7 +5,7 @@ import './index.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Preloader extends React.Component {
+export default class Preloader extends React.Component {
 
 	render() {
 
@@ -44,5 +44,3 @@ Preloader.defaultProps = {
 	active: false,
 	center: false,
 };
-
-export default Preloader;

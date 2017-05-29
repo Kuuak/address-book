@@ -8,7 +8,7 @@
  * @param		FormData object		formData	The FormData to convert.
  * @return	string											The form-urlencoded string.
  */
-function formData2UrlEncoded( formData ) {
+export default function formData2UrlEncoded( formData ) {
 
 	let urlEncodedData = "",
 			urlEncodedDataPairs = [];
@@ -24,5 +24,3 @@ function formData2UrlEncoded( formData ) {
 
 	return urlEncodedData;
 }
-
-export default formData2UrlEncoded;

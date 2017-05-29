@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import isNil from 'lodash.isnil';
 import Timer from 'includes/timer.js';
 
-class Alerts extends React.Component {
+export default class Alerts extends React.Component {
 
 	render() {
 		return (
@@ -101,7 +101,3 @@ Alert.defaultProps = {
 	handleClick	: null,
 	titleButton	: 'Click',
 }
-
-
-
-export default Alerts;

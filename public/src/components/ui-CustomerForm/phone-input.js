@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // Helpers
 import isFunction from 'lodash.isfunction';
 
-class PhoneInput extends React.Component {
+export default class PhoneInput extends React.Component {
 
 	render() {
 		return (
@@ -19,5 +19,3 @@ class PhoneInput extends React.Component {
 PhoneInput.propTypes = {
 	phone: PropTypes.string,
 };
-
-export default PhoneInput;

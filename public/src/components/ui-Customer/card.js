@@ -15,7 +15,7 @@ import rmSlash from 'includes/rmSlash';
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 
-class CustomerCard extends React.Component {
+export default class CustomerCard extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -102,7 +102,6 @@ class CustomerCard extends React.Component {
 		);
 	}
 }
-
 CustomerCard.propTypes = {
 	id				: PropTypes.number.isRequired,
 	addrId		: PropTypes.number,
@@ -111,5 +110,3 @@ CustomerCard.propTypes = {
 	location	: PropTypes.string.isRequired,
 	addAlerts	: PropTypes.func.isRequired,
 };
-
-export default CustomerCard;

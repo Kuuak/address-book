@@ -12,7 +12,7 @@ import rmSlash from 'includes/rmSlash';
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 
-class Address extends React.Component {
+export default class Address extends React.Component {
 	constructor( props ) {
 		super( props );
 
@@ -89,5 +89,3 @@ Address.propTypes = {
 Address.defaultProps = {
 	selected: false,
 };
-
-export default Address;

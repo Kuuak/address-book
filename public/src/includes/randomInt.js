@@ -10,10 +10,8 @@
  * @param		int	max	The max value.
  * @return	int			Random int between min & max.
  */
-function randomInt(min, max) {
+export default function randomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min)) + min;
 }
-
-export default randomInt;

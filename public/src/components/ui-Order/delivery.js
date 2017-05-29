@@ -12,7 +12,7 @@ import Customer from 'components/ui-Customer/card';
 import AddressForm from 'components/ui-CustomerForm/address';
 import CustomerForm from 'components/ui-CustomerForm/details';
 
-class OrderDelivery extends React.Component {
+export default class OrderDelivery extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -118,5 +118,3 @@ OrderDelivery.PropTypes = {
 	addAlerts			: PropTypes.func.isRequired,
 	history				: PropTypes.object.isRequired,
 };
-
-export default OrderDelivery;

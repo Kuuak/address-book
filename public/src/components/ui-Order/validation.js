@@ -11,7 +11,7 @@ import Gmap from 'components/ui-Gmap';
 import Customer from 'components/ui-Customer/card';
 import { Item, calcItemsTotal } from 'components/ui-Order/basket';
 
-class OrderValidation extends React.Component {
+export default class OrderValidation extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -126,6 +126,3 @@ OrderValidation.defaultProps = {
 	items	: [],
 	active: false,
 };
-
-
-export default OrderValidation;

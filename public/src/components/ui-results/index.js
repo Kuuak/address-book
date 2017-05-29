@@ -13,7 +13,7 @@ import ResultSuggestion from 'components/ui-ResultSuggestion';
 // Helpers
 import isNil from 'lodash.isnil';
 
-class Results extends React.Component {
+export default class Results extends React.Component {
 
 	render() {
 		return (
@@ -43,4 +43,3 @@ class Results extends React.Component {
 	}
 
 }
-export default Results;

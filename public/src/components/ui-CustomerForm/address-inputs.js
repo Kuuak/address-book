@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 // Helpers
 import isNull from 'lodash.isnull';
 
-class AddressInputs extends React.Component {
+export default class AddressInputs extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -118,5 +118,3 @@ AddressInputs.propTypes = {
 	floor		: PropTypes.string,
 	notes		: PropTypes.string,
 };
-
-export default AddressInputs;

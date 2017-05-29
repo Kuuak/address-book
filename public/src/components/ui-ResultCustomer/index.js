@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 // Helpers
 import isEmpty from 'lodash.isempty';
 
-class ResultCostumer extends React.Component {
+export default class ResultCostumer extends React.Component {
 
 	render() {
 
@@ -42,5 +42,3 @@ class ResultCostumer extends React.Component {
 	}
 
 }
-
-export default ResultCostumer

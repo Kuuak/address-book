@@ -16,7 +16,7 @@ import Preloader from 'components/ui-Preloader';
 import PhoneInput from 'components/ui-CustomerForm/phone-input';
 import CustomerInputs from 'components/ui-CustomerForm/customer-inputs';
 
-class CustomerFormDetails extends React.Component {
+export default class CustomerFormDetails extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -104,5 +104,3 @@ CustomerFormDetails.propTypes = {
 	addAlerts			: PropTypes.func.isRequired,
 	onSubmitSucess: PropTypes.func,
 };
-
-export default CustomerFormDetails;
