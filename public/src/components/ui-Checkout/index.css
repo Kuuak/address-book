@@ -1,10 +1,10 @@
-.order {
+.checkout {
 	display: flex;
 	flex-flow: row nowrap;
 	height: 100%;
 }
 
-.order-step {
+.checkout-step {
 	position: relative;
 	height: 100%;
 	flex: 1 1 3%;
@@ -16,9 +16,9 @@
 	flex-basis: 91%;
 	background-color: transparent;
 }
-.step-active ~ .order-step { background-color: #f5f5f5; }
+.step-active ~ .checkout-step { background-color: #f5f5f5; }
 
-.order-step .lateral {
+.checkout-step .lateral {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -39,7 +39,7 @@
 	opacity: 0;
 }
 
-.order-step .content {
+.checkout-step .content {
 	height: calc(100% - 2.1rem);
 	padding: 0 3rem;
 	opacity: 0;
@@ -51,7 +51,7 @@
 	opacity: 1;
 }
 
-.order .row {
+.checkout .row {
 	position: relative;
 	display: flex;
 	flex-flow: row wrap;
@@ -61,18 +61,18 @@
 }
 
 
-.order .collection-header {
+.checkout .collection-header {
 	position: sticky;
 	top: 0;
 	z-index: 5;
 }
 
-.order .collection-header h2 {
+.checkout .collection-header h2 {
 	margin: 0;
 	text-align: center;
 }
 
-.order .collection-header i {
+.checkout .collection-header i {
 	position: absolute;
 	top: 50%;
 	right: 1rem;
@@ -103,7 +103,7 @@
 .collection-item-action a.extra:hover { color: #66bb6a; }
 .collection-item-action a.delete:hover { color: #b71c1c; }
 
-.order .collection-footer {
+.checkout .collection-footer {
 	position: sticky;
 	bottom: 0;
 	padding: 10px;
@@ -142,12 +142,12 @@
 	flex-basis: 20%;
 }
 
-.order-process-action {
+.checkout-process-action {
 	text-align: center;
-	margin: 2rem 0 0;
+	margin: 1rem 0 0;
 }
-.order-process-action a {
+.checkout-process-action a {
 	color: #fff;
 	margin: 0 1rem;
 }
-.order-process-action .order-cance { font-size: .9rem; }
+.checkout-process-action .checkout-cance { font-size: .9rem; }

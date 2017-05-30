@@ -8,7 +8,7 @@
 
 .step-delivery .gmap-wrapper { position: relative; }
 
-.step-delivery .order-process-action { flex-basis: 100%; }
+.step-delivery .checkout-process-action { flex-basis: 100%; }
 
 .step-delivery aside {
 	position: absolute;

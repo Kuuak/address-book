@@ -47,13 +47,13 @@ export default class Address extends React.Component {
 					<div className="actions">
 							<Route path="/customer" render={ () => (
 								<div>
-									<Link to={ `/order/delivery/?customer=${this.props.custId}&address=${this.props.id}` } rel="address-shipping" onClick={ this.handleClick } className="material-icons shipping">local_shipping</Link>
+									<Link to={ `/checkout/delivery/?customer=${this.props.custId}&address=${this.props.id}` } rel="address-shipping" onClick={ this.handleClick } className="material-icons shipping">local_shipping</Link>
 									<Link to={`${rmSlash(this.props.location)}/address/${this.props.id}/directions/`} rel="address-directions" onClick={ this.handleClick } className="material-icons direction">directions</Link>
 									<Link to={`${rmSlash(this.props.location)}/address/${this.props.id}/edit/`} rel="address-edit" onClick={ this.handleClick } className="material-icons edit">edit</Link>
 									<Link to={`${rmSlash(this.props.location)}/address/${this.props.id}/delete/`} rel="address-delete" onClick={ this.handleClick } className="material-icons delete">delete</Link>
 								</div>
 							) } />
-							<Route path="/order/delivery" render={ () => (
+							<Route path="/checkout/delivery" render={ () => (
 								<div className="input-chk">
 									<input type="radio" id={ `addr_${this.props.id}` } name={`addr_${this.props.uniqueId}`} value={ this.props.id } onChange={ this.handleChange } defaultChecked={ this.props.selected } />
 									<label htmlFor={ `addr_${this.props.id}` }></label>

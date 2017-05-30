@@ -1,5 +1,5 @@
 // Assets depedencies (Style & images)
-import './validation.css';
+import './summary.css';
 
 // React
 import React from 'react';
@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 // Components
 import Gmap from 'components/ui-Gmap';
 import Customer from 'components/ui-Customer/card';
-import { Item, calcItemsTotal } from 'components/ui-Order/basket';
+import { Item, calcItemsTotal } from 'components/ui-Checkout/basket';
 
-export default class OrderValidation extends React.Component {
+export default class CheckoutSummary extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -51,17 +51,17 @@ export default class OrderValidation extends React.Component {
 				}
 
 				if ( res.success ) {
-					this.props.history.push( `/order/${res.order._id}/confirmation/` );
+					this.props.history.push( `/checkout/complete/` );
 				}
 			} );
 	}
 
 	render() {
 		return (
-			<section className={'order-step step-validation '+ ( this.props.active && 'step-active' ) }>
-				<div className="lateral">Validation</div>
+			<section className={'checkout-step step-validation '+ ( this.props.active && 'step-active' ) }>
+				<div className="lateral">Récapitulatif</div>
 				<div className="content">
-					<h1>Validation</h1>
+					<h1>Récapitulatif</h1>
 					<div className="row">
 						<div className="column-customer">
 							<Customer
@@ -104,9 +104,9 @@ export default class OrderValidation extends React.Component {
 									</div>
 								</div>
 							</div>
-							<div className="order-process-action">
-								<Link to={ `/order/basket/` } className="btn red lighten-2 order-return">Retour</Link>
-								<Link to={ `/order/confirmation/` } onClick={ this.handleConfirmation } className="btn red order-next">Confirmer</Link>
+							<div className="checkout-process-action">
+								<Link to={ `/checkout/basket/` } className="btn red lighten-2 checkout-return">Retour</Link>
+								<Link to={ `/checkout/complete/` } onClick={ this.handleConfirmation } className="btn red checkout-next">Confirmer</Link>
 							</div>
 						</div>
 					</div>
@@ -115,14 +115,14 @@ export default class OrderValidation extends React.Component {
 		);
 	}
 }
-OrderValidation.PropTypes = {
+CheckoutSummary.PropTypes = {
 	items		: PropTypes.array.isRequired,
 	active	: PropTypes.bool,
 	customer: PropTypes.number.isRequired,
 	address	: PropTypes.number.isRequired,
 	addAlerts: PropTypes.func.isRequired,
 };
-OrderValidation.defaultProps = {
+CheckoutSummary.defaultProps = {
 	items	: [],
 	active: false,
 };

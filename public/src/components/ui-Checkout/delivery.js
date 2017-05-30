@@ -12,7 +12,7 @@ import Customer from 'components/ui-Customer/card';
 import AddressForm from 'components/ui-CustomerForm/address';
 import CustomerForm from 'components/ui-CustomerForm/details';
 
-export default class OrderDelivery extends React.Component {
+export default class CheckoutDelivery extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -69,12 +69,12 @@ export default class OrderDelivery extends React.Component {
 	}
 
 	handleChange( event, custId, addrId ) {
-		this.props.history.push( `/order/delivery/?address=${addrId}` );
+		this.props.history.push( `/checkout/delivery/?address=${addrId}` );
 	}
 
 	render() {
 		return (
-			<section className={'order-step step-delivery '+ ( this.props.active && 'step-active' ) }>
+			<section className={'checkout-step step-delivery '+ ( this.props.active && 'step-active' ) }>
 				<div className="lateral">Livraison</div>
 				<div className="content">
 					<h1>Livraison</h1>
@@ -93,14 +93,14 @@ export default class OrderDelivery extends React.Component {
 						<div className="column-gmap card">
 							{ this.props.active && <Gmap custId={ this.props.customer } addrId={ this.props.address } addAlerts={ this.props.addAlerts } /> }
 						</div>
-						<div className="order-process-action">
-							<Link to="/" className="btn grey lighten-1 order-cancel">Annuler</Link>
-							<Link to="/order/basket/" onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+						<div className="checkout-process-action">
+							<Link to="/" className="btn grey lighten-1 checkout-cancel">Annuler</Link>
+							<Link to="/checkout/basket/" onClick={ this.handleNextStep } className="btn red checkout-next">Suivant</Link>
 						</div>
 					</div>
 				</div>
 				<aside className={( this.state.editCustomer || this.state.addAddress ? 'open' : '' )} >
-					<Link to={ `/order/customer/${this.props.customer}/address/${this.props.address}/delivery/` } rel="close-aside" className="material-icons close" onClick={ this.handleClick }>clear</Link>
+					<Link to={ `/checkout/delivery/` } rel="close-aside" className="material-icons close" onClick={ this.handleClick }>clear</Link>
 					{ ( this.state.editCustomer && <CustomerForm key="customerForm" id={ this.props.customer } addAlerts={ this.props.addAlerts } onSubmitSucess={ this.onFormsSuccess } /> ) }
 					{ ( this.state.addAddress && <AddressForm key="addressForm" custId={ this.props.customer } addAlerts={ this.props.addAlerts } onSubmitSucess={ this.onFormsSuccess } /> ) }
 				</aside>
@@ -108,10 +108,10 @@ export default class OrderDelivery extends React.Component {
 		);
 	}
 }
-OrderDelivery.defaultProps = {
+CheckoutDelivery.defaultProps = {
 	active: false,
 };
-OrderDelivery.PropTypes = {
+CheckoutDelivery.PropTypes = {
 	active				: PropTypes.bool,
 	customer			: PropTypes.number.isRequired,
 	address				: PropTypes.number.isRequired,

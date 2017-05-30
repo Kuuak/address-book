@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Components
-import Basket from 'components/ui-Order/basket';
-import Delivery from 'components/ui-Order/delivery';
-import Validation from 'components/ui-Order/validation';
-// import Confirmation from 'components/ui-Order/confirmation';
+import Basket from 'components/ui-Checkout/basket';
+import Delivery from 'components/ui-Checkout/delivery';
+import Summary from 'components/ui-Checkout/summary';
+// import Confirmation from 'components/ui-Checkout/confirmation';
 
-export default class Order extends React.Component {
+export default class Checkout extends React.Component {
 
 	constructor( props ) {
 		super( props );
@@ -33,7 +33,7 @@ export default class Order extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.history.replace( `/order/${this.props.step}/` ); // remove the queryString (search)
+		this.props.history.replace( `/checkout/${this.props.step}/` ); // remove the queryString (search)
 	}
 
 	componentDidUpdate() {
@@ -44,7 +44,7 @@ export default class Order extends React.Component {
 					address: this.props.addrId
 				}
 			});
-			this.props.history.replace( `/order/${this.props.step}/` ); // remove the queryString (search)
+			this.props.history.replace( `/checkout/${this.props.step}/` ); // remove the queryString (search)
 		}
 	}
 
@@ -117,22 +117,15 @@ export default class Order extends React.Component {
 
 	render() {
 		return (
-				<section className={'order-step step-items'+ ( 3 == this.state.step ? ' active' : '' ) }>
-					<Link className="lateral" to={ `${this.state.location}confirmation/` }>Confirmation</Link>
-					<div className="content">
-						<h1>Confirmation</h1>
-
-					</div>
-				</section>
-			<div className="order">
+			<div className="checkout">
 				<Delivery active={ 'delivery' == this.props.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 				<Basket active={ 'basket' == this.props.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } />
-				<Validation active={ 'validation' == this.props.step } { ...this.state.delivery } items={ this.state.items } addAlerts={ this.props.addAlerts } history={ this.props.history } />
+				<Summary active={ 'summary' == this.props.step } { ...this.state.delivery } items={ this.state.items } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 			</div>
 		);
 	}
 }
-Order.PropTypes = {
+Checkout.PropTypes = {
 	step			: PropTypes.string.isRequired,
 	id				: PropTypes.number,
 	custId		: PropTypes.number,

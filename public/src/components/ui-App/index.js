@@ -16,7 +16,7 @@ import Customer from 'components/ui-Customer';
 import SearchBar from 'components/ui-SearchBar';
 import Customers from 'components/ui-Customers';
 import CustomerForm from 'components/ui-CustomerForm/customer';
-import Order from 'components/ui-Order';
+import Checkout from 'components/ui-Checkout';
 
 // Helpers
 import isNil from 'lodash.isnil';
@@ -234,16 +234,9 @@ export default class App extends React.Component {
 							}
 							return <CustomerForm suggest={ suggestion } history={ history } addAlerts={ this.addAlerts } />;
 						}} />
-						<Route path="/order/:orderId/:step?" render={ ({ match, history, location }) => {
-
-							let query		= new URLSearchParams( location.search );
-
-							if ( isNil(match.params.step) ) {
-								match.params.step = match.params.orderId;
-								match.params.orderId = null;
-							}
-
-							return <Order step={ match.params.step } id={ match.params.orderId } custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
+						<Route path="/checkout/:step" render={ ({ match, history, location }) => {
+							let query = new URLSearchParams( location.search );
+							return <Checkout step={ match.params.step } custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
 						} } />
 					</main>
 					<footer className="page-footer indigo">

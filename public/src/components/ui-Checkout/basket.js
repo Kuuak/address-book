@@ -31,7 +31,7 @@ export function calcItemsTotal( items ) {
 	return totalPrice.toFixed(2);
 }
 
-export default class OrderBasket extends React.Component {
+export default class CheckoutBasket extends React.Component {
 	constructor( props ) {
 		super( props );
 
@@ -116,7 +116,7 @@ export default class OrderBasket extends React.Component {
 
 	render() {
 		return (
-			<section className={'order-step step-items '+ ( this.props.active && 'step-active' ) }>
+			<section className={'checkout-step step-items '+ ( this.props.active && 'step-active' ) }>
 				<div className="lateral">Commande</div>
 				<div className="content">
 					<h1>Commande</h1>
@@ -149,9 +149,9 @@ export default class OrderBasket extends React.Component {
 									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ) }</h3>
 								</li>
 							</CSSTransitionGroup>
-							<div className="order-process-action">
-								<Link to="/order/delivery/" className="btn red lighten-2 order-return">Retour</Link>
-								<Link to="/order/validation/" onClick={ this.handleNextStep } className="btn red order-next">Suivant</Link>
+							<div className="checkout-process-action">
+								<Link to="/checkout/delivery/" className="btn red lighten-2 checkout-return">Retour</Link>
+								<Link to="/checkout/summary/" onClick={ this.handleNextStep } className="btn red checkout-next">Suivant</Link>
 							</div>
 						</div>
 					</div>
@@ -160,11 +160,11 @@ export default class OrderBasket extends React.Component {
 		);
 	}
 }
-OrderBasket.defaultProps = {
+CheckoutBasket.defaultProps = {
 	items: [],
 	active: false,
 };
-OrderBasket.PropTypes = {
+CheckoutBasket.PropTypes = {
 	items				: PropTypes.array,
 	active			: PropTypes.bool,
 	addItem			: PropTypes.func.isRequired,
@@ -330,7 +330,7 @@ export class Item extends React.Component {
 		return (
 			<li className={ 'item collection-item'+ ( this.props.selected ? ' selected' : '' ) } >
 				<div className="item-detail">
-					<Route path="/order/basket" render={ () => (
+					<Route path="/checkout/basket" render={ () => (
 						<span className="collection-item-action">
 							<a onClick={ this.handleClick } rel="delete" className="delete material-icons" title="Supprimer">delete</a>
 							<a onClick={ this.handleClick } rel="copy" className="copy material-icons" title="Copier">add_box</a>
