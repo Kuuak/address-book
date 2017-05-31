@@ -5,7 +5,9 @@ import './index.css';
 import React from 'react';
 import DebounceInput from 'react-debounce-input';
 
+// Helpers
 import isEmpty from 'lodash.isempty';
+import formatPhone from 'includes/formatPhone';
 
 export default class SearchBar extends React.Component {
 
@@ -20,13 +22,13 @@ export default class SearchBar extends React.Component {
 	}
 
 	handleChange( event ) {
-		this.props.onChange( event.target.value )
+		this.props.onChange( event.target.value.replace( /\D/g, '' ) );
 	}
 
 	render() {
 		return (
 			<div className='search-bar'>
-				<DebounceInput id="search_input" name="search-input" value={this.props.searchValue} placeholder='saisir un numéro' onChange={this.handleChange} debounceTimeout={500} />
+				<DebounceInput id="search_input" name="search-input" value={ formatPhone(this.props.searchValue) } placeholder='saisir un numéro' onChange={this.handleChange} debounceTimeout={500} />
 			</div>
 		)
 	}

@@ -7,6 +7,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// Helpers
+import formatPhone from 'includes/formatPhone';
+
 export default class ResultSuggestion extends React.Component {
 
 	render() {
@@ -15,7 +18,7 @@ export default class ResultSuggestion extends React.Component {
 			<li className="card result-suggestion" style={{transitionDelay: (this.props.id*75) +'ms'}}>
 				<div className="card-content">
 					<div className="card-header">
-						<div className="card-title phone">{this.props.phone}</div>
+						<div className="card-title phone">{ formatPhone(this.props.phone) }</div>
 					</div>
 					<div className="title">{this.props.title}</div>
 					<address>

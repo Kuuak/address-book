@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
+import formatPhone from 'includes/formatPhone';
 
 export default class ResultCostumer extends React.Component {
 
@@ -16,7 +17,7 @@ export default class ResultCostumer extends React.Component {
 		return (
 			<li className="result-costumer card" style={{transitionDelay: (this.props.id*75) +'ms'}}>
 				<div className="card-content">
-					<div className="card-title">{this.props.phone}</div>
+					<div className="card-title">{ formatPhone(this.props.phone) }</div>
 					<div className="name">{this.props.firstname} {this.props.lastname}</div>
 					<ul className="collection">
 						{

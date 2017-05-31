@@ -14,6 +14,7 @@ import Address from 'components/ui-Address';
 import rmSlash from 'includes/rmSlash';
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
+import formatPhone from 'includes/formatPhone';
 
 export default class CustomerCard extends React.Component {
 
@@ -82,7 +83,7 @@ export default class CustomerCard extends React.Component {
 		return (
 			<div className={ 'customer-card card'+ ( this.state.loading ? ' loading' : '' ) }>
 				<div className="card-content">
-					<h1 className="card-title">{ this.state.phone }</h1>
+					<h1 className="card-title">{ formatPhone(this.state.phone || '') }</h1>
 					<h2>
 						{ `${this.state.firstname} ${this.state.lastname}`  }
 						<small> ({( 'mr' === this.state.gender ? 'Monsieur' : 'Madame' )})</small>
