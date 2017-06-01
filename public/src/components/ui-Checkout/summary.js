@@ -105,8 +105,8 @@ export default class CheckoutSummary extends React.Component {
 								</div>
 							</div>
 							<div className="checkout-process-action">
-								<Link to={ `/checkout/basket/` } className="btn red lighten-2 checkout-return">Retour</Link>
-								<Link to={ `/checkout/complete/` } onClick={ this.handleConfirmation } className="btn red checkout-next">Confirmer</Link>
+								<Link to="/checkout/basket/" className="btn red lighten-2 checkout-return">Retour</Link>
+								<Link to="/checkout/complete/" onClick={ this.handleConfirmation } className="btn red checkout-next">Confirmer</Link>
 							</div>
 						</div>
 					</div>
