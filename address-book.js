@@ -79,6 +79,14 @@ app
 		Customer.delete( req.params.custId, result => res.end( JSON.stringify( result ) ) );
 	} )
 
+	.get		( '/order/:orderId', (req, res) => {
+		if ( req.accepts( 'html' ) ) {
+			res.sendFile( __dirname +'/public/index.html' );
+		}
+		else {
+			Order.get( req.params.orderId, result => res.end( JSON.stringify( result ) ) );
+		}
+	} )
 	.post		( '/order', (req, res) => {
 		Order.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
 	} )

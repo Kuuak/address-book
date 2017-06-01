@@ -84,7 +84,7 @@ export default class Gmap extends React.Component {
 
 				if ( res.success ) {
 					this.directionsService.route( {
-						origin: config.map.address,
+						origin: `${config.address.street} ${config.address.number}, ${config.address.postcode} ${config.address.city}, ${config.address.country}`,
 						destination: `${res.address.street} ${res.address.number}, ${res.address.postcode} ${res.address.city}`,
 						travelMode: 'DRIVING',
 						provideRouteAlternatives: true,

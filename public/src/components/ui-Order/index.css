@@ -1,0 +1,107 @@
+.order {
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 1rem 2rem;
+	overflow-y: scroll;
+}
+
+.order-header {
+	display: flex;
+	height: 120px;
+	margin-bottom: 1.5rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid;
+	align-items: center;
+	justify-content: space-between;
+}
+.order-header .logo,
+.order-header .logo img { height: 100%; }
+
+.order-header address {
+	font-style: normal;
+	text-align: right;
+}
+.order-header address .title { font-size: 1.1rem; }
+
+.order-details,
+.order-customer {
+	display: flex;
+	flex-flow: row wrap;
+	font-size: 1.2rem;
+	margin-bottom: 1rem;
+	justify-content: space-between;
+}
+
+.order-details > div,
+.order-customer > div { flex-basis: 49%; }
+
+.order-customer {
+	padding-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
+ 	border-bottom: 1px solid;
+}
+
+
+.order .selected-items { border: none; }
+
+.order .selected-items .collection-item.item {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: none;
+}
+.order .selected-items .collection-item.item:first-child { border: none; }
+
+.order .selected-items .item:last-of-type { border: none; }
+
+.order .selected-items .item-name,
+.order .selected-items .item-price { font-size: 1.1rem; }
+
+.order .selected-items .collection-footer {
+	display: flex;
+	margin-top: .5rem;
+	padding: 10px 20px;
+	border-top: double;
+	justify-content: flex-end;
+	text-align: right;
+}
+
+.order .selected-items .collection-footer .titles { padding-right: 1rem; }
+.order .selected-items .collection-footer .amount { flex-shrink: 0; }
+
+.order .selected-items .collection-footer .titles h3 { font-weight: bold; }
+.order .selected-items .collection-footer h3 {
+	margin: 0 0 .5rem;
+	font-size: 1.3rem;
+}
+
+.order .map-wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	margin-top: 1.5rem;
+	border-top: solid;
+	padding-top: 1.5rem;
+	justify-content: space-between;
+}
+
+.order .map {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.order .qrcode {
+	width: 200px;
+	height: 200px;
+	margin: 2rem 1rem;
+	flex-shrink: 0;
+}
+
+.order .qrcode canvas {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.order .gmap-wrapper .chip { bottom: 1rem; }

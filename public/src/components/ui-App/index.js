@@ -17,6 +17,7 @@ import SearchBar from 'components/ui-SearchBar';
 import Customers from 'components/ui-Customers';
 import CustomerForm from 'components/ui-CustomerForm/customer';
 import Checkout from 'components/ui-Checkout';
+import Order from 'components/ui-Order';
 
 // Helpers
 import isNil from 'lodash.isnil';
@@ -238,6 +239,7 @@ export default class App extends React.Component {
 							let query = new URLSearchParams( location.search );
 							return <Checkout step={ match.params.step } custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
 						} } />
+						<Route path="/order/:id" render={ ({ match }) => <Order id={ match.params.id } addAlerts={this.addAlerts} /> } />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">

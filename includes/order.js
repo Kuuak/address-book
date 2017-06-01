@@ -70,6 +70,33 @@ find( {}, { _id: 1 }, result => {
 } );
 
 
+function get( id, callback ) {
+	dbOrders.findOne( { _id: parseInt(id) }, (err, doc) => {
+		let success = true,
+				alert		= null;
+
+		if ( ! isNull(err) ) {
+			success = false;
+			alert = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Une erreur s\'est produite durant la recherche.',
+			};
+		}
+		else if ( isNull(doc) ) {
+			success = false;
+			alert = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups',
+				message	: 'Impossible de trouver la commande.',
+			};
+		}
+
+		callback({ success: success, order: doc, alerts: alert });
+	} );
+}
 function find( query, sort, callback ) {
 
 	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { _id: new RegExp( query ) } );
@@ -230,5 +257,6 @@ function validateOrder( data ) {
 	return { success: success, fields: fields, alerts: alerts }
 }
 
+exports.get			= get;
 exports.find		= find;
 exports.insert	= insert;

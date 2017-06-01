@@ -23,6 +23,7 @@
     "nedb": "^1.8.0",
     "node-fritzbox-callmonitor": "^1.1.0",
     "prop-types": "^15.5.9",
+    "qrcode": "^0.8.2",
     "react": "^15.5.4",
     "react-debounce-input": "^3.0.0",
     "react-dom": "^15.5.4",
