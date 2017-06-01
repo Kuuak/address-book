@@ -13,7 +13,8 @@ module.exports = {
 
 	output: {
 		filename: 'address-book.js',
-		path: path.resolve(__dirname, 'public/dist')
+		path: path.resolve(__dirname, 'public/dist'),
+		publicPath: '/dist/'
 	},
 
 	// Resolve the `./src` directory so we can avoid writing

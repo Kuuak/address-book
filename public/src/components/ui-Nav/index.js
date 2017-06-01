@@ -1,6 +1,6 @@
 // Assets depedencies (Style & images)
 import './index.css';
-import './images/LEscaleGourmande-Logo-v2-blanc.png';
+import logoSrc from './images/LEscaleGourmande-Logo-v2-blanc.png';
 
 // React
 import React from 'react';
@@ -13,7 +13,7 @@ export default class Nav extends React.Component {
 			<nav className="site-nav indigo">
 				<div className="nav-wrapper">
 					<Link to="/" className="brand-logo" >
-						<img src="/dist/images/LEscaleGourmande-Logo-v2-blanc.png" alt="L'Escale Gourmande"/>
+						<img src={ logoSrc } alt="L'Escale Gourmande"/>
 					</Link>
 					<ul id="nav-mobile" className="right">
 						<li>
