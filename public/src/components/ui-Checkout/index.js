@@ -1,5 +1,6 @@
 // Assets depedencies (Style & images)
 import './index.css';
+import './print.css';
 
 // React
 import React from 'react';

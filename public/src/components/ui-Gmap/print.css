@@ -1,0 +1,10 @@
+@media print {
+
+	.gmap-wrapper .chip {
+		height: auto;
+		line-height: 2;
+		color: #000 !important;
+		background-color: #fff !important;
+	}
+
+}

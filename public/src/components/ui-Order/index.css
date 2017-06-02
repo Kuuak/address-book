@@ -23,6 +23,18 @@
 }
 .order-header address .title { font-size: 1.1rem; }
 
+.order-info {
+	display: flex;
+	flex-flow: row nowrap;
+	margin-bottom: 1.5rem;
+	padding-bottom: .5rem;
+	border-bottom: 1px solid;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.order-info > .column { width: 100%; }
+
 .order-details,
 .order-customer {
 	display: flex;
@@ -35,61 +47,53 @@
 .order-details > div,
 .order-customer > div { flex-basis: 49%; }
 
-.order-customer {
-	padding-bottom: 1.5rem;
-	margin-bottom: 1.5rem;
- 	border-bottom: 1px solid;
+.order-qrcode { display: none; }
+.order-qrcode canvas {
+	width: auto !important;
+	max-height: 100px;
+	margin: -5px;
 }
-
 
 .order .selected-items { border: none; }
-
-.order .selected-items .collection-item.item {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border-top: 1px solid #e0e0e0;
-	border-bottom: none;
-}
-.order .selected-items .collection-item.item:first-child { border: none; }
-
-.order .selected-items .item:last-of-type { border: none; }
+.order .selected-items .collection-item.item:last-child { border-width: 0; }
 
 .order .selected-items .item-name,
 .order .selected-items .item-price { font-size: 1.1rem; }
 
-.order .selected-items .collection-footer {
+.order-amounts {
 	display: flex;
 	margin-top: .5rem;
 	padding: 10px 20px;
 	border-top: double;
+	flex-flow: row wrap;
 	justify-content: flex-end;
 	text-align: right;
 }
 
-.order .selected-items .collection-footer .titles { padding-right: 1rem; }
-.order .selected-items .collection-footer .amount { flex-shrink: 0; }
+.order-amounts .titles { padding-right: 1rem; }
+.order-amounts .amount { flex-shrink: 0; }
 
-.order .selected-items .collection-footer .titles h3 { font-weight: bold; }
-.order .selected-items .collection-footer h3 {
+.order-amounts .titles h3 { font-weight: bold; }
+.order-amounts h3 {
 	margin: 0 0 .5rem;
+	padding: 0;
 	font-size: 1.3rem;
 }
 
-.order .map-wrapper {
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: stretch;
-	margin-top: 1.5rem;
-	border-top: solid;
-	padding-top: 1.5rem;
-	justify-content: space-between;
+.order-amounts .greetings {
+	font-size: 1.2rem;
+	display: none;
+	flex-basis: 100%;
+	text-align: center;
 }
 
-.order .map {
+.order-map {
 	position: relative;
-	display: block;
 	width: 100%;
-	height: auto;
+	height: 200px;
+	margin-top: 1.5rem;
+	padding-top: 1.5rem;
+	border-top: solid;
 }
 
 .order .qrcode {

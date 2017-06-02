@@ -1,0 +1,10 @@
+@media print {
+	.checkout-step h1,
+	.checkout-process-action,
+	.checkout-step:not(.step-active) {
+		display: none;
+		visibility: hidden;
+	}
+
+	.checkout-step .content { padding: 0; }
+}

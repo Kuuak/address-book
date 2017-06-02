@@ -1,0 +1,17 @@
+@media print {
+	/*@page {
+		size: A5 landscape;
+	}*/
+
+	html { font-size: 10px; }
+	body { background-color: #fff; }
+
+ 	.alerts,
+	.page-header,
+	.page-footer {
+		display: none;
+		visibility: hidden;
+	}
+
+
+}

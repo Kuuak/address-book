@@ -2,6 +2,7 @@
 import 'materialize/css/materialize.min.css';
 import 'styles/base.css';
 import './index.css';
+import './print.css';
 
 // React
 import React from 'react';
@@ -237,7 +238,7 @@ export default class App extends React.Component {
 						}} />
 						<Route path="/checkout/:step" render={ ({ match, history, location }) => {
 							let query = new URLSearchParams( location.search );
-							return <Checkout step={ match.params.step } custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
+							return <Checkout step={ match.params.step } orderId={parseInt(query.get('order'))} custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
 						} } />
 						<Route path="/order/:id" render={ ({ match }) => <Order id={ match.params.id } addAlerts={this.addAlerts} /> } />
 					</main>

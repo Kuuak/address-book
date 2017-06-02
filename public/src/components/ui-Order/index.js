@@ -1,5 +1,6 @@
 // Assets depedencies (Style & images)
 import './index.css';
+import './print.css';
 import imgLogo from './images/LEscaleGourmande-Logo-v2.jpg';
 
 import config from '../../../../config';
@@ -81,28 +82,35 @@ export default class Order extends React.Component {
 						<div className="city">{ `${config.address.postcode} ${config.address.city}` }</div>
 					</address>
 				</div>
-				<div className="order-details">
-					<div className="order-number"><strong>Commande n° : </strong>{ this.state._id.toLocaleString("arab",{minimumIntegerDigits:4, useGrouping: false}) }</div>
-					<div className="order-date"><strong>Date : </strong>{ orderDate.toLocaleDateString( 'fr-CH' ) } { orderDate.toLocaleTimeString( 'fr-CH' ) }</div>
-					<div className="order-payment"><strong>Payement : </strong>{ 'card' == this.state.payment ? 'par carte' : 'en espèces' }</div>
-					<div className="order-information"><strong>Informations : </strong>{ isEmpty(this.state.information) ? '-' : this.state.information }</div>
-				</div>
-				<div className="order-customer">
-					<div className="column-left">
-						<div className="order-customer-name">{ `${this.state.customer.firstname} ${this.state.customer.lastname}` }</div>
-						<div className="order-customer-phone">{ formatPhone(this.state.customer.phone) }</div>
-						<div><span className="street">{this.state.address.street}</span>&nbsp;<span className="number">{this.state.address.number}</span></div>
-						<div><span className="postcode">{this.state.address.postcode}</span>&nbsp;<span className="city">{this.state.address.city}</span></div>
+				<div className="order-content">
+					<div className="order-info">
+						<div className="column">
+							<div className="order-details">
+								<div className="number"><strong>Commande n° : </strong>{ this.state._id.toLocaleString("arab",{minimumIntegerDigits:4, useGrouping: false}) }</div>
+								<div className="date"><strong>Date : </strong>{ orderDate.toLocaleDateString( 'fr-CH' ) } { orderDate.toLocaleTimeString( 'fr-CH' ).replace( /\:\d{2}$/, '' ) }</div>
+								<div className="payment"><strong>Payement : </strong>{ 'card' == this.state.payment ? 'par carte' : 'en espèces' }</div>
+								<div className="information"><strong>Informations : </strong>{ isEmpty(this.state.information) ? '-' : this.state.information }</div>
+							</div>
+							<div className="order-customer">
+								<div className="column-left">
+									<div className="name">{ `${this.state.customer.firstname} ${this.state.customer.lastname}` }</div>
+									<div className="phone">{ formatPhone(this.state.customer.phone) }</div>
+									<div><span className="street">{this.state.address.street}</span>&nbsp;<span className="number">{this.state.address.number}</span></div>
+									<div><span className="postcode">{this.state.address.postcode}</span>&nbsp;<span className="city">{this.state.address.city}</span></div>
+								</div>
+								<div className="column-right">
+									<div className="doorcode"><strong>Code de porte : </strong>{ isEmpty(this.state.address.doorcode) ? '-' : this.state.address.doorcode }</div>
+									<div className="floor"><strong>Étage : </strong>{ isEmpty(this.state.address.floor) ? '-' : this.state.address.floor }</div>
+									<div className="notes"><strong>Informations : </strong>{ isEmpty(this.state.address.notes) ? '-' : this.state.address.notes }</div>
+								</div>
+							</div>
+						</div>
+						<div id="qrcode" className="order-qrcode"></div>
 					</div>
-					<div className="column-right">
-						<div><strong>Code de porte : </strong>{ isEmpty(this.state.address.doorcode) ? '-' : this.state.address.doorcode }</div>
-						<div><strong>Étage : </strong>{ isEmpty(this.state.address.floor) ? '-' : this.state.address.floor }</div>
-						<div><strong>Informations : </strong>{ isEmpty(this.state.address.notes) ? '-' : this.state.address.notes }</div>
-					</div>
-				</div>
-				<ul className="selected-items collection">
-					{ this.state.items.map( item => <Item key={ item.id } { ...item } /> ) }
-					<li className="collection-footer">
+					<ul className="selected-items collection">
+						{ this.state.items.map( item => <Item key={ item.id } { ...item } /> ) }
+					</ul>
+					<div className="order-amounts">
 						<div className="titles">
 							<h3 className="total" >Total</h3>
 							<div className="tax">{`TVA ${config.tax}% incluse`}</div>
@@ -111,13 +119,11 @@ export default class Order extends React.Component {
 							<h3 className="total">{ parseFloat(total).toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</h3>
 							<div className="tax">{ tax.toFixed( 2 ) }</div>
 						</div>
-					</li>
-				</ul>
-				<div className="map-wrapper">
-					<div className="map">
-						{ ! isEmpty(this.state.address) && <Gmap custId={ this.state.customer._id } addrId={ this.state.address.id } addAlerts={ this.props.addAlerts } /> }
+						<div className="greetings">Merci et bon appétit!</div>
 					</div>
-					<div id="qrcode" className="qrcode"></div>
+				</div>
+				<div className="order-footer order-map">
+					{ ! isEmpty(this.state.address) && <Gmap custId={ this.state.customer._id } addrId={ this.state.address.id } addAlerts={ this.props.addAlerts } /> }
 				</div>
 			</div>
 		);
