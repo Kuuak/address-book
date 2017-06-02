@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Basket from 'components/ui-Checkout/basket';
 import Delivery from 'components/ui-Checkout/delivery';
 import Summary from 'components/ui-Checkout/summary';
-// import Confirmation from 'components/ui-Checkout/confirmation';
+import Complete from 'components/ui-Checkout/complete';
 
 export default class Checkout extends React.Component {
 
@@ -20,6 +20,7 @@ export default class Checkout extends React.Component {
 
 		this.state = {
 			items: [],
+			order: this.props.orderId,
 			delivery: {
 				customer: this.props.custId,
 				address	: this.props.addrId,
@@ -37,15 +38,21 @@ export default class Checkout extends React.Component {
 		this.props.history.replace( `/checkout/${this.props.step}/` ); // remove the queryString (search)
 	}
 
-	componentDidUpdate() {
-		if ( ! isNaN(this.props.addrId) && this.props.addrId != this.state.delivery.address ) {
+	componentWillReceiveProps( nextProps ) {
+		if ( ! isNaN(nextProps.addrId) && nextProps.addrId != this.state.delivery.address ) {
 			this.setState({
 				delivery: {
 					customer: this.state.delivery.customer,
-					address: this.props.addrId
+					address: nextProps.addrId
 				}
 			});
-			this.props.history.replace( `/checkout/${this.props.step}/` ); // remove the queryString (search)
+			this.props.history.replace( `/checkout/${nextProps.step}/` ); // remove the queryString (search)
+		}
+		if ( ! isNaN(nextProps.orderId) && nextProps.orderId != this.state.order ) {
+			this.setState({
+				order: nextProps.orderId
+			});
+			this.props.history.replace( `/checkout/${nextProps.step}/` ); // remove the queryString (search)
 		}
 	}
 
@@ -122,15 +129,16 @@ export default class Checkout extends React.Component {
 				<Delivery active={ 'delivery' == this.props.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 				<Basket active={ 'basket' == this.props.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } />
 				<Summary active={ 'summary' == this.props.step } { ...this.state.delivery } items={ this.state.items } addAlerts={ this.props.addAlerts } history={ this.props.history } />
+				<Complete active={ 'complete' == this.props.step } id={ this.state.order } addAlerts={ this.props.addAlerts } />
 			</div>
 		);
 	}
 }
 Checkout.PropTypes = {
 	step			: PropTypes.string.isRequired,
-	id				: PropTypes.number,
 	custId		: PropTypes.number,
 	addrId		: PropTypes.number,
+	orderId		: PropTypes.number,
 	addAlerts	: PropTypes.func.isRequired,
 	history		: PropTypes.object.isRequired,
 };

@@ -51,7 +51,7 @@ export default class CheckoutSummary extends React.Component {
 				}
 
 				if ( res.success ) {
-					this.props.history.push( `/checkout/complete/` );
+					this.props.history.push( `/checkout/complete/?order=${res.order._id}` );
 				}
 			} );
 	}
@@ -69,7 +69,6 @@ export default class CheckoutSummary extends React.Component {
 								addrId={ this.props.address }
 								location={ '' }
 								addAlerts={ this.props.addAlerts }
-								ref={ customer => this.customer = customer }
 							/>
 							<div className="gmap card">
 								{ this.props.active && <Gmap custId={ this.props.customer } addrId={ this.props.address } addAlerts={ this.props.addAlerts } /> }
