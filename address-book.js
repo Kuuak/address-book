@@ -50,7 +50,6 @@ app
 		}
 	} )
 	.post		( '/customer/:custId/address/', (req, res) => {
-		console.log( 'POST', `/customer/${req.params.custId}/address/`);
 		Customer.addressInsert( req.params.custId, req.body, result => res.end( JSON.stringify( result ) ) );
 	} )
 	.put		( '/customer/:custId/address/', (req, res) => {
