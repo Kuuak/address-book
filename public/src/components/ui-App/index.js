@@ -69,6 +69,8 @@ export default class App extends React.Component {
 				.on( 'connected'		, data => this.callMonitorEvent( 'connected' , data ) )
 				.on( 'disconnected'	, data => this.callMonitorEvent( 'disconnected' , data ) );
 		}
+
+		this.searchCustomer();
 	}
 
 	callMonitorEvent( status, data ) {
@@ -111,11 +113,8 @@ export default class App extends React.Component {
 			this.searchSuggestion( value );
 		}
 		else {
+			this.searchCustomer();
 			this.setState({
-				customers: {
-					items: [],
-					loading: false,
-				},
 				suggestions: {
 					items: null,
 					loading: false,
@@ -163,12 +162,14 @@ export default class App extends React.Component {
 
 	searchCustomer( value ) {
 
+		value = value || '';
+
 		this.setState({ customers: {
 			loading: true,
 			items: [],
 		} });
 
-		fetch( `/search/customer/${value}/` )
+		fetch( `/search/customer/${value}` )
 			.then( res => res.json() )
 			.then( res => {
 				if ( ! isNil(res.alerts) ) {

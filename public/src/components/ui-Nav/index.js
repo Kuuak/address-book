@@ -22,8 +22,8 @@ export default class Nav extends React.Component {
 							</Link>
 						</li>
 						<li>
-							<Link to="/customers/">
-								<i className="large material-icons" title="Tous les clients">list</i>
+							<Link to="/orders/">
+								<i className="large material-icons" title="Commandes">list</i>
 							</Link>
 						</li>
 						<li>
