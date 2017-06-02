@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 // Helpers
 import isNil from 'lodash.isnil';
+import isEmpty from 'lodash.isEmpty';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
 // Components
@@ -68,6 +69,14 @@ export default class CustomerForm extends React.Component {
 	}
 
 	render() {
+
+		let address = [];
+		if ( this.props.suggest ) {
+			if ( ! isEmpty(this.props.suggest.street) ) { address.push(this.props.suggest.street); }
+			if ( ! isEmpty(this.props.suggest.postcode) ) { address.push(this.props.suggest.postcode); }
+			if ( ! isEmpty(this.props.suggest.city) ) { address.push(this.props.suggest.city); }
+		}
+
 		return (
 			<div className="customer-form">
 				<h1>Ajouter un client</h1>
@@ -75,7 +84,7 @@ export default class CustomerForm extends React.Component {
 					<Preloader active={this.state.processing} />
 					<div className="wrapper">
 						<PhoneInput phone={ this.props.suggest && this.props.suggest.phone } />
-						<AddressInputs address={ this.props.suggest ? `${this.props.suggest.street} ${this.props.suggest.postcode} ${this.props.suggest.city}` : '' } />
+						<AddressInputs address={ address.join(' ') } />
 						<CustomerInputs firstname={ this.props.suggest && this.props.suggest.title } email={ this.props.suggest && this.props.suggest.email } />
 						<div className="fieldset input-wrap btn-wrap">
 							<button type="submit" className="btn red btn-large half">Enregistrer</button>
