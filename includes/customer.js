@@ -49,7 +49,7 @@ function get( id, callback ) {
 }
 function find( query, callback ) {
 
-	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { phone: new RegExp( query ) } );
+	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { phone: new RegExp(query) } );
 
 	dbCustomers.find( query, (err, docs) => {
 
@@ -116,7 +116,7 @@ function insert( data, callback ) {
 
 	let newCustomer = {
 		_id				: currentId+1,
-		phone			: data.phone,
+		phone			: data.phone.replace( /\D/g, '' ),
 		gender		: data.gender,
 		firstname	: data.firstname,
 		lastname	: data.lastname,
@@ -224,7 +224,7 @@ function update( data, callback ) {
 	}
 
 	let customerFields = { $set: {
-		phone			: data.phone,
+		phone			: data.phone.replace( /\D/g, '' ),
 		gender		: data.gender,
 		firstname	: data.firstname,
 		lastname	: data.lastname,
