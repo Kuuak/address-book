@@ -25,6 +25,7 @@ import isNil from 'lodash.isnil';
 import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
+import formatPhone from 'includes/formatPhone';
 
 
 export default class App extends React.Component {
@@ -46,6 +47,7 @@ export default class App extends React.Component {
 				totalResults: null,
 			},
 			currentCall: {
+				status	: null,
 				number	: null,
 				alertId	: 0,
 			}
@@ -74,14 +76,19 @@ export default class App extends React.Component {
 	}
 
 	callMonitorEvent( status, data ) {
+
+		const phoneNumber = data.replace( '041', '' );
+		if ( status == this.state.currentCall.status && phoneNumber == this.state.currentCall.number ) {
+			return;
+		}
+
 		this.dismissAlert( this.state.currentCall.alertId );
 
-		const phoneNumber = data.caller.replace( '041', '' );
 		const callAlert		= {
-			timeout			: ( 'disconnected' === status ? 3000 : 0 ),
+			timeout			: ( 'disconnected' === status ? 15000 : 0 ),
 			status			: ( 'disconnected' === status ? 'error' : ( 'inbound' === status ? 'info' : 'success' ) ),
 			title				: ( 'disconnected' === status ? 'Appel terminé' : ( 'inbound' === status ? 'Appel entrant' : 'Appel en cours' ) ),
-			message			: phoneNumber,
+			message			: formatPhone(phoneNumber),
 			icon				: ( 'disconnected' === status ? 'call_end' : ( 'inbound' === status ? 'settings_phone' : 'call' ) ),
 			handleClick	: this.copyCurrentCallNumber,
 			titleButton	: 'Rechercher',
@@ -89,6 +96,7 @@ export default class App extends React.Component {
 
 		this.setState({
 			currentCall: {
+				status	: status,
 				number	: phoneNumber,
 				alertId	: parseInt( this.addAlerts( callAlert ) )
 			}
@@ -99,7 +107,7 @@ export default class App extends React.Component {
 
 		if ( ! isNull(this.state.currentCall.number) ) {
 			this.setState({ searchValue: this.state.currentCall.number });
-			this.searchValueChange( this.state.currentCall.number );
+			this.handleChangeSearch( this.state.currentCall.number );
 			return true;
 		}
 
