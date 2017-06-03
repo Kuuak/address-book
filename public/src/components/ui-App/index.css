@@ -7,13 +7,21 @@
 header  {
 	position: relative;
 	z-index: 50;
-	flex-grow: 0;
+	flex: 0 0 70px
 }
 
 main {
 	height: 100%;
 	flex-grow: 1;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 
-footer { flex-grow: 0; }
+.page-footer {
+	flex-grow: 0;
+	padding-top: 0;
+}
+
+.page-footer .footer-copyright {
+	min-height: 0;
+	height: 40px;
+}

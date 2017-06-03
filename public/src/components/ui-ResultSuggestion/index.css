@@ -1,18 +1,26 @@
 .remote-results {
 	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
 	flex: 0 0 25%;
 	height: 100%;
+	overflow: hidden;
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+	transition: flex .3s ease-in-out;
+}
+.no-suggestions .remote-results { flex-basis: 0; }
+
+.remote-results h2 {
+	flex: 0 0 auto;
+	padding: 0 50px 0 25px;
 }
 
-.remote-results h2 { padding: 0 50px 0 25px; }
-
 .remote-results .suggestions {
-	height: calc(100% - (1.5rem + 1.78rem + 1.424rem));
+	height: 100%;
 	width: 100%;
 	margin: 0;
 	padding: 0 50px 0 25px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .result-suggestion {

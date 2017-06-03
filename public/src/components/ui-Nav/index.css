@@ -1,11 +1,11 @@
 .site-nav {
-	height: 100px;
+	height: 70px;
 	padding: 0 100px;
 }
 
 .site-nav a i {
-	height: 100px;
-	line-height: 100px;
+	height: 70px;
+	line-height: 70px;
 }
 
 nav .brand-logo {

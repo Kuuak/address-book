@@ -1,27 +1,38 @@
 .local-results {
 	position: relative;
-	flex: 0 1 75%;
+	display: flex;
+	flex-flow: column nowrap;
+	flex: 1 1 75%;
 	height: 100%;
+	overflow: hidden;
+	transition: flex .3s ease-in-out;
 }
 
-.local-results h2 { padding: 0 25px 0 50px; }
+.local-results h2 {
+	flex: 0 0 auto;
+	visibility: visible;
+	padding: 0 25px 0 50px;
+	transition: visibility .3s ease-in-out;
+}
+.no-suggestion .local-results h2 { visibility: hidden; }
 
 .results .customers {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
 	width: 100%;
-	height: calc(100% - (1.5rem + 1.78rem + 1.424rem));
 	margin: 0;
 	padding: 0 25px 0 50px;
-	overflow-y: scroll;
+	max-height: 100%;
+	overflow-y: auto;
 	align-items: flex-start;
 }
 
 .result-costumer {
-	flex: 0 0 calc(50% - 0.5rem);
-	margin-top: 0;
+	flex: 0 0 calc(33% - 1rem);
+	margin: 0 .5rem 1rem;
+	transition: flex .3s ease-in-out;
 }
+.no-suggestions .result-costumer { flex-basis: calc(25% - 1rem); }
 
 .result-costumer .collection-item {
 	display: flex;

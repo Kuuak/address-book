@@ -4,6 +4,8 @@
 	height: 100%;
 }
 
+.gmap-wrapper .gmap * { overflow: initial; }
+
 .gmap-wrapper .chip {
 	position: absolute;
 	left: 50%;

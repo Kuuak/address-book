@@ -79,7 +79,7 @@ export default class Gmap extends React.Component {
 			.then( res => {
 
 				if ( ! isEmpty(res.alerts) ) {
-					this.addAlerts( res.alerts );
+					this.props.addAlerts( res.alerts );
 				}
 
 				if ( res.success ) {

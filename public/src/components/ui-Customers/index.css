@@ -10,7 +10,7 @@
 	justify-content: space-around;
 	height: calc(100% - 2rem - 2rem - 1.68rem);
 	padding: 0 50px 10px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .customer-all .result-costumer {

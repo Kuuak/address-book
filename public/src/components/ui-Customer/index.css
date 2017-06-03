@@ -1,27 +1,29 @@
 .customer {
 	display: flex;
 	align-items: stretch;
+	height: 100%;
 }
 
 
 .customer-details {
 	flex: 1 0 40%;
 	padding: 2rem;
-	height: calc(100vh - 170px);
-	overflow-x: scroll;
+	height: 100%;
+	overflow: hidden;
 	transition: flex-basis .3s ease-in-out .1s;
 }
 
 aside {
 	position: relative;
 	flex: 0 1 0;
-	height: calc(100vh - 170px);
+	height: 100%;
 	overflow: hidden;
 	transition: flex-basis .3s ease-in-out;
 }
 aside.open {
 	flex-basis: 60%;
-	overflow-x: scroll;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 aside .close {

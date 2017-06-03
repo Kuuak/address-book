@@ -1,9 +1,5 @@
 .step-complete .content {
 	height: 100%;
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding-bottom: 2rem;
-}
-
-.step-complete .order {
-	overflow: auto;
 }

@@ -2,9 +2,9 @@
 .step-delivery .column-customer {
 	flex-basis: 49%;
 	height: calc(100% - 36px - 2rem);
-	overflow-y: scroll;
 	margin: 0;
 }
+.step-delivery .column-customer { overflow-y: auto; }
 
 .step-delivery .gmap-wrapper { position: relative; }
 

@@ -58,7 +58,7 @@ export default class CheckoutSummary extends React.Component {
 
 	render() {
 		return (
-			<section className={'checkout-step step-validation '+ ( this.props.active && 'step-active' ) }>
+			<section className={'checkout-step step-summary '+ ( this.props.active && 'step-active' ) }>
 				<div className="lateral">Récapitulatif</div>
 				<div className="content">
 					<h1>Récapitulatif</h1>

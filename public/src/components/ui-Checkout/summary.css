@@ -1,27 +1,28 @@
-.step-validation .column-customer { flex-basis: 45%; }
+.step-summary .column-customer { flex-basis: 45%; }
 
-.step-validation .column-basket,
-.step-validation .column-customer {
+.step-summary .column-basket,
+.step-summary .column-customer {
 	display: flex;
 	flex-flow: column nowrap;
 }
 
-.step-validation .customer-card h3,
-.step-validation .customer-card .card-action,
-.step-validation .customer-card .collection-item { display: none; }
+.step-summary .customer-card h3,
+.step-summary .customer-card .card-action,
+.step-summary .customer-card .collection-item { display: none; }
 
-.step-validation .customer-card {
+.step-summary .customer-card {
 	width: 100%;
+	flex-shrink: 0;
 	margin-bottom: 1rem;
 }
 
-.step-validation .customer-card .collection-item.selected {
+.step-summary .customer-card .collection-item.selected {
 	display: block;
 	border: none;
 	background-color: transparent;
 }
 
-.step-validation .gmap {
+.step-summary .gmap {
 	position: relative;
 	height: 100%;
 	width: 100%;
@@ -30,21 +31,25 @@
 
 
 
-.step-validation .column-basket { flex-basis: 45%; }
-.step-validation .selected-items {
+.step-summary .column-basket { flex-basis: 45%; }
+.step-summary .selected-items {
 	margin-top: 0;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
-.step-validation .selected-items .extra a:hover {
+.step-summary .selected-items .extra a:hover {
 	cursor: default;
 	text-decoration: none;
 }
 
-.step-validation .order-informations { flex-shrink: 0; }
+.step-summary .order-informations { flex-shrink: 0; }
 
-.step-validation .selected-items h2,
-.step-validation .order-informations h2 { font-size: 1.3rem; }
+.step-summary .selected-items h2,
+.step-summary .order-informations h2 { font-size: 1.3rem; }
 
-.step-validation .order-informations .collection-item { padding-left: 20px; }
+.step-summary .order-informations .collection-item { padding-left: 20px; }
 
-.step-validation .order-informations textarea { margin-bottom: 0; }
+.step-summary .order-informations textarea {
+	height: 1rem;
+	margin-bottom: 0;
+	padding-bottom: 1rem;
+}
