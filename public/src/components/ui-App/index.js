@@ -174,7 +174,6 @@ export default class App extends React.Component {
 
 		this.setState({ customers: {
 			loading: true,
-			items: [],
 		} });
 
 		fetch( `/search/customer/${value}` )
