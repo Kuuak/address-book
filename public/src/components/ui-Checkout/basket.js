@@ -279,7 +279,8 @@ export class DishForm extends React.Component {
 				this.setState({
 					name: '',
 					price: '',
-				})
+				});
+				form.elements[0].focus();
 			}
 
 		} );
@@ -289,7 +290,7 @@ export class DishForm extends React.Component {
 	}
 	handleChangePrice( event ) {
 
-		let newPrice = event.target.value.replace( /\.|,/, '' );
+		let newPrice = event.target.value.replace( /\D/, '' );
 
 		if ( 2 < newPrice.length ) {
 			let decimal = newPrice.slice(-2);
@@ -455,7 +456,8 @@ export class IngredientForm extends React.Component {
 				this.setState({
 					name: '',
 					price: '',
-				})
+				});
+				form.elements[0].focus();
 			}
 
 		} );
@@ -465,7 +467,7 @@ export class IngredientForm extends React.Component {
 	}
 	handleChangePrice( event ) {
 
-		let newPrice = event.target.value.replace( /\.|,/, '' );
+		let newPrice = event.target.value.replace( /\D/, '' );
 
 		if ( 2 < newPrice.length ) {
 			let decimal = newPrice.slice(-2);
