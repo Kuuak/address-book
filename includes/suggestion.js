@@ -59,7 +59,7 @@ function find( number, callback ) {
 					}
 
 					vcards.push( {
-						title: vcard.fullname,
+						title: vcard.fullname.replace( /\\,/g, ',' ),
 						phone: vcard.phone[0].value.replace( '+41', '0' ),
 						street: vcard.addr[0].street,
 						postcode: vcard.addr[0].zip,
