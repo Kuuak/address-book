@@ -85,7 +85,6 @@ export default class App extends React.Component {
 		this.dismissAlert( this.state.currentCall.alertId );
 
 		const callAlert		= {
-			timeout			: ( 'disconnected' === status ? 15000 : 0 ),
 			status			: ( 'disconnected' === status ? 'error' : ( 'inbound' === status ? 'info' : 'success' ) ),
 			title				: ( 'disconnected' === status ? 'Appel terminé' : ( 'inbound' === status ? 'Appel entrant' : 'Appel en cours' ) ),
 			message			: formatPhone(phoneNumber),
