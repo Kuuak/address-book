@@ -67,8 +67,6 @@ export default class Order extends React.Component {
 		let total			= calcItemsTotal( this.state.items ),
 				tax 			= (total/100) * config.tax;
 
-		let orderDate = new Date( this.state.date );
-
 		return (
 			<div className="order card">
 				<div className="order-header">
@@ -87,7 +85,7 @@ export default class Order extends React.Component {
 						<div className="column">
 							<div className="order-details">
 								<div className="number"><strong>Commande n° : </strong>{ this.state._id.toLocaleString("arab",{minimumIntegerDigits:4, useGrouping: false}) }</div>
-								<div className="date"><strong>Date : </strong>{ orderDate.toLocaleDateString( 'fr-CH' ) } { orderDate.toLocaleTimeString( 'fr-CH' ).replace( /\:\d{2}$/, '' ) }</div>
+								<div className="date"><strong>Date : </strong>{ formatDate( this.state.date ) }</div>
 								<div className="payment"><strong>Payement : </strong>{ 'card' == this.state.payment ? 'par carte' : 'en espèces' }</div>
 								<div className="information"><strong>Informations : </strong>{ isEmpty(this.state.information) ? '-' : this.state.information }</div>
 							</div>
@@ -133,3 +131,16 @@ Order.PropTypes = {
 	id	: PropTypes.number.isRequired,
 	addAlerts: PropTypes.func.isRequired,
 };
+
+/**
+ * Format the given timestamp to local date and time (without seconds)
+ *
+ * @since TODO version
+ *
+ * @param		number	timestamp		Timestamp to convert to date & time format
+ * @return	string							Date and time
+ */
+export function formatDate( timestamp ) {
+	let d = new Date( timestamp );
+	return d.toLocaleDateString( 'fr-CH' ) +' '+ d.toLocaleTimeString( 'fr-CH' ).replace( /\:\d{2}$/, '' );
+}
