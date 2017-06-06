@@ -98,6 +98,14 @@ export default class Checkout extends React.Component {
 				index = items.findIndex( item => item.id == itemId );
 
 		if ( 0 <= index ) {
+
+			// Check for opposite extra types (+/- or -/+)
+			const opositeExtraIndex = items[index].extras.findIndex( extra => extra.ingredient === ingredient.id && extra.type !== type  );
+			if ( 0 <= opositeExtraIndex ) {
+				this.removeExtra( itemId, items[index].extras[opositeExtraIndex].id );
+				return;
+			}
+
 			items[index].extras.push({
 				id				: ( items[index].extras.length ? items[index].extras[items[index].extras.length-1].id + 1 : 1 ),
 				type			: type,
