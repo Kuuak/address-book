@@ -4,7 +4,7 @@
   "description": "L'Escale Gourmande address book directory",
   "main": "address-book.js",
   "scripts": {
-    "start": "node address-book.js",
+    "start": "pm2 start address-book.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build\""
@@ -22,6 +22,7 @@
     "lodash.uniqueid": "^4.0.1",
     "nedb": "^1.8.0",
     "node-fritzbox-callmonitor": "^1.1.0",
+    "pm2": "^2.4.6",
     "prop-types": "^15.5.9",
     "qrcode": "^0.8.2",
     "react": "^15.5.4",
