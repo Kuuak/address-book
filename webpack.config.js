@@ -25,7 +25,7 @@ module.exports = {
 
 	module: {
 		loaders: [
-			{ test: /\.js[x]?$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['react'] } },
+			{ test: /\.js[x]?$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['es2015', 'react'] } },
 			{ test: /\.json$/, loader: 'json-loader' },
 			{ test: /\.css$/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) },
 			{ test: /\.(png|jp[e]?g)$/, loader: 'file-loader?name=images/[name].[ext]' },
