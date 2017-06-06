@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 // Helpers
 import isNil from 'lodash.isnil';
-import isEmpty from 'lodash.isEmpty';
+import isEmpty from 'lodash.isempty';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
 // Components

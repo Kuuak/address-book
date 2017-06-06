@@ -18,5 +18,5 @@ export default function formatPhone( phone ) {
 		formated += ( char[i] || '' ) + numbers[i];
 	}
 
-return formated;
+	return formated;
 }
