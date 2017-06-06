@@ -70,11 +70,17 @@ export default class CustomerForm extends React.Component {
 
 	render() {
 
-		let address = [];
+		let address		= [],
+				firstname	= '',
+				lastname	= '';
 		if ( this.props.suggest ) {
 			if ( ! isEmpty(this.props.suggest.street) ) { address.push(this.props.suggest.street); }
 			if ( ! isEmpty(this.props.suggest.postcode) ) { address.push(this.props.suggest.postcode); }
 			if ( ! isEmpty(this.props.suggest.city) ) { address.push(this.props.suggest.city); }
+
+			const names = this.props.suggest.title.match( /(?:([^,]*),\s)?([^\(]*)(\(-[^\)]*\))?/ );
+			firstname = names[2].trim();
+			lastname = ( isNil(names[1]) ? '' : names[1].trim() ) + ( isNil(names[3]) ? '' : ' '+names[3].trim() );
 		}
 
 		return (
@@ -85,7 +91,7 @@ export default class CustomerForm extends React.Component {
 					<div className="wrapper">
 						<PhoneInput phone={ this.props.suggest && this.props.suggest.phone } />
 						<AddressInputs address={ address.join(' ') } />
-						<CustomerInputs firstname={ this.props.suggest && this.props.suggest.title } email={ this.props.suggest && this.props.suggest.email } />
+						<CustomerInputs firstname={ firstname } lastname={ lastname } email={ this.props.suggest && this.props.suggest.email } />
 						<div className="fieldset input-wrap btn-wrap">
 							<button type="submit" className="btn red btn-large half">Enregistrer</button>
 						</div>
