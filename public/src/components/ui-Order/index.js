@@ -17,6 +17,7 @@ import { Item, calcItemsTotal } from 'components/ui-Checkout/basket';
 // Helpers
 import isEmpty from 'lodash.isempty';
 import QRCode from 'qrcode';
+import formatDate from 'includes/formatDate';
 import formatPhone from 'includes/formatPhone';
 
 export default class Order extends React.Component {
@@ -131,16 +132,3 @@ Order.PropTypes = {
 	id	: PropTypes.number.isRequired,
 	addAlerts: PropTypes.func.isRequired,
 };
-
-/**
- * Format the given timestamp to local date and time (without seconds)
- *
- * @since TODO version
- *
- * @param		number	timestamp		Timestamp to convert to date & time format
- * @return	string							Date and time
- */
-export function formatDate( timestamp ) {
-	let d = new Date( timestamp );
-	return d.toLocaleDateString( 'fr-CH' ) +' '+ d.toLocaleTimeString( 'fr-CH' ).replace( /\:\d{2}$/, '' );
-}

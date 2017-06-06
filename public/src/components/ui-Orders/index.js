@@ -13,7 +13,7 @@ import Preloader from 'components/ui-Preloader';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
-import { formatDate } from 'components/ui-Order';
+import formatDate from 'includes/formatDate';
 import { calcItemsTotal } from 'components/ui-Checkout/basket';
 
 export default class Orders extends React.Component {
