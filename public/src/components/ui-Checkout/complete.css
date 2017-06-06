@@ -1,5 +1,7 @@
+.step-complete,
 .step-complete .content {
-	height: 100%;
+	height: auto;
 	overflow-y: auto;
-	padding-bottom: 2rem;
 }
+
+.step-complete .content { padding-bottom: 2rem; }
