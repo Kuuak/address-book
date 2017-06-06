@@ -146,13 +146,13 @@ function insert( data, callback ) {
 					status			: 'success',
 					title				: 'Bravo',
 					message			: 'Le client a été enregistré.',
-					linkButton	: `/customer/${newDoc._id}/`,
-					titleButton	: 'Fiche client',
+					linkButton	: `/checkout/delivery/?customer=${newDoc._id}&address=1`,
+					titleButton	: 'Passer une commande',
 				},
 				fields: [],
 				redirect: {
-					timeout		: 5000,
-					to: `/customer/${newDoc._id}`,
+					timeout		: 0,
+					to: `/customer/${newDoc._id}/`,
 				},
 			} );
 			return;
