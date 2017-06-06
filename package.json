@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2 start address-book.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --progress",
     "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build\""
   },
   "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",
