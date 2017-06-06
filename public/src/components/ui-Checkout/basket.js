@@ -14,6 +14,14 @@ import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
+/**
+ * Calculate total price of given items including extras
+ *
+ * @since TODO version
+ *
+ * @param		array		items		Items to calculate total price
+ * @return	number					Total price
+ */
 export function calcItemsTotal( items ) {
 	let totalPrice = 0;
 
@@ -28,7 +36,7 @@ export function calcItemsTotal( items ) {
 		totalPrice += itemPrice;
 	} );
 
-	return totalPrice.toFixed(2);
+	return totalPrice;
 }
 
 export default class CheckoutBasket extends React.Component {
@@ -146,7 +154,7 @@ export default class CheckoutBasket extends React.Component {
 								{ this.props.items.map( item => <Item key={ item.id } selected={ item.id == this.state.selectedItem } { ...item } onClick={ this.handleClickItem } /> ) }
 								<li key="footer" className="collection-footer">
 									<h3>Total</h3>
-									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ) }</h3>
+									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ).toFixed(2) }</h3>
 								</li>
 							</CSSTransitionGroup>
 							<div className="checkout-process-action">

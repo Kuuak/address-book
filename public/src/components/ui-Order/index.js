@@ -116,7 +116,7 @@ export default class Order extends React.Component {
 							<div className="tax">{`TVA ${config.tax}% incluse`}</div>
 						</div>
 						<div className="amount">
-							<h3 className="total">{ parseFloat(total).toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</h3>
+							<h3 className="total">{ total.toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</h3>
 							<div className="tax">{ tax.toFixed( 2 ) }</div>
 						</div>
 						<div className="greetings">Merci et bon appétit!</div>
