@@ -30,9 +30,6 @@ app
 	.get( '/', (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
-	.get( '/customers/', (req, res) => {
-		res.sendFile( __dirname +'/public/index.html' );
-	} )
 	.get( '/search/customer/:number?', (req, res) => {
 		Customer.find( req.params.number, results => res.end( JSON.stringify( results ) ) );
 	} )
@@ -88,6 +85,10 @@ app
 	} )
 	.post		( '/order', (req, res) => {
 		Order.insert( req.body, result => res.status( result.success ? 201 : 200 ).end( JSON.stringify( result ) ) );
+	} )
+	.get( '/orders/', (req, res) => {
+		if ( req.accepts( 'html' ) ) { res.sendFile( __dirname +'/public/index.html' ); }
+		else { Order.find( {}, { date: -1 }, result => res.end( JSON.stringify( result ) ) ); }
 	} )
 
 	// Retrieve (GET), insert (POST), update (PUT) or delete dish

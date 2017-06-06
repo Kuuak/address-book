@@ -1,0 +1,20 @@
+.order-all {
+	height: 100*;
+	overflow-y: hidden;
+}
+
+.order-all .orders {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	height: 100%;
+	padding: 0 50px;
+	margin-bottom: 1rem;
+	overflow-y: auto;
+}
+
+.order-all .result-order {
+	flex-basis: calc(33% - 1rem);
+	margin-left: .5rem;
+	margin-right: .5rem;
+}

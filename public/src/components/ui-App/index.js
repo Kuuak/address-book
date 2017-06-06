@@ -15,10 +15,10 @@ import Alerts from 'components/ui-Alerts';
 import Results from 'components/ui-Results';
 import Customer from 'components/ui-Customer';
 import SearchBar from 'components/ui-SearchBar';
-import Customers from 'components/ui-Customers';
 import CustomerForm from 'components/ui-CustomerForm/customer';
 import Checkout from 'components/ui-Checkout';
 import Order from 'components/ui-Order';
+import Orders from 'components/ui-Orders';
 
 // Helpers
 import isNil from 'lodash.isnil';
@@ -235,7 +235,6 @@ export default class App extends React.Component {
 					<main>
 						<Alerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 						<Route exact path="/" render={ () => <Results customers={this.state.customers} suggestions={this.state.suggestions} /> } />
-						<Route path="/customers/" render={ () => <Customers /> } />
 						<Route path="/customer/:id" render={ ({ match, location, history } ) => <Customer id={ parseInt(match.params.id) } location={location} history={history} addAlerts={this.addAlerts} /> } />
 						<Route path="/add/customer/:suggestId?" render={ ({ match, history }) => {
 							let suggestion = null;
@@ -248,6 +247,7 @@ export default class App extends React.Component {
 							let query = new URLSearchParams( location.search );
 							return <Checkout step={ match.params.step } orderId={parseInt(query.get('order'))} custId={parseInt(query.get('customer'))} addrId={parseInt(query.get('address'))} history={history} addAlerts={this.addAlerts} />;
 						} } />
+						<Route path="/orders/" render={ () => <Orders /> } />
 						<Route path="/order/:id" render={ ({ match }) => <Order id={ match.params.id } addAlerts={this.addAlerts} /> } />
 					</main>
 					<footer className="page-footer indigo">
