@@ -2,6 +2,7 @@
 const config = require( '../config' );
 
 const vCard = require( 'vcard-json' );
+const isNil = require( 'lodash.isnil' );
 const isNull = require( 'lodash.isnull' );
 const isEmpty = require( 'lodash.isempty' );
 const request = require( 'request' );
@@ -52,7 +53,7 @@ function find( number, callback ) {
 			result.links.forEach( (link, i) => {
 				getVcard( link, (err, vcard) => {
 
-					if ( !isNull(err) ) {
+					if ( !isNull(err) || isNil(vcard) ) {
 						callback( err, [] );
 						return;
 					}
