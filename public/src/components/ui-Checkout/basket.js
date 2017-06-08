@@ -17,7 +17,7 @@ import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 /**
  * Calculate total price of given items including extras
  *
- * @since TODO version
+ * @since TODO 1.0.0
  *
  * @param		array		items		Items to calculate total price
  * @return	number					Total price
