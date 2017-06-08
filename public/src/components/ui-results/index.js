@@ -17,7 +17,7 @@ export default class Results extends React.Component {
 
 	render() {
 		return (
-			<section className={'results' + ( isNil(this.props.suggestions.totalResults) ? ' no-suggestions' : '' ) }>
+			<section className={'results' + ( !this.props.suggestions.items.length ? ' no-suggestions' : '' ) }>
 				<div className="local-results">
 					<h2>Clients enregistrés</h2>
 					<Preloader active={this.props.customers.loading} />
