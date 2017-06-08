@@ -15,6 +15,7 @@ export default class SearchBar extends React.Component {
 		super( props );
 
 		this.handleChange = this.handleChange.bind(this);
+		this.handleClickClear = this.handleClickClear.bind(this);
 	}
 
 	componentDidMount() {
@@ -25,10 +26,15 @@ export default class SearchBar extends React.Component {
 		this.props.onChange( event.target.value.replace( /\D/g, '' ) );
 	}
 
+	handleClickClear() {
+		this.props.onChange( '' );
+	}
+
 	render() {
 		return (
-			<div className='search-bar'>
+			<div className="search-bar">
 				<DebounceInput id="search_input" name="search-input" value={ formatPhone(this.props.searchValue) } placeholder='saisir un numéro' onChange={this.handleChange} debounceTimeout={500} />
+				<button className={ 'clear-input material-icons'+ ( isEmpty(this.props.searchValue) ? '' : ' show' ) } onClick={ this.handleClickClear }>backspace</button>
 			</div>
 		)
 	}

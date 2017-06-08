@@ -23,3 +23,17 @@
 	color: #333;
 	transition: color .3s ease-in-out;
 }
+
+.search-bar .clear-input {
+	position: absolute;
+	top: 50%;
+	right: .5rem;
+	border: none;
+	padding: 0;
+	display: none;
+	font-size: 1.1rem;
+	color: #fff;
+	background-color: transparent;
+	transform: translateY(-50%);
+}
+.search-bar .clear-input.show { display: block; }

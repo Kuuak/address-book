@@ -1,6 +1,6 @@
 {
   "name": "address-book",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "L'Escale Gourmande address book directory",
   "main": "address-book.js",
   "scripts": {

@@ -115,20 +115,8 @@ export default class App extends React.Component {
 
 	handleChangeSearch( value ) {
 
-		if ( !isEmpty(value) && value.length > 2 ) {
-			this.searchCustomer( value );
-			this.searchSuggestion( value );
-		}
-		else {
-			this.searchCustomer();
-			this.setState({
-				suggestions: {
-					items: null,
-					loading: false,
-					totalResults: null,
-				}
-			});
-		}
+		this.searchCustomer( value );
+		this.searchSuggestion( value );
 
 		this.setState({ searchValue: value });
 	}
@@ -192,11 +180,15 @@ export default class App extends React.Component {
 	searchSuggestion( value ) {
 
 		this.setState({ suggestions: {
-			items				: null,
+			items				: [],
 			loading			: true,
 			totalResults: null,
 			}
 		});
+
+		if ( isEmpty(value) || value.length < 3 ) {
+			return;
+		}
 
 		fetch( `/search/suggestion/${value}/` )
 			.then( res => res.json() )
