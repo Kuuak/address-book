@@ -99,6 +99,12 @@ app
 	.post	( '/dish', (req, res) => {
 		Dish.insert( req.body, result => res.end( JSON.stringify( result ) ) );
 	})
+	.put	( '/dish', (req, res) => {
+		Dish.update( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+	.delete	( '/dish/:id', (req, res) => {
+		Dish.delete( req.params.id, result => res.end( JSON.stringify( result ) ) );
+	})
 
 	// Retrieve (GET), insert (POST), update (PUT) or delete ingredient
 	.get( '/ingredient/:id?', (req, res) => {

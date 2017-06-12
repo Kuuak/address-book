@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import Preloader from 'components/ui-Preloader';
+import Dishes from 'components/ui-Dishes';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
@@ -29,6 +30,7 @@ export default class DishesIngredients extends React.Component {
 				<Preloader active={this.state.loading} />
 				<div className="row">
 					<div className="column-dishes">
+						<Dishes addAlerts={ this.props.addAlerts } />
 					</div>
 					<div className="column-ingredients">
 					</div>

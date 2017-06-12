@@ -20,3 +20,22 @@
 
 .dishes-ingredients .column-dishes,
 .dishes-ingredients .column-ingredients { flex: 0 0 49%; }
+
+.dishes-ingredients .dishes,
+.dishes-ingredients .ingredients {
+	margin: 0 auto;
+	max-width: 600px;
+	max-height: 100%;
+  overflow-y: auto;
+}
+
+.dishes-ingredients .dish {
+	display: flex;
+	align-items: center;
+}
+
+.dishes-ingredients .dish .collection-item-action {
+	padding-left: 20px;
+	flex-shrink: 0;
+}
+.dishes-ingredients .dish .select-link { padding-left: 0; }

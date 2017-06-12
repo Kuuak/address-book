@@ -19,13 +19,25 @@ export default class DishForm extends React.Component {
 		super( props );
 
 		this.state = {
-			name: '',
-			price: ''
+			name: this.props.name,
+			price: ( 0 == this.props.price ? '' : this.props.price.toFixed(2) ),
 		};
 
 		this.handleSubmit = this.handleSubmit.bind( this );
 		this.handleChangeName = this.handleChangeName.bind( this );
 		this.handleChangePrice = this.handleChangePrice.bind( this );
+	}
+
+	componentWillReceiveProps( nextProps ) {
+		if ( this.props._id != nextProps._id ) {
+
+			this.setState({
+				_id		: nextProps._id,
+				name	: nextProps.name,
+				price	: ( 0 == nextProps.price ? '' : nextProps.price.toFixed(2) ),
+				desc	: nextProps.desc,
+			})
+		}
 	}
 
 	handleSubmit( event ) {
@@ -39,7 +51,7 @@ export default class DishForm extends React.Component {
 		}
 
 		fetch( form.action, {
-			method: 'POST',
+			method: ( isNaN(this.props._id) ? 'POST' : 'PUT' ),
 			body: formData2UrlEncoded( data ),
 			headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
 		} )
@@ -56,7 +68,6 @@ export default class DishForm extends React.Component {
 				}
 			}
 
-
 			if ( res.success ) {
 
 				this.setState({
@@ -66,12 +77,16 @@ export default class DishForm extends React.Component {
 				form.elements[0].focus();
 
 				if ( isFunction( this.props.onSubmitSuccess ) ) {
-					this.props.onSubmitSuccess({
-						id		: res.dish._id,
-						name	: res.dish.name,
-						price	: res.dish.price,
-						desc	: res.dish.desc,
-					});
+					let dish = null;
+					if ( res.dish ) {
+						dish = {
+							id		: res.dish._id,
+							name	: res.dish.name,
+							price	: res.dish.price,
+							desc	: res.dish.desc,
+						};
+					}
+					this.props.onSubmitSuccess( dish, isNaN(this.props._id) ? 'POST' : 'PUT' );
 				}
 			}
 		} );
@@ -90,11 +105,21 @@ export default class DishForm extends React.Component {
 			<form method="POST" action="/dish/" className="add-dish-form" onSubmit={ this.handleSubmit }>
 				<input type="text" name="name" className="name" placeholder="Ajouter un plat" value={ this.state.name } onChange={ this.handleChangeName } autoComplete="off" />
 				<input type="text" name="price" className="price" placeholder="Prix" value={ this.state.price } pattern="\d+(\.\d{1,2})?" onChange={ this.handleChangePrice } autoComplete="off" />
-				<button type="submit" className="btn blue">Ajouter</button>
+				{ !isNaN(this.props._id) && <input type="hidden" name="_id" value={ this.props._id } /> }
+				<button type="submit" className="btn blue">{ (isNaN(this.props._id) ? 'Ajouter' : 'Modifier') }</button>
 			</form>
 		);
 	}
 }
 DishForm.PropTypes = {
-	onSubmitSuccess: PropTypes.func,
+	_id							: PropTypes.number,
+	name						: PropTypes.string,
+	price						: PropTypes.number,
+	desc						: PropTypes.string,
+	onSubmitSuccess	: PropTypes.func,
 };
+DishForm.defaultProps = {
+	name	: '',
+	price	: 0,
+	desc	: '',
+}

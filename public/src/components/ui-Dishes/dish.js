@@ -16,6 +16,7 @@ export default class Dish extends React.Component {
 		super( props );
 
 		this.handleClick = this.handleClick.bind( this );
+		this.handleClickAction = this.handleClickAction.bind( this );
 	}
 
 	handleClick( event ) {
@@ -31,10 +32,24 @@ export default class Dish extends React.Component {
 		}
 	}
 
+	handleClickAction( event ) {
+		event.preventDefault();
+
+		if ( isFunction( this.props.onClickAction ) ) {
+			this.props.onClickAction( event.target.rel, this.props._id );
+		}
+	}
+
 	render() {
 		return (
 			<li className="dish collection-item">
-				<Link to={`/dish/${this.props._id}/`} onClick={ this.handleClick } >
+				<Route path="/dishes-ingredients" render={ () => (
+					<span className="collection-item-action">
+						<a onClick={ this.handleClickAction } rel="edit" className="edit material-icons" title="Modifier">edit</a>
+						<a onClick={ this.handleClickAction } rel="delete" className="delete material-icons" title="Supprimer">delete</a>
+					</span>
+				)} />
+				<Link to={`/dish/${this.props._id}/`} className="select-link" onClick={ this.handleClick } >
 					{ this.props.name }
 					<span className="secondary-content black-text">{ this.props.price.toFixed(2) }</span>
 				</Link>
@@ -43,9 +58,10 @@ export default class Dish extends React.Component {
 	}
 }
 Dish.PropTypes = {
-	_id			: PropTypes.number.isRequired,
-	name		: PropTypes.string.isRequired,
-	price		: PropTypes.number.isRequired,
-	desc		: PropTypes.string,
-	onClick	: PropTypes.func,
+	_id						: PropTypes.number.isRequired,
+	name					: PropTypes.string.isRequired,
+	price					: PropTypes.number.isRequired,
+	desc					: PropTypes.string,
+	onClick				: PropTypes.func,
+	onClickAction	: PropTypes.func,
 };

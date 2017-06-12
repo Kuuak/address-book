@@ -8,6 +8,7 @@ import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Helpers
+import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 
 // Components
@@ -22,9 +23,12 @@ export default class Dishes extends React.Component {
 		this.state = {
 			loading: true,
 			dishes: [],
+			current: null,
 		};
 
+		this.deleteDish = this.deleteDish.bind( this );
 		this.handleClick = this.handleClick.bind( this );
+		this.handleClickAction = this.handleClickAction.bind( this );
 		this.handleSubmitSuccess = this.handleSubmitSuccess.bind( this );
 	}
 
@@ -52,9 +56,40 @@ export default class Dishes extends React.Component {
 		}
 	}
 
-	handleSubmitSuccess( dish ) {
-		if ( isFunction( this.props.onDishSelect  ) ) {
+	handleClickAction( action, dishId ) {
+		switch (action) {
+			case 'edit':
+				this.setState({ current: this.state.dishes.find( dish => dish._id == dishId ) });
+				break;
+			case 'delete':
+				this.deleteDish( dishId );
+				break;
+		}
+	}
+
+	deleteDish( dishId ) {
+		if ( window.confirm(`Êtes-vous sûr de vouloir supprimer ce plat ?`) ) {
+			fetch( `/dish/${dishId}/`, { method: 'DELETE'} )
+				.then( res => res.json() )
+				.then( res => {
+					if ( ! isEmpty(res.alerts) ) {
+						this.props.addAlerts( res.alerts );
+					}
+
+					if ( res.success ) {
+						this.fetch();
+					}
+				} );
+		}
+	}
+
+	handleSubmitSuccess( dish, method ) {
+		if ( !isEmpty(dish) && isFunction( this.props.onDishSelect ) ) {
 			this.props.onDishSelect( dish );
+		}
+
+		if ( 'PUT' == method ) {
+			this.setState({ current: null });
 		}
 
 		this.fetch();
@@ -64,9 +99,9 @@ export default class Dishes extends React.Component {
 		return (
 			<ul className="dishes card collection with-header">
 				<li className="collection-header"><h2>Plats</h2></li>
-					{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} onClick={ this.handleClick } /> ) }
+					{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} onClick={ this.handleClick } onClickAction={ this.handleClickAction }/> ) }
 				<li className="collection-footer">
-					<DishForm onSubmitSuccess={ this.handleSubmitSuccess } addAlerts={ this.props.addAlerts } />
+					<DishForm { ...this.state.current } onSubmitSuccess={ this.handleSubmitSuccess } addAlerts={ this.props.addAlerts } />
 				</li>
 			</ul>
 		);
