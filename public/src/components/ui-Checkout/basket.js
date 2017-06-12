@@ -12,35 +12,11 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
+import calcItemsTotal from 'includes/calcItemsTotal';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
 // Components
 import Dishes from 'components/ui-Dishes';
-
-/**
- * Calculate total price of given items including extras
- *
- * @since TODO 1.0.0
- *
- * @param		array		items		Items to calculate total price
- * @return	number					Total price
- */
-export function calcItemsTotal( items ) {
-	let totalPrice = 0;
-
-	items.forEach( item => {
-		let itemPrice = item.price;
-
-		item.extras.forEach( extra => {
-			if ( 'add' == extra.type ) { itemPrice += extra.price; }
-			else { itemPrice -= extra.price; }
-		} );
-
-		totalPrice += itemPrice;
-	} );
-
-	return totalPrice;
-}
 
 export default class CheckoutBasket extends React.Component {
 	constructor( props ) {

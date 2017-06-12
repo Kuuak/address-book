@@ -12,13 +12,15 @@ import PropTypes from 'prop-types';
 
 // Components
 import Gmap from 'components/ui-Gmap';
-import { Item, calcItemsTotal } from 'components/ui-Checkout/basket';
+import { Item } from 'components/ui-Checkout/basket';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
 import QRCode from 'qrcode';
 import formatDate from 'includes/formatDate';
 import formatPhone from 'includes/formatPhone';
+import calcItemsTotal from 'includes/calcItemsTotal';
+
 
 export default class Order extends React.Component {
 

@@ -6,10 +6,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// Helpers
+import calcItemsTotal from 'includes/calcItemsTotal';
+
 // Components
 import Gmap from 'components/ui-Gmap';
 import Customer from 'components/ui-Customer/card';
-import { Item, calcItemsTotal } from 'components/ui-Checkout/basket';
+import { Item } from 'components/ui-Checkout/basket';
 
 export default class CheckoutSummary extends React.Component {
 
