@@ -28,7 +28,12 @@ export default class Nav extends React.Component {
 						</li>
 						<li>
 							<Link to="/add/customer/">
-								<i className="large material-icons" title="Ajouter un client">add</i>
+								<i className="large material-icons" title="Ajouter un client">supervisor_account</i>
+							</Link>
+						</li>
+						<li>
+							<Link to="/dishes-ingredients/">
+								<i className="large material-icons" title="Gérer les plats et suppléments">restaurant_menu</i>
 							</Link>
 						</li>
 					</ul>

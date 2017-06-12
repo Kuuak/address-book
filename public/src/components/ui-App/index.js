@@ -19,6 +19,7 @@ import CustomerForm from 'components/ui-CustomerForm/customer';
 import Checkout from 'components/ui-Checkout';
 import Order from 'components/ui-Order';
 import Orders from 'components/ui-Orders';
+import DishesIngredients from 'components/ui-Dishes-Ingredients';
 
 // Helpers
 import isNil from 'lodash.isnil';
@@ -85,6 +86,7 @@ export default class App extends React.Component {
 		this.dismissAlert( this.state.currentCall.alertId );
 
 		const callAlert		= {
+			timeout			: ( 'disconnected' === status ? 5000 : 0 ),
 			status			: ( 'disconnected' === status ? 'error' : ( 'inbound' === status ? 'info' : 'success' ) ),
 			title				: ( 'disconnected' === status ? 'Appel terminé' : ( 'inbound' === status ? 'Appel entrant' : 'Appel en cours' ) ),
 			message			: formatPhone(phoneNumber),
@@ -240,6 +242,7 @@ export default class App extends React.Component {
 						} } />
 						<Route path="/orders/" render={ () => <Orders /> } />
 						<Route path="/order/:id" render={ ({ match }) => <Order id={ match.params.id } addAlerts={this.addAlerts} /> } />
+						<Route path="/dishes-ingredients" render={ () => <DishesIngredients addAlerts={ this.addAlerts } /> } />
 					</main>
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">

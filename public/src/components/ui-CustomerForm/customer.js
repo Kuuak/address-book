@@ -92,8 +92,8 @@ export default class CustomerForm extends React.Component {
 					<Preloader active={this.state.processing} />
 					<div className="wrapper">
 						<PhoneInput phone={ this.props.suggest && this.props.suggest.phone } />
-						<AddressInputs address={ address.join(' ') } />
 						<CustomerInputs firstname={ firstname } lastname={ lastname } email={ this.props.suggest && this.props.suggest.email } />
+						<AddressInputs address={ address.join(' ') } />
 						<div className="fieldset input-wrap btn-wrap">
 							<button type="submit" className="btn red btn-large half">Enregistrer</button>
 						</div>
