@@ -117,6 +117,7 @@ DishForm.PropTypes = {
 	price						: PropTypes.number,
 	desc						: PropTypes.string,
 	onSubmitSuccess	: PropTypes.func,
+	addAlerts				: PropTypes.func.isRequired,
 };
 DishForm.defaultProps = {
 	name	: '',
