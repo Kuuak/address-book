@@ -25,7 +25,7 @@
 	transition: opacity .3s ease-in-out, transform .3s ease-in-out;
 	transform: translate3d(-110%,0,0);
 }
-.step-items .ingredients.active {
+.step-items .show-ingredients .ingredients {
 	opacity: 1;
 	transform: none;
 }
@@ -39,7 +39,7 @@
 	overflow-y: auto;
 	transition: opacity .3s ease-in-out;
 }
-.step-items .ingredients.active + .dishes { opacity: 0; }
+.step-items .show-ingredients .dishes { opacity: 0; }
 
 .step-items .collection-item.dish {
 	padding: 0;
