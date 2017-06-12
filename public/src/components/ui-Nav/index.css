@@ -21,3 +21,5 @@ nav .brand-logo {
 	height: 100%;
 	max-width: none;
 }
+
+nav ul a { padding: 0 .5rem; }

@@ -27,7 +27,7 @@ app
 	.use( bodyParser.json() )
 
 	// ROUTES
-	.get( '/', (req, res) => {
+	.get( [ '/', '/dishes-ingredients' ], (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.get( '/search/customer/:number?', (req, res) => {
@@ -75,6 +75,7 @@ app
 		Customer.delete( req.params.custId, result => res.end( JSON.stringify( result ) ) );
 	} )
 
+	// View (GET), insert (POST) an order or view (GET) all orders
 	.get		( '/order/:orderId', (req, res) => {
 		if ( req.accepts( 'html' ) ) {
 			res.sendFile( __dirname +'/public/index.html' );
