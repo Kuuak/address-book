@@ -105,7 +105,73 @@ function insert( data, callback ) {
 		} );
 	});
 }
-function update() {}
+function update( data, callback ) {
+
+	let { success, fields, alerts } = validateDish( data );
+
+	if ( ! success ) {
+		callback({ success: success, fields: fields, alerts: alerts });
+		return;
+	}
+
+	let dishFields = { $set: {
+		name	: data.name,
+		price	: parseFloat(data.price),
+		desc	: isEmpty(data.desc) ? '' : data.desc,
+	} };
+
+	dbDishes.update( { _id: parseInt(data._id) }, dishFields, (err, numUpdated) => {
+
+		if ( isNull(err) && 1 == numUpdated ) {
+			success = true;
+			alerts	= {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'Le plat a été modifié.',
+			};
+		}
+		else {
+			success = false;
+			alerts = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups!',
+				message	: 'Impossible de modifier ce plat. Merci de contacter l\'administrateur.',
+			};
+		}
+
+		callback({ success: success, alerts: alerts });
+
+	});
+
+}
+function remove( id, callback ) {
+	dbDishes.remove( { _id: parseInt( id ) }, (err, numRemoved) => {
+		if( err || 1 !== numRemoved ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de supprimer ce plat.',
+				},
+			});
+			return;
+		}
+
+		callback({
+			success: true,
+			alerts: {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'Le plat a été supprimé.',
+			},
+		});
+	});
+}
 
 function validateDish( data ) {
 
@@ -140,3 +206,4 @@ function validateDish( data ) {
 exports.find		= find;
 exports.insert	= insert;
 exports.update	= update;
+exports.delete	= remove;

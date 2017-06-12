@@ -25,7 +25,7 @@
 	transition: opacity .3s ease-in-out, transform .3s ease-in-out;
 	transform: translate3d(-110%,0,0);
 }
-.step-items .ingredients.active {
+.step-items .show-ingredients .ingredients {
 	opacity: 1;
 	transform: none;
 }
@@ -39,19 +39,10 @@
 	overflow-y: auto;
 	transition: opacity .3s ease-in-out;
 }
-.step-items .ingredients.active + .dishes { opacity: 0; }
+.step-items .show-ingredients .dishes { opacity: 0; }
 
-.step-items .collection-item.dish {
-	padding: 0;
-	transition-duration: .2s;
-}
+.step-items .collection-item.dish { transition-duration: .2s; }
 .step-items .dish:hover { background-color: #ffab40; }
-
-.dish a {
-	display: block;
-	padding: 10px 20px;
-}
-
 
 /**
  * ITEMS
@@ -66,9 +57,6 @@
 .selected-items .item.delete-active { animation: fadeOut .3s linear 1; }
 
 .selected-items .item .collection-item-action .extra { transform: rotate(180deg); }
-
-.selected-items .item-name,
-.selected-items .item-price { font-size: 1.2rem; }
 
 .selected-items .item-extra {
 	display: block;

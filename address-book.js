@@ -27,7 +27,7 @@ app
 	.use( bodyParser.json() )
 
 	// ROUTES
-	.get( '/', (req, res) => {
+	.get( [ '/', '/dishes-ingredients' ], (req, res) => {
 		res.sendFile( __dirname +'/public/index.html' );
 	} )
 	.get( '/search/customer/:number?', (req, res) => {
@@ -75,6 +75,7 @@ app
 		Customer.delete( req.params.custId, result => res.end( JSON.stringify( result ) ) );
 	} )
 
+	// View (GET), insert (POST) an order or view (GET) all orders
 	.get		( '/order/:orderId', (req, res) => {
 		if ( req.accepts( 'html' ) ) {
 			res.sendFile( __dirname +'/public/index.html' );
@@ -98,6 +99,12 @@ app
 	.post	( '/dish', (req, res) => {
 		Dish.insert( req.body, result => res.end( JSON.stringify( result ) ) );
 	})
+	.put	( '/dish', (req, res) => {
+		Dish.update( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+	.delete	( '/dish/:id', (req, res) => {
+		Dish.delete( req.params.id, result => res.end( JSON.stringify( result ) ) );
+	})
 
 	// Retrieve (GET), insert (POST), update (PUT) or delete ingredient
 	.get( '/ingredient/:id?', (req, res) => {
@@ -105,6 +112,12 @@ app
 	})
 	.post	( '/ingredient', (req, res) => {
 		Ingredient.insert( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+	.put	( '/ingredient', (req, res) => {
+		Ingredient.update( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+	.delete	( '/ingredient/:id', (req, res) => {
+		Ingredient.delete( req.params.id, result => res.end( JSON.stringify( result ) ) );
 	})
 
 	// If request does not match any route
