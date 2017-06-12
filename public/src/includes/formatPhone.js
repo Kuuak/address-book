@@ -9,6 +9,7 @@
  * @return	string
  */
 export default function formatPhone( phone ) {
+	phone = phone || '';
 	const numbers = phone.replace(/\D/g, ''),
 				char = { 3:' ', 6:' ', 8:' ' };
 
