@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 // Helpers
 import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
+import formatPrice from 'includes/formatPrice';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
 
@@ -81,15 +82,7 @@ export default class DishForm extends React.Component {
 	}
 
 	handleChangePrice( event ) {
-
-		let newPrice = event.target.value.replace( /\D/, '' );
-
-		if ( 2 < newPrice.length ) {
-			let decimal = newPrice.slice(-2);
-			newPrice = newPrice.slice( 0, newPrice.length-decimal.length ) +'.'+ decimal;
-		}
-
-		this.setState({ price: newPrice });
+		this.setState({ price: formatPrice( event.target.value ) });
 	}
 
 	render() {
