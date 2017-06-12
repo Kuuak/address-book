@@ -1,4 +1,5 @@
 // Assets depedencies (Style & images)
+import 'styles/collection.css';
 import './index.css';
 import './print.css';
 import imgLogo from './images/LEscaleGourmande-Logo-v2.jpg';

@@ -1,4 +1,5 @@
 // Assets depedencies (Style & images)$
+import 'styles/collection.css';
 import './index.css';
 
 // React

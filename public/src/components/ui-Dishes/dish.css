@@ -1,4 +1,8 @@
-.dish a {
+.collection-item.dish,
+.collection.with-header .collection-item.dish { padding: 0; }
+
+.dish .select-link {
 	display: block;
 	padding: 10px 20px;
+	width: 100%;
 }

@@ -1,5 +1,6 @@
 // Assets depedencies (Style & images)
 import 'styles/fade.css';
+import 'styles/collection.css';
 import './basket.css';
 
 // React

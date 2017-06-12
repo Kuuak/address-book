@@ -1,4 +1,5 @@
 // Assets depedencies (Style & images)$
+import 'styles/collection.css';
 import './index.css';
 
 // React
@@ -67,7 +68,7 @@ export default class Ingredients extends React.Component {
 
 	render() {
 		return (
-			<ul className="ingredients collection with-header">
+			<ul className="ingredients card collection with-header">
 				<li className="collection-header">
 					<h2>Suppléments</h2>
 					<i onClick={ this.handleClickClose } className="material-icons">clear</i>
