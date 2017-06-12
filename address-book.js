@@ -119,3 +119,5 @@ io.on( 'connection', socket => fritzMonitor.listen( socket ) );
  * Start server
  */
 server.listen( config.port );
+
+console.log( `Address Book server listening on port ${config.port}.`);
