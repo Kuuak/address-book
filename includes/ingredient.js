@@ -13,7 +13,7 @@ const config = require( '../config' );
 
 // Database
 const Datastore	= require( 'nedb' );
-const dbDishes	= new Datastore({ filename: `${__dirname}/..${config.database.ingredient}`, autoload: true });
+const dbIngredients	= new Datastore({ filename: `${__dirname}/..${config.database.ingredient}`, autoload: true });
 
 // Helpers
 const isNull	= require( 'lodash.isnull' );
@@ -33,7 +33,7 @@ function find( query, sort, callback ) {
 	query = ( typeof query == 'object' ) ? query : ( isEmpty(query) ? {} : { _id: new RegExp( query ) } );
 	sort	= sort || {};
 
-	dbDishes.find( query ).sort( sort ).exec( (err, docs) => {
+	dbIngredients.find( query ).sort( sort ).exec( (err, docs) => {
 
 		if ( ! isNull(err) ) {
 			callback({
@@ -75,7 +75,7 @@ function insert( data, callback ) {
 		price	: parseFloat(data.price),
 	};
 
-	dbDishes.insert( newIngredient, (err, newDoc) => {
+	dbIngredients.insert( newIngredient, (err, newDoc) => {
 
 		if ( isNull(err) ) {
 			success = true;
