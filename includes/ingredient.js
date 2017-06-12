@@ -103,7 +103,72 @@ function insert( data, callback ) {
 		} );
 	});
 }
-function update() {}
+function update( data, callback ) {
+
+	let { success, fields, alerts } = validateIngredient( data );
+
+	if ( ! success ) {
+		callback({ success: success, fields: fields, alerts: alerts });
+		return;
+	}
+
+	let IngredientFields = { $set: {
+		name	: data.name,
+		price	: parseFloat(data.price),
+	} };
+
+	dbIngredients.update( { _id: parseInt(data._id) }, IngredientFields, (err, numUpdated) => {
+
+		if ( isNull(err) && 1 == numUpdated ) {
+			success = true;
+			alerts	= {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'L\'ingrédient a été modifié.',
+			};
+		}
+		else {
+			success = false;
+			alerts = {
+				icon		: 'error',
+				status	: 'error',
+				title		: 'Oups!',
+				message	: 'Impossible de modifier cet ingrédient. Merci de contacter l\'administrateur.',
+			};
+		}
+
+		callback({ success: success, alerts: alerts });
+
+	});
+
+}
+function remove( id, callback ) {
+	dbIngredients.remove( { _id: parseInt( id ) }, (err, numRemoved) => {
+		if( err || 1 !== numRemoved ) {
+			callback({
+				success: false,
+				alerts: {
+					icon		: 'error',
+					status	: 'error',
+					title		: 'Oups',
+					message	: 'Impossible de supprimer ce ingrédient.',
+				},
+			});
+			return;
+		}
+
+		callback({
+			success: true,
+			alerts: {
+				icon		: 'done',
+				status	: 'success',
+				title		: 'Bravo',
+				message	: 'L\'ingrédient a été supprimé.',
+			},
+		});
+	});
+}
 
 function validateIngredient( data ) {
 
@@ -128,3 +193,4 @@ function validateIngredient( data ) {
 exports.find		= find;
 exports.insert	= insert;
 exports.update	= update;
+exports.delete	= remove;

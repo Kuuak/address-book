@@ -113,6 +113,12 @@ app
 	.post	( '/ingredient', (req, res) => {
 		Ingredient.insert( req.body, result => res.end( JSON.stringify( result ) ) );
 	})
+	.put	( '/ingredient', (req, res) => {
+		Ingredient.update( req.body, result => res.end( JSON.stringify( result ) ) );
+	})
+	.delete	( '/ingredient/:id', (req, res) => {
+		Ingredient.delete( req.params.id, result => res.end( JSON.stringify( result ) ) );
+	})
 
 	// If request does not match any route
 	.use( '/', (req, res) => res.redirect( '/' ) );

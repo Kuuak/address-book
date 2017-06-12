@@ -33,10 +33,18 @@ export default class Ingredient extends React.Component {
 	render() {
 		return (
 			<li className="ingredient collection-item">
-				<span className="collection-item-action">
-					<a onClick={ this.handleClick } rel="add" className="extra material-icons" title="Supplément">add_circle_outline</a>
-					<a onClick={ this.handleClick } rel="remove" className="delete material-icons" title="Sans">remove_circle_outline</a>
-				</span>
+				<Route path="/dishes-ingredients" render={ () => (
+					<span className="collection-item-action">
+						<a onClick={ this.handleClick } rel="edit" className="edit material-icons" title="Modifier">edit</a>
+						<a onClick={ this.handleClick } rel="delete" className="delete material-icons" title="Supprimer">delete</a>
+					</span>
+				) } />
+				<Route path="/checkout" render={ () => (
+					<span className="collection-item-action">
+						<a onClick={ this.handleClick } rel="add" className="extra material-icons" title="Supplément">add_circle_outline</a>
+						<a onClick={ this.handleClick } rel="remove" className="delete material-icons" title="Sans">remove_circle_outline</a>
+					</span>
+				) } />
 				{ this.props.name }
 				{ this.props.price && <span className="secondary-content black-text">{ this.props.price.toFixed(2) }</span> }
 			</li>

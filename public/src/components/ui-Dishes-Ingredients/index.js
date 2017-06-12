@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 // Components
 import Preloader from 'components/ui-Preloader';
 import Dishes from 'components/ui-Dishes';
+import Ingredients from 'components/ui-Ingredients';
 
 // Helpers
 import isEmpty from 'lodash.isempty';
@@ -33,6 +34,7 @@ export default class DishesIngredients extends React.Component {
 						<Dishes addAlerts={ this.props.addAlerts } />
 					</div>
 					<div className="column-ingredients">
+						<Ingredients addAlerts={ this.props.addAlerts } />
 					</div>
 				</div>
 			</div>
