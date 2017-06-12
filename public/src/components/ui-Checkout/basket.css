@@ -47,12 +47,6 @@
 }
 .step-items .dish:hover { background-color: #ffab40; }
 
-.dish a {
-	display: block;
-	padding: 10px 20px;
-}
-
-
 /**
  * ITEMS
  */

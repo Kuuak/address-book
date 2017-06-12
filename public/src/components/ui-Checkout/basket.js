@@ -14,6 +14,9 @@ import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 import formData2UrlEncoded from 'includes/formData2UrlEncoded';
 
+// Components
+import Dishes from 'components/ui-Dishes';
+
 /**
  * Calculate total price of given items including extras
  *
@@ -44,12 +47,10 @@ export default class CheckoutBasket extends React.Component {
 		super( props );
 
 		this.state = {
-			dishes: [],
 			ingredients: [],
 			selectedItem: null,
 		};
 
-		this.addDish = this.addDish.bind( this );
 		this.addExtra = this.addExtra.bind( this );
 		this.addIngredient = this.addIngredient.bind( this );
 		this.toggleIngredients = this.toggleIngredients.bind( this );
@@ -58,13 +59,6 @@ export default class CheckoutBasket extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch( '/dish/' )
-			.then( res => res.json() )
-			.then( res => {
-				res.dishes.sort( (a, b) => a.name.localeCompare(b.name) );
-				this.setState({ dishes: res.dishes });
-			} );
-
 		fetch( '/ingredient/' )
 			.then( res => res.json() )
 			.then( res => {
@@ -94,11 +88,6 @@ export default class CheckoutBasket extends React.Component {
 		this.setState({ selectedItem: ( typeof itemId == 'object' ? null : ( itemId == this.state.selectedItem ? null : itemId ) ) });
 	}
 
-	addDish( dish ) {
-		let dishes = this.state.dishes;
-		dishes.push( dish );
-		this.setState({ dishes: dishes });
-	}
 	addIngredient( ingredient ) {
 		let ingredients = this.state.ingredients;
 		ingredients.push( ingredient );
@@ -140,13 +129,7 @@ export default class CheckoutBasket extends React.Component {
 									<IngredientForm addIngredient={ this.addIngredient } addExtra={ this.addExtra } addAlerts={ this.props.addAlerts } />
 								</li>
 							</ul>
-							<ul className="dishes card collection with-header">
-								<li className="collection-header"><h2>Plats</h2></li>
-									{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} addItem={ this.props.addItem } /> ) }
-								<li className="collection-footer">
-									<DishForm addDish={ this.addDish } addItem={ this.props.addItem } addAlerts={ this.props.addAlerts } />
-								</li>
-							</ul>
+							<Dishes onDishSelect={ this.props.addItem } addAlerts={ this.props.addAlerts } />
 						</div>
 						<div className="column-right">
 							<CSSTransitionGroup component="ul" className="selected-items card collection with-header" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
@@ -183,136 +166,6 @@ CheckoutBasket.PropTypes = {
 	addAlerts		: PropTypes.func.isRequired,
 	customer		: PropTypes.number.isRequired,
 	address			: PropTypes.number.isRequired,
-};
-
-export class Dish extends React.Component {
-
-	constructor( props ) {
-		super( props );
-
-		this.handleClick = this.handleClick.bind( this );
-	}
-
-	handleClick( event ) {
-		event.preventDefault();
-
-		this.props.addItem({
-			id		: this.props._id,
-			name	: this.props.name,
-			price	: this.props.price,
-			desc	: this.props.desc,
-		});
-	}
-
-	render() {
-		return (
-			<li className="dish collection-item">
-				<Link to={`/dish/${this.props._id}/`} onClick={ this.handleClick } >
-					{ this.props.name }
-					<span className="secondary-content black-text">{ this.props.price.toFixed(2) }</span>
-				</Link>
-			</li>
-		);
-	}
-}
-Dish.PropTypes = {
-	_id			: PropTypes.number.isRequired,
-	name		: PropTypes.string.isRequired,
-	price		: PropTypes.number.isRequired,
-	desc		: PropTypes.string,
-	addItem	: PropTypes.func.isRequired,
-};
-
-export class DishForm extends React.Component {
-
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			name: '',
-			price: ''
-		};
-
-		this.handleSubmit = this.handleSubmit.bind( this );
-		this.handleChangeName = this.handleChangeName.bind( this );
-		this.handleChangePrice = this.handleChangePrice.bind( this );
-	}
-
-	handleSubmit( event ) {
-		event.preventDefault();
-
-		let form = event.target,
-				data = new FormData( form );
-
-		for( let field of form.querySelectorAll( '.invalid' ) ) {
-			field.classList.remove( 'invalid' );
-		}
-
-		fetch( form.action, {
-			method: 'POST',
-			body: formData2UrlEncoded( data ),
-			headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
-		} )
-		.then( res => res.json() )
-		.then( res => {
-
-			if ( ! isEmpty(res.alerts) ) {
-				this.props.addAlerts( res.alerts );
-			}
-
-			if ( ! isEmpty(res.fields) ) {
-				for (let fieldName of res.fields) {
-					form.querySelector( `[name="${fieldName}"]` ).classList.add( 'invalid' );
-				}
-			}
-
-
-			if ( res.success ) {
-				this.props.addDish( res.dish );
-				this.props.addItem({
-					id		: res.dish._id,
-					name	: res.dish.name,
-					price	: res.dish.price,
-					desc	: res.dish.desc,
-				});
-
-				this.setState({
-					name: '',
-					price: '',
-				});
-				form.elements[0].focus();
-			}
-
-		} );
-	}
-	handleChangeName( event ) {
-		this.setState({ name: event.target.value });
-	}
-	handleChangePrice( event ) {
-
-		let newPrice = event.target.value.replace( /\D/, '' );
-
-		if ( 2 < newPrice.length ) {
-			let decimal = newPrice.slice(-2);
-			newPrice = newPrice.slice( 0, newPrice.length-decimal.length ) +'.'+ decimal;
-		}
-
-		this.setState({ price: newPrice });
-	}
-
-	render() {
-		return (
-			<form method="POST" action="/dish/" className="add-dish-form" onSubmit={ this.handleSubmit }>
-				<input type="text" name="name" className="name" placeholder="Ajouter un plat" value={ this.state.name } onChange={ this.handleChangeName } autoComplete="off" />
-				<input type="text" name="price" className="price" placeholder="Prix" value={ this.state.price } pattern="\d+(\.\d{1,2})?" onChange={ this.handleChangePrice } autoComplete="off" />
-				<button type="submit" className="btn blue">Ajouter</button>
-			</form>
-		);
-	}
-}
-DishForm.PropTypes = {
-	addDish: PropTypes.func.isRequired,
-	addItem: PropTypes.func.isRequired,
 };
 
 export class Item extends React.Component {
