@@ -8,7 +8,7 @@ import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Helpers
-import isEmpty from 'lodash.isEmpty';
+import isEmpty from 'lodash.isempty';
 import isFunction from 'lodash.isfunction';
 
 // Components
