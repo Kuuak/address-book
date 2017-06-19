@@ -14,22 +14,6 @@ Install dependencies by running `npm install --only=prod` command.
 
 Run the app `npm start` and go to http://localhost:8080
 
-## Run as a Windows service
-
-Please install the [node-windows](https://www.npmjs.com/package/node-windows) package globally first with `npm i -g node-windows` command.
-
-### Intall and start
-
-Run `node windows-service-install.js` script to install the service.
-
-Start the `Address-Book` service in the Windows Services Console if it didn't start automaticaly.
-
-### stop and uninstall
-
-Stop the service.
-
-Run `node windows-service-uninstall.js` script.
-
 ## CHANGELOG
 
 ### TODO
