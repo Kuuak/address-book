@@ -20,6 +20,10 @@ Run the app `npm start` and go to http://localhost:8080
 * Refactor the Add Customer workflow
 * Clear the search input after Customer insertion and Checkout completed
 
+### 1.1.1
+* Fix: Undefined property on customer insert
+* Remove: Windows service scripts
+
 ### 1.1.0
 * Completed README
 * Add: Dishes and Ingredients manage page
