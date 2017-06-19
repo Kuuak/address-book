@@ -1,3 +1,5 @@
+const path = require( 'path' );
+
 module.exports = {
   /**
    * Application configuration section
@@ -8,9 +10,9 @@ module.exports = {
     // First application
     {
       name      : 'AddressBook',
-      script    : 'address-book.js',
+      script    : path.resolve( __dirname, 'address-book.js' ),
 			"watch"   : true,
-			"ignore_watch" : [ ".git", "node_modules", "public/src", "data" ],
+			"ignore_watch" : [ path.resolve( __dirname, ".git" ), path.resolve( __dirname, "node_modules" ), path.resolve( __dirname, "public/src" ), path.resolve( __dirname, "data" ) ],
       env: {
         COMMON_VARIABLE: 'true'
       },
