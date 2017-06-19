@@ -168,8 +168,6 @@ function insert( data, callback ) {
 							status			: 'error',
 							title				: 'Oups!',
 							message			: 'Ce téléphone est déjà enregistré pour un autre client.',
-							linkButton	: `/customer/${newDoc._id}/`,
-							titleButton	: 'Fiche client',
 							timeout			: 0,
 						}
 					});
