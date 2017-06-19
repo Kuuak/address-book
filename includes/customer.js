@@ -168,7 +168,7 @@ function insert( data, callback ) {
 							status			: 'error',
 							title				: 'Oups!',
 							message			: 'Ce téléphone est déjà enregistré pour un autre client.',
-							linkButton	: `/customer/${results.customers[0]._id}/`,
+							linkButton	: `/customer/${newDoc._id}/`,
 							titleButton	: 'Fiche client',
 							timeout			: 0,
 						}
