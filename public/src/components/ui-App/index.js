@@ -27,6 +27,7 @@ import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
 import formatPhone from 'includes/formatPhone';
+import loadGoogleAPIScript from 'includes/loadGoogleAPIScript';
 
 
 export default class App extends React.Component {
@@ -63,6 +64,9 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
+
+		loadGoogleAPIScript();
+
 		if ( typeof io !== undefined ) {
 			this.socket = io.connect( window.location.origin );
 
