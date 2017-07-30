@@ -29,6 +29,12 @@ export default class IngredientForm extends React.Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
+		if ( nextProps.clear ) {
+			this.setState({
+				name: '',
+			});
+		}
+
 		if ( this.props._id != nextProps._id ) {
 			this.setState({
 				_id		: nextProps._id,
@@ -82,6 +88,10 @@ export default class IngredientForm extends React.Component {
 
 	handleChangeName( event ) {
 		this.setState({ name: event.target.value });
+
+		if ( isFunction( this.props.onInputChange) ) {
+			this.props.onInputChange( event.target.value );
+		}
 	}
 
 	handleChangePrice( event ) {
@@ -105,8 +115,11 @@ IngredientForm.PropTypes = {
 	price						: PropTypes.number,
 	addAlerts				: PropTypes.func.isRequired,
 	onSubmitSuccess	: PropTypes.func,
+	onInputChange		: PropTypes.func,
+	clear						: PropTypes.bool,
 };
 IngredientForm.defaultProps = {
 	name	: '',
 	price	: 0,
+	clear	: false,
 }
