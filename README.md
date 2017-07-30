@@ -13,6 +13,8 @@ Update the configuration parameters to your preferences.
 
 Don't forget to configure your Google Maps API key, with  [JavaScript](https://developers.google.com/maps/documentation/javascript/), [Direction](https://developers.google.com/maps/documentation/directions/) and [Places Web Service](https://developers.google.com/places/web-service/) libraries enabled.
 
+Copy and rename or replace the `logo_default.png` into `_logo.png` and `_logo-black.jpg` in `public/src/images/` with your logo.
+
 Install dependencies by running `npm install --only=prod` command.
 
 Run the app `npm start` and go to http://localhost:8080 where the port is the one set in the `config/index.json` file

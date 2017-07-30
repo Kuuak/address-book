@@ -2,7 +2,7 @@
 import 'styles/collection.css';
 import './index.css';
 import './print.css';
-import imgLogo from './images/LEscaleGourmande-Logo-v2.jpg';
+import imgLogo from 'images/_logo-black.jpg';
 
 import config from '../../../../config';
 
