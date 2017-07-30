@@ -25,6 +25,12 @@ Run the app `npm start` and go to http://localhost:8080 where the port is the on
 * Refactor the Add Customer workflow
 * Clear the search input after Customer insertion and Checkout completed
 
+### 1.2.0
+* Add: Discount input in order on checkout
+* Add: Filter Dish and Ingredient lists when form input name is getting filled
+* Refactor: Load Google API script dynamically
+* Remove: Personnal config from versionning
+
 ### 1.1.1
 * Fix: Undefined property on customer insert
 * Remove: Windows service scripts
