@@ -35,5 +35,10 @@
 	"tax": 2.5,
 	"print": {
 		"number": 2
+	},
+	"discount": {
+		"min": 0,
+		"max": 50,
+		"step": 5
 	}
 }

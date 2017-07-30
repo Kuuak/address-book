@@ -42,6 +42,7 @@ export default class Order extends React.Component {
 			payment			: 'cash',
 			date				: '',
 			information	: '',
+			discount		: 0,
 		};
 	}
 
@@ -68,7 +69,7 @@ export default class Order extends React.Component {
 	}
 
 	render() {
-		const totals	= calcItemsTotal( this.state.items ),
+		const totals	= calcItemsTotal( this.state.items, this.state.discount ),
 				tax 			= (totals.total/100) * config.tax;
 
 		return (
@@ -114,11 +115,23 @@ export default class Order extends React.Component {
 					</ul>
 					<div className="order-amounts">
 						<div className="titles">
+							{ 0 < this.state.discount && (
+								<div className="discount-wrap">
+									<h4 className="subtotal" >Sous-Total</h4>
+									<h4 className="discount" >Réduction { this.state.discount }%</h4>
+								</div>
+							) }
+							<h4 className="tax">{`TVA ${config.tax}%`}</h4>
 							<h3 className="total" >Total</h3>
-							<div className="tax">{`TVA ${config.tax}% incluse`}</div>
 						</div>
 						<div className="amount">
-							<div className="tax">{ tax.toFixed( 2 ) }</div>
+							{ 0 < this.state.discount && (
+								<div className="discount-wrap">
+									<h4 className="subtotal">{ totals.subtotal.toFixed(2) }</h4>
+									<h4 className="discount">- { totals.discount.toFixed(2) }</h4>
+								</div>
+							) }
+							<h4 className="tax">{ tax.toFixed( 2 ) }</h4>
 							<h3 className="total">{ totals.total.toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</h3>
 						</div>
 						<div className="greetings">Merci et bon appétit!</div>

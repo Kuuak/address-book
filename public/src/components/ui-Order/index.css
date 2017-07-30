@@ -73,9 +73,14 @@
 .order-amounts .titles { padding-right: 1rem; }
 .order-amounts .amount { flex-shrink: 0; }
 
+.order-amounts h4 {
+	font-size: 1rem;
+	margin: 0 0 .5rem;
+}
+
 .order-amounts .titles h3 { font-weight: bold; }
 .order-amounts h3 {
-	margin: 0 0 .5rem;
+	margin: 1rem 0 0;
 	padding: 0;
 	font-size: 1.3rem;
 }

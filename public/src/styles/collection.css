@@ -51,7 +51,8 @@
 	border-top: 1px solid;
 }
 
-.collection-footer h3 {
+.collection-footer h3,
+.collection-footer h4 {
 	display: inline;
 	margin: 0;
 	padding-left: 10px;
