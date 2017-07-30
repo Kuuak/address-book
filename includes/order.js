@@ -25,6 +25,7 @@
  *		date				: string, Timestamp
  *		information	: string, Optional. Additional info
  *		payment			: string, Method of payment
+ *		discount		: int, Discount rate in %
  *		items				: array,	Optional. Dished ordered
  *		[{
  *			id			: number, incremential number
@@ -182,6 +183,7 @@ function insert( data, callback ) {
 			address			: address,
 			date				: Date.now(),
 			payment			: data.payment,
+			discount		: data.discount,
 			information	: data.information,
 			items				: isEmpty(data.items) ? [] : data.items,
 		};

@@ -1,0 +1,44 @@
+{
+	"name"		: "My Company Name",
+	"phone"		: "0215552244",
+	"address"	: {
+		"street"	: "Company Street",
+		"number"	: "0",
+		"postcode": "5555",
+		"city"		: "Company City",
+		"country"	: "Country"
+	},
+	"server": {
+		"port": 8080
+	},
+	"map": {
+		"latlng": {
+			"lat": 46.5533089,
+			"lng": 6.617475
+		},
+		"zoom": 12,
+		"key": "YOUR Google API KEY"
+	},
+	"database": {
+		"dish": "/data/dishes.db",
+		"order": "/data/orders.db",
+		"customers": "/data/customers.db",
+		"ingredient": "/data/ingredients.db"
+	},
+	"suggestion": {
+		"link": "https://tel.search.ch/api/?wo=vd&was="
+	},
+	"fritzbox": {
+		"address": "192.168.178.1",
+		"port": "1012"
+	},
+	"tax": 2.5,
+	"print": {
+		"number": 2
+	},
+	"discount": {
+		"min": 0,
+		"max": 50,
+		"step": 5
+	}
+}

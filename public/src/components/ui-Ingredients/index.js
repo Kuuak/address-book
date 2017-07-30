@@ -24,11 +24,13 @@ export default class Ingredients extends React.Component {
 			loading			: false,
 			ingredients	: [],
 			current			: null,
+			search			: null,
 		};
 
 		this.handleClick = this.handleClick.bind( this );
 		this.handleClickClose = this.handleClickClose.bind( this );
 		this.handleSubmitSuccess = this.handleSubmitSuccess.bind( this );
+		this.handleFormNameChange = this.handleFormNameChange.bind( this );
 	}
 
 	componentDidMount() {
@@ -65,6 +67,13 @@ export default class Ingredients extends React.Component {
 				if ( isFunction( this.props.onIngredientSelect  ) ) {
 					this.props.onIngredientSelect( action, ingredient );
 				}
+
+				this.setState({
+					current: {
+						clear: true,
+					},
+					search: null,
+				});
 				break;
 			case 'edit':
 				this.setState({ current: this.state.ingredients.find( igt => igt._id == ingredient.id ) });
@@ -99,6 +108,13 @@ export default class Ingredients extends React.Component {
 		this.fetch();
 	}
 
+	handleFormNameChange( value ) {
+		this.setState({
+			current: null,
+			search: value.toLowerCase(),
+		});
+	}
+
 	render() {
 		return (
 			<ul className="ingredients card collection with-header">
@@ -106,9 +122,12 @@ export default class Ingredients extends React.Component {
 					<h2>Suppléments</h2>
 					<Route path="/checkout" render={ () => <i onClick={ this.handleClickClose } className="material-icons">clear</i> } />
 				</li>
-				{ this.state.ingredients.map( ingredient => <Ingredient key={ ingredient._id } { ...ingredient } onClick={ this.handleClick } /> ) }
+				{ this.state.ingredients
+						.filter( ingredient => ( isEmpty(this.state.search) ? true : ingredient.name.toLowerCase().includes( this.state.search ) ) )
+						.map( ingredient => <Ingredient key={ ingredient._id } { ...ingredient } onClick={ this.handleClick } /> )
+				}
 				<li className="collection-footer">
-					<IngredientForm { ...this.state.current } onSubmitSuccess={ this.handleSubmitSuccess } addAlerts={ this.props.addAlerts } />
+					<IngredientForm { ...this.state.current } onSubmitSuccess={ this.handleSubmitSuccess } onInputChange={ this.handleFormNameChange } addAlerts={ this.props.addAlerts } />
 				</li>
 			</ul>
 		);

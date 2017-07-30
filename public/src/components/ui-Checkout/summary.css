@@ -41,14 +41,43 @@
 	text-decoration: none;
 }
 
-.step-summary .order-informations { flex-shrink: 0; }
+.step-summary .order-information { flex-shrink: 0; }
 
 .step-summary .selected-items h2,
-.step-summary .order-informations h2 { font-size: 1.3rem; }
+.step-summary .order-information h2 { font-size: 1.3rem; }
 
-.step-summary .order-informations .collection-item { padding-left: 20px; }
+.step-summary .order-information .collection-item {
+	display: flex;
+	flex-flow: row wrap;
+	padding-left: 20px;
+	align-items: stretch;
+	justify-content: space-between;
+}
 
-.step-summary .order-informations textarea {
+.step-summary .order-discount { flex-basis: 40%; }
+.step-summary .order-discount input {
+	display: inline-block;
+	width: 100%;
+	max-width: 150px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.step-summary .order-payment-method { flex-basis: 45%; }
+
+.step-summary .order-payment-method .input-rdo-label { margin: 0; }
+.step-summary .order-payment-method .input-rdo {
+	display: block;
+	margin: 0;
+}
+
+.step-summary .order-extra-info {
+	flex-basis: 100%;
+	margin-top: 1rem;
+}
+
+
+.step-summary .order-information textarea {
 	height: 1rem;
 	margin-bottom: 0;
 	padding-bottom: 1rem;

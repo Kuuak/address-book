@@ -8,17 +8,28 @@ Monitor your FritzBox router to get incoming/current caller number easily.
 
 ## Getting started
 
-Insert your Google Maps API key, with  [JavaScript](https://developers.google.com/maps/documentation/javascript/), [Direction](https://developers.google.com/maps/documentation/directions/) and [Places Web Service](https://developers.google.com/places/web-service/) libraries enabled, in the public/index.html file on line 9.
+Copy and rename the file `config/index_default.json` into `config/index.json`.
+Update the configuration parameters to your preferences.
+
+Don't forget to configure your Google Maps API key, with  [JavaScript](https://developers.google.com/maps/documentation/javascript/), [Direction](https://developers.google.com/maps/documentation/directions/) and [Places Web Service](https://developers.google.com/places/web-service/) libraries enabled.
+
+Copy and rename or replace the `logo_default.png` into `_logo.png` and `_logo-black.jpg` in `public/src/images/` with your logo.
 
 Install dependencies by running `npm install --only=prod` command.
 
-Run the app `npm start` and go to http://localhost:8080
+Run the app `npm start` and go to http://localhost:8080 where the port is the one set in the `config/index.json` file
 
 ## CHANGELOG
 
 ### TODO
 * Refactor the Add Customer workflow
 * Clear the search input after Customer insertion and Checkout completed
+
+### 1.2.0
+* Add: Discount input in order on checkout
+* Add: Filter Dish and Ingredient lists when form input name is getting filled
+* Refactor: Load Google API script dynamically
+* Remove: Personnal config from versionning
 
 ### 1.1.1
 * Fix: Undefined property on customer insert

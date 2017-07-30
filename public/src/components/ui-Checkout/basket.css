@@ -35,11 +35,15 @@
  */
 .step-items .dishes {
 	opacity: 1;
+	visibility: visible;
 	max-height: 100%;
 	overflow-y: auto;
-	transition: opacity .3s ease-in-out;
+	transition: opacity .3s ease-in-out, visibility .3s ease-in-out;
 }
-.step-items .show-ingredients .dishes { opacity: 0; }
+.step-items .show-ingredients .dishes {
+	opacity: 0;
+	visibility: hidden;
+}
 
 .step-items .collection-item.dish { transition-duration: .2s; }
 .step-items .dish:hover { background-color: #ffab40; }
@@ -69,3 +73,10 @@
 }
 
 .selected-items .extra-name { margin-left: .2rem; }
+
+.selected-items .discount-wrap {
+	margin-bottom: .3rem;
+	padding-bottom: .3rem;
+	border-bottom: 1px solid #e0e0e0;
+}
+.selected-items .discount-wrap .discount { padding-left: 20px; }
