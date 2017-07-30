@@ -25,13 +25,15 @@ export default class Checkout extends React.Component {
 				customer: this.props.custId,
 				address	: this.props.addrId,
 			},
+			discount: 0,
 		};
 
-		this.addItem			= this.addItem.bind(this);
-		this.copyItem			= this.copyItem.bind(this);
-		this.removeItem		= this.removeItem.bind(this);
-		this.addExtra			= this.addExtra.bind(this);
-		this.removeExtra	= this.removeExtra.bind(this);
+		this.addItem				= this.addItem.bind(this);
+		this.copyItem				= this.copyItem.bind(this);
+		this.removeItem			= this.removeItem.bind(this);
+		this.addExtra				= this.addExtra.bind(this);
+		this.removeExtra		= this.removeExtra.bind(this);
+		this.updateDiscount	= this.updateDiscount.bind(this);
 	}
 
 	componentDidMount() {
@@ -131,12 +133,16 @@ export default class Checkout extends React.Component {
 		}
 	}
 
+	updateDiscount( value ) {
+		this.setState({ discount: value });
+	}
+
 	render() {
 		return (
 			<div className="checkout">
 				<Delivery active={ 'delivery' == this.props.step } { ...this.state.delivery } addAlerts={ this.props.addAlerts } history={ this.props.history } />
 				<Basket active={ 'basket' == this.props.step } { ...this.state.delivery } items={ this.state.items } addItem={ this.addItem } copyItem={ this.copyItem } removeItem={ this.removeItem } addExtra={ this.addExtra } removeExtra={ this.removeExtra } addAlerts={ this.props.addAlerts } />
-				<Summary active={ 'summary' == this.props.step } { ...this.state.delivery } items={ this.state.items } addAlerts={ this.props.addAlerts } history={ this.props.history } />
+				<Summary active={ 'summary' == this.props.step } { ...this.state.delivery } items={ this.state.items } discount={ this.state.discount } addAlerts={ this.props.addAlerts } updateDiscount={ this.updateDiscount } history={ this.props.history } />
 				<Complete active={ 'complete' == this.props.step } id={ this.state.order } addAlerts={ this.props.addAlerts } />
 			</div>
 		);

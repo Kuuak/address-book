@@ -69,3 +69,10 @@
 }
 
 .selected-items .extra-name { margin-left: .2rem; }
+
+.selected-items .discount-wrap {
+	margin-bottom: .3rem;
+	padding-bottom: .3rem;
+	border-bottom: 1px solid #e0e0e0;
+}
+.selected-items .discount-wrap .discount { padding-left: 20px; }

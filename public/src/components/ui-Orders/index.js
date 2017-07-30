@@ -59,7 +59,7 @@ export class ResultOrder extends React.Component {
 				<div className="card-content">
 					<div className="card-title">Commande n° <strong>{ this.props._id.toLocaleString("arab",{minimumIntegerDigits:4, useGrouping: false}) }</strong></div>
 					<div className="date"><strong>Date</strong> { formatDate( this.props.date ) }</div>
-					<div className="amount"><strong>Total</strong> { calcItemsTotal( this.props.items ).toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</div>
+					<div className="amount"><strong>Total</strong> { calcItemsTotal( this.props.items ).total.toLocaleString( 'fr-CH', { style: "currency", currency: "CHF" } ) }</div>
 				</div>
 				<div className="card-action">
 					<Link to={`/order/${this.props._id}/`} >Voir la commande</Link>

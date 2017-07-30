@@ -9,7 +9,8 @@
     "restart": "pm2 restart address-book",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p --progress",
-    "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build\""
+    "build:dev": "webpack --progress",
+    "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build:dev\""
   },
   "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",
   "license": "MIT",
