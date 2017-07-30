@@ -48,6 +48,8 @@ nbproject
 *.sublime-project
 *.sublime-workspace
 
+# Dist folder
+public/dist
 
 # Database
 data/*
