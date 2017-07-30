@@ -24,12 +24,14 @@ export default class Dishes extends React.Component {
 			loading: true,
 			dishes: [],
 			current: null,
+			search: null,
 		};
 
 		this.deleteDish = this.deleteDish.bind( this );
 		this.handleClick = this.handleClick.bind( this );
 		this.handleClickAction = this.handleClickAction.bind( this );
 		this.handleSubmitSuccess = this.handleSubmitSuccess.bind( this );
+		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	componentDidMount() {
@@ -54,6 +56,13 @@ export default class Dishes extends React.Component {
 		if ( isFunction( this.props.onDishSelect  ) ) {
 			this.props.onDishSelect( dish );
 		}
+
+		this.setState({
+			current: {
+				clear: true,
+			},
+			search: null,
+		});
 	}
 
 	handleClickAction( action, dishId ) {
@@ -95,13 +104,20 @@ export default class Dishes extends React.Component {
 		this.fetch();
 	}
 
+	handleSearch( query ) {
+		this.setState({
+			current: null,
+			search: query.toLowerCase()
+		});
+	}
+
 	render() {
 		return (
 			<ul className="dishes card collection with-header">
 				<li className="collection-header"><h2>Plats</h2></li>
-					{ this.state.dishes.map( (dish, i) => <Dish key={ dish._id } {...dish} onClick={ this.handleClick } onClickAction={ this.handleClickAction }/> ) }
+					{ this.state.dishes.filter( dish => (isEmpty(this.state.search) ? true : dish.name.toLowerCase().includes( this.state.search )) ).map( (dish, i) => <Dish key={ dish._id } {...dish} onClick={ this.handleClick } onClickAction={ this.handleClickAction }/> ) }
 				<li className="collection-footer">
-					<DishForm { ...this.state.current } onSubmitSuccess={ this.handleSubmitSuccess } addAlerts={ this.props.addAlerts } />
+					<DishForm { ...this.state.current } onSubmitSuccess={ this.handleSubmitSuccess } onInputChange={ this.handleSearch } addAlerts={ this.props.addAlerts } />
 				</li>
 			</ul>
 		);

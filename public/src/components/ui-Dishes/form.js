@@ -29,6 +29,12 @@ export default class DishForm extends React.Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
+		if ( nextProps.clear ) {
+			this.setState({
+				name: '',
+			});
+		}
+
 		if ( this.props._id != nextProps._id ) {
 
 			this.setState({
@@ -94,6 +100,10 @@ export default class DishForm extends React.Component {
 
 	handleChangeName( event ) {
 		this.setState({ name: event.target.value });
+
+		if ( isFunction( this.props.onInputChange ) ) {
+			this.props.onInputChange( event.target.value );
+		}
 	}
 
 	handleChangePrice( event ) {
@@ -117,10 +127,13 @@ DishForm.PropTypes = {
 	price						: PropTypes.number,
 	desc						: PropTypes.string,
 	onSubmitSuccess	: PropTypes.func,
+	onInputChange		: PropTypes.func,
 	addAlerts				: PropTypes.func.isRequired,
+	clear						: PropTypes.bool,
 };
 DishForm.defaultProps = {
 	name	: '',
 	price	: 0,
 	desc	: '',
+	clear	: false,
 }
