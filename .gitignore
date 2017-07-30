@@ -51,3 +51,6 @@ nbproject
 
 # Database
 data/*
+
+# Local config
+config/index.json
