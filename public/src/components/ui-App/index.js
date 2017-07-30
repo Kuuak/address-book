@@ -4,6 +4,9 @@ import 'styles/base.css';
 import './index.css';
 import './print.css';
 
+// APP settings
+import config from '../../../../config';
+
 // React
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -27,6 +30,7 @@ import isNull from 'lodash.isnull';
 import isEmpty from 'lodash.isempty';
 import uniqueId from 'lodash.uniqueid';
 import formatPhone from 'includes/formatPhone';
+import loadGoogleAPIScript from 'includes/loadGoogleAPIScript';
 
 
 export default class App extends React.Component {
@@ -63,6 +67,9 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
+
+		loadGoogleAPIScript();
+
 		if ( typeof io !== undefined ) {
 			this.socket = io.connect( window.location.origin );
 
@@ -247,7 +254,7 @@ export default class App extends React.Component {
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">
 							<div className="container">
-								© 2017 L'Escale Gourmande
+								© {new Date().getFullYear()} {config.name}
 							</div>
 						</div>
 					</footer>

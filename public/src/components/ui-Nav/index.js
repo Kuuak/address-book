@@ -1,6 +1,6 @@
 // Assets depedencies (Style & images)
 import './index.css';
-import logoSrc from './images/LEscaleGourmande-Logo-v2-blanc.png';
+import logoSrc from 'images/_logo.png';
 
 // React
 import React from 'react';

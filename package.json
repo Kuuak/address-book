@@ -1,14 +1,14 @@
 {
   "name": "address-book",
   "version": "1.1.1",
-  "description": "L'Escale Gourmande address book directory",
+  "description": "An address book directory and food order app",
   "main": "address-book.js",
   "scripts": {
-    "start": "pm2 start address-book.js",
+    "start": "npm run build && pm2 start address-book.js",
     "stop": "pm2 stop address-book",
     "restart": "pm2 restart address-book",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress",
+    "build": "webpack -p --progress",
     "watch": "nodemon --watch public/src -e js,json,css -x \"npm run build\""
   },
   "author": "Felipe Paul Martins <felipe.paulmartins@outlook.com>",

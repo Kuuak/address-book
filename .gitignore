@@ -48,6 +48,15 @@ nbproject
 *.sublime-project
 *.sublime-workspace
 
+# Dist folder
+public/dist
 
 # Database
 data/*
+
+# Local config
+config/index.json
+
+# Personalize logo
+public/src/images/_*.jpg
+public/src/images/_*.png
