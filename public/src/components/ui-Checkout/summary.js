@@ -61,6 +61,9 @@ export default class CheckoutSummary extends React.Component {
 	}
 
 	render() {
+
+		const totals = calcItemsTotal( this.props.items );
+
 		return (
 			<section className={'checkout-step step-summary '+ ( this.props.active && 'step-active' ) }>
 				<div className="lateral">Récapitulatif</div>
@@ -84,7 +87,7 @@ export default class CheckoutSummary extends React.Component {
 								{ this.props.items.map( item => <Item key={ item.id } { ...item } /> ) }
 								<li className="collection-footer">
 									<h3>Total</h3>
-									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ).toFixed(2) }</h3>
+										<h3 className="secondary-content black-text">{ totals.total.toFixed(2) }</h3>
 								</li>
 							</ul>
 							<div className="order-informations collection with-header card">

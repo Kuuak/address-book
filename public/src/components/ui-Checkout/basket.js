@@ -74,6 +74,9 @@ export default class CheckoutBasket extends React.Component {
 	}
 
 	render() {
+
+		const { total } = calcItemsTotal( this.props.items );
+
 		return (
 			<section className={'checkout-step step-items '+ ( this.props.active && 'step-active' ) }>
 				<div className="lateral">Commande</div>
@@ -90,7 +93,7 @@ export default class CheckoutBasket extends React.Component {
 								{ this.props.items.map( item => <Item key={ item.id } selected={ item.id == this.state.selectedItem } { ...item } onClick={ this.handleClickItem } /> ) }
 								<li key="footer" className="collection-footer">
 									<h3>Total</h3>
-									<h3 className="secondary-content black-text">{ calcItemsTotal( this.props.items ).toFixed(2) }</h3>
+									<h3 className="secondary-content black-text">{ total.toFixed(2) }</h3>
 								</li>
 							</CSSTransitionGroup>
 							<div className="checkout-process-action">
