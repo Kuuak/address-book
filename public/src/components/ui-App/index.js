@@ -4,6 +4,9 @@ import 'styles/base.css';
 import './index.css';
 import './print.css';
 
+// APP settings
+import config from '../../../../config';
+
 // React
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -251,7 +254,7 @@ export default class App extends React.Component {
 					<footer className="page-footer indigo">
 						<div className="footer-copyright">
 							<div className="container">
-								© 2017 L'Escale Gourmande
+								© {new Date().getFullYear()} {config.name}
 							</div>
 						</div>
 					</footer>
