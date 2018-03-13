@@ -3,6 +3,10 @@
   "version": "1.2.0",
   "description": "An address book directory and food order app",
   "main": "address-book.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/Kuuak/address-book"
+  },
   "scripts": {
     "start": "npm run build && pm2 start address-book.js",
     "stop": "pm2 stop address-book",

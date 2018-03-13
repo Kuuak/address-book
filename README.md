@@ -1,4 +1,4 @@
-# L'Escale Gourmande Address Book
+# Address Book directory & food order solution
 
 Register and find customers' phone number and addresses.
 Get address, and names suggestions from [tel.search.ch](https://tel.search.ch) for an easier registration. Register the customer order and print out the order with an QRCode to load the itinerary on your Google Maps App.
@@ -15,7 +15,7 @@ Don't forget to configure your Google Maps API key, with  [JavaScript](https://d
 
 Copy and rename or replace the `logo_default.png` into `_logo.png` and `_logo-black.jpg` in `public/src/images/` with your logo.
 
-Install dependencies by running `npm install --only=prod` command.
+Install dependencies by running `npm install` command.
 
 Run the app `npm start` and go to http://localhost:8080 where the port is the one set in the `config/index.json` file
 
