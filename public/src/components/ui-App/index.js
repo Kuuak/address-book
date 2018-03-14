@@ -1,6 +1,7 @@
 // Assets depedencies (Style & images)
 import 'materialize/css/materialize.min.css';
 import 'styles/base.css';
+import 'styles/card.css';
 import './index.css';
 import './print.css';
 

@@ -24,15 +24,31 @@
 	padding: 0 25px 0 50px;
 	max-height: 100%;
 	overflow-y: auto;
-	align-items: flex-start;
+	align-items: stretch;
 }
 
 .result-costumer {
 	flex: 0 0 calc(33% - 1rem);
 	margin: 0 .5rem 1rem;
 	transition: flex .3s ease-in-out;
+	display: flex;
+	flex-direction: column;
 }
 .no-suggestions .result-costumer { flex-basis: calc(25% - 1rem); }
+
+.result-costumer .card-content {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+}
+
+.no-suggestions .name {
+	flex-grow: 1;
+}
+
+.result-costumer .collection {
+	margin-bottom: 0;
+}
 
 .result-costumer .collection-item {
 	display: flex;
