@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Data
-import genderNames from './data/names.json';
+import genderNames from './placeholder/names.json';
 
 // Helpers
 import randomInt from 'includes/randomInt';
