@@ -22,8 +22,14 @@ Run the app `npm start` and go to http://localhost:8080 where the port is the on
 ## CHANGELOG
 
 ### TODO
+* /!\ Add login
 * Refactor the Add Customer workflow
 * Clear the search input after Customer insertion and Checkout completed
+
+### 1.3.0
+* Add deploy script
+* Adapt a few things to work with deploy script
+* Fix few styles
 
 ### 1.2.0
 * Add: Discount input in order on checkout
