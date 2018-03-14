@@ -60,3 +60,6 @@ config/index.json
 # Personalize logo
 public/src/images/_*.jpg
 public/src/images/_*.png
+
+# Custom deploy script
+deploy-*
