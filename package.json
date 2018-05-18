@@ -8,7 +8,7 @@
     "url": "https://github.com/Kuuak/address-book"
   },
   "scripts": {
-    "start": "pm2 start address-book.js",
+    "start": "pm2 kill && pm2 start address-book.js --env production --no-daemon",
     "stop": "pm2 stop address-book",
     "restart": "pm2 restart address-book",
     "test": "echo \"Error: no test specified\" && exit 1",
