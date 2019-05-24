@@ -7,7 +7,6 @@ import config from '../../../../config';
 // React
 import React from 'react'
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
 import Preloader from 'components/ui-Preloader';

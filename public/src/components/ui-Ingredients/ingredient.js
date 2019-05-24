@@ -5,7 +5,6 @@ import './ingredient.css';
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Helpers
 import isFunction from 'lodash.isfunction';

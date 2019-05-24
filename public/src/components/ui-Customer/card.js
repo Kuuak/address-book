@@ -5,7 +5,6 @@ import './card.css';
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
 import Address from 'components/ui-Address';
@@ -90,9 +89,9 @@ export default class CustomerCard extends React.Component {
 					</h2>
 					{ !isEmpty(this.state.email) && <p className="email"><a href={`mailto:${this.state.email}`}>{ this.state.email }</a></p> }
 					<h3>Adresses</h3>
-					<CSSTransitionGroup component="ul" className="addresses collection" transitionName={{ enter: 'add', leave: 'delete' }} transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+					<ul className="addresses collection">
 						{ this.state.addresses.map( (addr) => <Address key={addr.id} custId={this.props.id} {...addr} selected={ addr.id == this.props.addrId } location={ this.props.location } onClick={ this.handleClickAddress } onChange={ this.handleChangeAddress } uniqueId={ this.uniqueId }/> ) }
-					</CSSTransitionGroup>
+					</ul>
 				</div>
 				<div className="card-action">
 					<Link to={ `${rmSlash(this.props.location)}/edit` } rel="edit" onClick={ this.handleClick } >Modifier</Link>
