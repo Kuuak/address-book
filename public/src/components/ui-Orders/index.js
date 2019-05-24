@@ -6,7 +6,6 @@ import './index.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
 import Preloader from 'components/ui-Preloader';
@@ -43,9 +42,9 @@ export default class Orders extends React.Component {
 			<div className="order-all">
 				<h1>Toutes les commandes</h1>
 				<Preloader active={this.state.loading} />
-				<CSSTransitionGroup component="ul" className="orders" transitionName="appears" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+				<ul className="orders">
 					{ this.state.orders && this.state.orders.map( (order, i) => <ResultOrder key={order._id} {...order} /> ) }
-				</CSSTransitionGroup>
+				</ul>
 			</div>
 		);
 	}
