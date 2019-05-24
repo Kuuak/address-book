@@ -3,7 +3,6 @@ import './index.css';
 
 // React
 import React from 'react';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 // Components
 import Preloader from 'components/ui-Preloader';
@@ -21,9 +20,9 @@ export default class Results extends React.Component {
 				<div className="local-results">
 					<h2>Clients enregistrés</h2>
 					<Preloader active={this.props.customers.loading} />
-					<CSSTransitionGroup component="ul" className="customers" transitionName="appears" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+					<ul className="customers">
 						{ this.props.customers.items && this.props.customers.items.map( (customer, i) => <ResultCustomer key={customer._id} id={i} {...customer} /> ) }
-					</CSSTransitionGroup>
+					</ul>
 				</div>
 				<div className="remote-results">
 					<h2>
@@ -31,9 +30,9 @@ export default class Results extends React.Component {
 						{ !isNil(this.props.suggestions.totalResults) && <span className="new badge"><strong>{this.props.suggestions.totalResults}</strong> résultat{ ( 1 < this.props.suggestions.totalResults ? 's' : '' ) }</span> }
 					</h2>
 					<Preloader active={this.props.suggestions.loading} />
-					<CSSTransitionGroup component="ul" className="suggestions" transitionName="appears" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+					<ul className="suggestions">
 						{ this.props.suggestions.items && this.props.suggestions.items.map( (suggestion, i) => <ResultSuggestion key={i} id={i} {...suggestion}/>) }
-					</CSSTransitionGroup>
+					</ul>
 				</div>
 			</section>
 		)
