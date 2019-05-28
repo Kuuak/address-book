@@ -33,7 +33,7 @@ export default class SearchBar extends React.Component {
 	render() {
 		return (
 			<div className="search-bar">
-				<DebounceInput id="search_input" name="search-input" value={ formatPhone(this.props.searchValue) } placeholder='saisir un numéro' onChange={this.handleChange} debounceTimeout={500} />
+				<DebounceInput id="search_input" name="search-input" value={ formatPhone(this.props.searchValue) } placeholder='saisir un numéro' onChange={this.handleChange} debounceTimeout={500} autoComplete="off" />
 				<button className={ 'clear-input material-icons'+ ( isEmpty(this.props.searchValue) ? '' : ' show' ) } onClick={ this.handleClickClear }>backspace</button>
 			</div>
 		)
